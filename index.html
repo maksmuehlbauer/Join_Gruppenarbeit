@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+
+</head>
+<body onload="init()">
+    <div id="content">
+        <img src="./assets/img/logo.png" class="login-logo" alt="logo">
+        <div id="login-container">
+            <h1>Log in</h1>
+            <div class="divider-line"></div>
+            <div class="hidden-width">
+                <div class="input-container">
+                    <input type="email" placeholder="Email" class="login-input">
+                    <img src="./assets/img/mail.png">
+                </div>
+                <div class="input-container">
+                    <input type="password" placeholder="Password" class="login-input">
+                    <img src="./assets/img/lock.png">
+                </div>
+                <div class="Remember-container">
+                    <input type="checkbox" id="remember-login" class="remember-login">
+                    <label for="remember-login">Remember me</label>
+                </div>
+                <div class="button-box">
+                    <button class="button btn-login">Log in</button>
+                    <button class="button btn-gust-login">Guest Log in</button>
+                </div>
+            </div>
+        </div>
+        <div class="sign-up-box">
+            <h4>Not a Join user?</h4>
+            <button class="button btn-login btn-signup">Sign up</button>
+        </div>
+        <div class="user-notices-box">
+            <a href="#" class="notices-link">Privacy Policy</a>
+            <a href="#" class="notices-link">Legal Notice</a>
+        </div>
+    </div>
+    
+</body>
+</html>
