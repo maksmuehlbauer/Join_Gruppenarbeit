@@ -1,14 +1,6 @@
 const STORAGE_TOKEN = 'PMSYFRVR552SZW6MAG0T95301L1BCNVFHWSKVHMK';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
-let contacts = [
-    // {
-    //     'name' : 'Okan Kaplan',
-    //     'telefon' : '+49 176 12345678',
-    //     'email' : 'okan149@gmail.com'
-    // }
-];
-
-
+let contacts = [];
 
 async function setItem(key, value) {
     const payload = { key, value, token: STORAGE_TOKEN };
@@ -27,6 +19,7 @@ async function getItem(key) {
 }
 async function init(){
     loadContacts();
+    renderContacts();
 }
 async function loadContacts(){
     try {
@@ -34,11 +27,12 @@ async function loadContacts(){
         contacts = JSON.parse(result);
     } catch(e){
         console.error('Loading error:', e);
-        contacts = []; // Initialisiere contacts als leeres Array, wenn der Schlüssel nicht gefunden wird
+        contacts = [];
     }
+    renderContacts();
 }
 
-async function register() {
+async function save() {
     saveBtn.disabled = true;
     let name = document.getElementById('name').value;
     let email = document.getElementById('email').value;
@@ -52,3 +46,30 @@ async function register() {
     await setItem('contacts', JSON.stringify(contacts));
 }
 
+function clearForm() {
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('telefon').value = '';
+    saveBtn.disabled = false;
+}
+
+
+function renderContacts() {
+    const sortedContacts = contacts.sort((a, b) => a.name.localeCompare(b.name));
+    const contactsContainer = document.getElementById('contactsList');
+    
+    let content = '';
+    let currentLetter = '';
+
+    for (let i = 0; i < sortedContacts.length; i++) {
+        const contact = sortedContacts[i];
+        const firstLetter = contact.name[0].toUpperCase();
+        
+        if (currentLetter !== firstLetter) {
+            currentLetter = firstLetter;
+            content += `<h2>${currentLetter}</h2>`;
+        }
+        content += `<div>${contact.name} - ${contact.email} - ${contact.telefon}</div>`;
+    }
+    contactsContainer.innerHTML = content;
+}
