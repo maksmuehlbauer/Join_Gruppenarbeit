@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kontakte</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kontakte</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
   <body onload="init()">
     <div>
-      <form onsubmit="register(); return false;">
-      <input required type="text" id="name" placeholder="Name">
-      <input required type="email" id="email" placeholder="E-Mail">
-      <input required type="tel" id="telefon" placeholder="Telefon">
-      <button id="saveBtn">save</button>
-      <button id="deleteBtn">Delete</button>
-    </form>
+      <form onsubmit="save(); return false;">
+        <input required type="text" id="name" placeholder="Name" />
+        <input required type="email" id="email" placeholder="E-Mail" />
+        <input required type="tel" id="telefon" placeholder="Telefon" />
+        <button id="saveBtn">save</button>
+        <button onclick="clearForm()" id="deleteBtn">Delete</button>
+      </form>
     </div>
-    
-    <div>
+    <div id="contactsList">
 
     </div>
-  <script src="contacts.js"></script>
-</body>
+    <script src="contacts.js"></script>
+  </body>
 </html>
