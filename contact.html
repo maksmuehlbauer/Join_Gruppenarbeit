@@ -7,16 +7,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
   <body onload="init()">
-    <div class="d-none">
+    <div>
       <form onsubmit="register(); return false;">
-      <input required type="text" id="name">
-      <input required type="email" id="email">
-      <input required type="tel" id="telefon">
-      <button id="registerBtn">Registrieren</button>
+      <input required type="text" id="name" placeholder="Name">
+      <input required type="email" id="email" placeholder="E-Mail">
+      <input required type="tel" id="telefon" placeholder="Telefon">
+      <button id="saveBtn">save</button>
+      <button id="deleteBtn">Delete</button>
     </form>
     </div>
     
+    <div>
 
+    </div>
   <script src="contacts.js"></script>
 </body>
 </html>
