@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="board">
+    <div class="board-titel board-titel-head">
+      <h1>Board</h1>
+      <button type="button" class="add-task-btn btn-head">
+        <img src="./assets/img/board-plus.png" alt="add Task button" />
+      </button>
+    </div>
+    <input type="search" placeholder="Find Task" />
+    <section class="column" id="todo">
+      <div class="board-titel">
+        <h3>To do</h3>
+        <button type="button" class="add-task-btn">
+          <img src="./assets/img/plus-button.png" alt="add Task button" />
+        </button>
+      </div>
+      <div class="no-tasks">No tasks To do</div>
+    </section>
+    <section class="column" id="progess">
+      <div class="board-titel">
+        <h3>In progress</h3>
+        <button type="button" class="add-task-btn">
+          <img src="./assets/img/plus-button.png" alt="add Task button" />
+        </button>
+      </div>
+      <div class="task-card" draggable="true">
+        <div>User Story</div>
+        <div>Kochwelt Page & Recipe Recommender</div>
+        <div>Build start page with recipe</div>
+      </div>
+    </section>
+    <section class="column" id="feedback">
+      <div class="board-titel">
+        <h3>Await feedback</h3>
+        <button type="button" class="add-task-btn">
+          <img src="./assets/img/plus-button.png" alt="add Task button" />
+        </button>
+      </div>
+    </section>
+    <section class="column" id="done">
+      <div class="board-titel">
+        <h3>Done</h3>
+        <button type="button" class="add-task-btn">
+          <img src="./assets/img/plus-button.png" alt="add Task button" />
+        </button>
+      </div>
+    </section>
+  </body>
+</html>
