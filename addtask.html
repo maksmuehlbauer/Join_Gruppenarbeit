@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+    <div class="add-task-container">
+        <h1>Add Task</h1>
+        <div class="task-input-container">
+            <div class="title-container">
+                <label for="title">Title<sup>*</sup></label>
+                <input id="title" type="text" placeholder="Enter a title" required></input>
+            </div>
+            <div class="description-container">
+                <label for="description">Description</label>
+                <textarea id="description" type="text" placeholder="Enter a Description"></textarea>
+            </div>
+            <div class="prio-container">
+                <label for="prio">Prio</label>
+                <div id="prio">
+                    <button>Urgent</button>
+                    <button>Medium</button>
+                    <button>Low</button>
+                </div>
+            </div>
+            <div class="due-date-container">
+                <label for="due-date">Due date<sup>*</sup></label>
+                <input id="due-date" type="date" required></input>
+            </div>
+            <div class="category-container">
+                <label for="category">Category<sup>*</sup></label>
+                <select id="category">
+                    <option value="Select task category" required>Select task category</option>
+                </select>
+            </div>
+            <div class="assigned-to-container">
+                <label for="assigned-to">Assigned to</label>
+                <select id="assigned-to">
+                    <option value="Select contacts to assign">Select contacts to assign</option>
+                </select>
+            </div>
+            <div class="subtasks-container">
+                <label for="subtasks">Subtasks</label>
+                <input id="subtasks" type="text" placeholder="Add new subtask"></input>
+            </div>
+        </div>
+        <div class="add-task-footnote-container">
+            <div class="footnote">
+                <sup>*</sup>
+                <span>This field is required</span>
+            </div>
+
+            <div>
+                <button class="button">Create Task</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
