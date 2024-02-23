@@ -42,7 +42,6 @@ async function save() {
   let name = document.getElementById("name").value;
   let email = document.getElementById("email").value;
   let telefon = document.getElementById("telefon").value;
-
   contacts.push({
     name: name,
     email: email,
@@ -81,20 +80,31 @@ function renderContacts() {
                 </div>`;
     }
     content += generateContacts(contact.email, contact.name, secondLetter,firstLetter);
+    getRandomColor();
   }
   contactsContainer.innerHTML = content;
 }
 
-function generateContacts(email, name, secondLetter,firstLetter) {
-  return /*HTML*/ `
-    <div class="contact">
-        <div class="contact-header">
-            <span>${firstLetter}${secondLetter}</span>
-        </div> 
-        <div class="contact-info">
-            <div>${name}</div>
-            <div>${email}</div>
-        </div>
-    </div>
-    `;
-}
+function generateContacts(email, name, secondLetter, firstLetter) {
+    const contactHeaderColor = getRandomColor(); 
+    return /*HTML*/ `
+      <div class="contact">
+          <div class="contact-header" style="background-color: ${contactHeaderColor};">
+              <span>${firstLetter}${secondLetter}</span>
+          </div> 
+          <div class="contact-info">
+              <div>${name}</div>
+              <div>${email}</div>
+          </div>
+      </div>
+      `;
+  }
+  
+  function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+  }
