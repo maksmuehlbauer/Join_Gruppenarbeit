@@ -93,8 +93,8 @@ function generateContacts(email, name, secondLetter, firstLetter) {
               <span>${firstLetter}${secondLetter}</span>
           </div> 
           <div class="contact-info">
-              <div>${name}</div>
-              <div>${email}</div>
+              <div class="name">${name}</div>
+              <div class="email">${email}</div>
           </div>
       </div>
       `;
