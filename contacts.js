@@ -132,6 +132,7 @@ function openContact(i) {
     addContactImg.style.display = "none";
     contact.style.display = "flex";
     showContact(i);
+    document.getElementById('center-contacts').classList.remove('center');
   }
   contactStatus = true;
 }
@@ -141,6 +142,7 @@ function closeContact() {
     contactsList.style.display = "block";
   addContactImg.style.display = "flex";
   contact.style.display = "none";
+  document.getElementById('center-contacts').classList.add('center');
   }
   contactStatus = false;
 }
@@ -164,8 +166,10 @@ function showContact(i) {
 
 function generateContact(firstLetter, secondLetter, name, telefon,email ,contactHeaderColor) {
   return /*HTML*/ `
-  <div>
+  <div class="contact-container">
+    <div class="back-to-contacts-img">
     <img onclick="closeContact()" src="assets/img/back.png" alt="">
+    </div>
   <h1>Contacts</h1>
   <span class="slogan-contact">Better with a Team</span>
   <div class="contact-underline"></div>

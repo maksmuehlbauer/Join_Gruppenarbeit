@@ -641,5 +641,22 @@ sup{
   margin-bottom: 48px;
 }
 
+.back-to-contacts-img {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 16px;
+}
+
+#contact {
+  height: 100vh; 
+  overflow: hidden;
+  z-index: 1000;
+  padding: 128px 0 0 16px;
+  width: 100%;
+}
+
+.contact-container {
+  width: 100%;
+}
 
 /***** end styles for contacts.html ****/
