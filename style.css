@@ -542,18 +542,30 @@ sup{
   margin-bottom: 30px;
 }
 
-& h4 {
-  padding-left: 12px;
+.contact:hover {
+  cursor: pointer;
+}
+
+ .contact-headline-letter {
+  padding-left: 12px !important;
 }
  .name {
   font-size: 24px !important;
   font-weight: 400 !important;
  }
 
-.email {
+.email-contact {
   font-size: 16px !important;
   color: #007CEE;
   margin-top: 5px;
+}
+
+.email-contact-opened {
+  color: black;
+  font-weight: bold !important ;
+  font-size: 16px !important;
+  margin-top: 21px;
+  margin-bottom: 15px;
 }
 
 .contact-header {
@@ -594,12 +606,40 @@ sup{
   background-color: var(--color-primary);
   z-index: 1000;
 }
+.name-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
 
-& img {
+.contact-opened {
+  height: 80px !important;
+  width: 80px !important;
+  border: 3px 3px 3px 3px, black;
+}
+
+.slogan-contact {
+  margin-top: 8px;
+  font-size: 20px;
+}
+
+.addContactImg:hover {
+  cursor: pointer;
+}
+
+.addContactImg img {
   height: 32px;
   width: 32px;
 }
 
+.contact-underline {
+  height: 3px;
+  width: 90px;
+  background-color: #29ABE2;
+  margin-top: 8px;
+  margin-bottom: 48px;
+}
 
 
 /***** end styles for contacts.html ****/

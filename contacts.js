@@ -1,18 +1,19 @@
 const STORAGE_TOKEN = "PMSYFRVR552SZW6MAG0T95301L1BCNVFHWSKVHMK";
 const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 let contacts = [];
+let contactStatus = false;
 
 async function includeHTML() {
-  let includeElements = document.querySelectorAll('[w3-include-html]');
+  let includeElements = document.querySelectorAll("[w3-include-html]");
   for (let i = 0; i < includeElements.length; i++) {
-      const element = includeElements[i];
-      file = element.getAttribute("w3-include-html"); // "includes/header.html"
-      let resp = await fetch(file);
-      if (resp.ok) {
-          element.innerHTML = await resp.text();
-      } else {
-          element.innerHTML = 'Page not found';
-      }
+    const element = includeElements[i];
+    file = element.getAttribute("w3-include-html"); // "includes/header.html"
+    let resp = await fetch(file);
+    if (resp.ok) {
+      element.innerHTML = await resp.text();
+    } else {
+      element.innerHTML = "Page not found";
+    }
   }
 }
 
@@ -56,11 +57,11 @@ async function save() {
   saveBtn.disabled = true;
   let name = document.getElementById("name").value;
   let email = document.getElementById("email").value;
-  let telefon = document.getElementById("telefon").value;
+  let phone = document.getElementById("phone").value;
   contacts.push({
     name: name,
     email: email,
-    telefon: telefon,
+    phone: phone,
   });
   await setItem("contacts", JSON.stringify(contacts));
 }
@@ -68,7 +69,7 @@ async function save() {
 function clearForm() {
   document.getElementById("name").value = "";
   document.getElementById("email").value = "";
-  document.getElementById("telefon").value = "";
+  document.getElementById("phone").value = "";
   saveBtn.disabled = false;
 }
 
@@ -82,7 +83,7 @@ function renderContacts() {
   for (let i = 0; i < sortedContacts.length; i++) {
     const contact = sortedContacts[i];
     const firstLetter = contact.name[0].toUpperCase();
-    const parts = contact.name.split(' ');
+    const parts = contact.name.split(" ");
     const lastName = parts[parts.length - 1];
     const secondLetter = lastName[0].toUpperCase();
 
@@ -90,36 +91,98 @@ function renderContacts() {
       currentLetter = firstLetter;
       content += `
                 <div>
-                    <h4>${currentLetter}</h4>
+                    <h4 class="contact-headline-letter">${currentLetter}</h4>
                     <div class="underline"></div>
                 </div>`;
     }
-    content += generateContacts(contact.email, contact.name, secondLetter,firstLetter);
+    content += generateContacts(contact.email,contact.name,secondLetter,
+      firstLetter,i);
     getRandomColor();
   }
   contactsContainer.innerHTML = content;
 }
 
-function generateContacts(email, name, secondLetter, firstLetter) {
-    const contactHeaderColor = getRandomColor(); 
-    return /*HTML*/ `
-      <div class="contact">
+function generateContacts(email, name, secondLetter, firstLetter, i) {
+  const contactHeaderColor = getRandomColor();
+  return /*HTML*/ `
+      <div class="contact" id="${i}" onclick="openContact(${i})">
           <div class="contact-header" style="background-color: ${contactHeaderColor};">
               <span>${firstLetter}${secondLetter}</span>
           </div> 
           <div class="contact-info">
               <div class="name">${name}</div>
-              <div class="email">${email}</div>
+              <div class="email-contact">${email}</div>
           </div>
       </div>
       `;
+}
+
+function getRandomColor() {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
   }
-  
-  function getRandomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
+  return color;
+}
+
+function openContact(i) {
+  if(!contactStatus) {
+    contactsList.style.display = "none";
+    addContactImg.style.display = "none";
+    contact.style.display = "flex";
+    showContact(i);
   }
+  contactStatus = true;
+}
+
+function closeContact() {
+  if(contactStatus){
+    contactsList.style.display = "block";
+  addContactImg.style.display = "flex";
+  contact.style.display = "none";
+  }
+  contactStatus = false;
+}
+
+function showContact(i) {
+  let content = document.getElementById("contact");
+  content.innerHTML = "";
+  let contact = contacts[i];
+  const firstLetter = contact.name[0].toUpperCase();
+  const parts = contact.name.split(" ");
+  const lastName = parts[parts.length - 1];
+  const secondLetter = lastName[0].toUpperCase();
+  const contactHeaderColor = getRandomColor();
+  const name = contact.name;
+  const phone = contact.telefon;
+  const email = contact.email;
+  content.innerHTML += 
+  generateContact(firstLetter, secondLetter, name,
+                  phone,email ,contactHeaderColor);
+}
+
+function generateContact(firstLetter, secondLetter, name, telefon,email ,contactHeaderColor) {
+  return /*HTML*/ `
+  <div>
+    <img onclick="closeContact()" src="assets/img/back.png" alt="">
+  <h1>Contacts</h1>
+  <span class="slogan-contact">Better with a Team</span>
+  <div class="contact-underline"></div>
+  <div class="name-container">
+    <div class="contact-header contact-opened" style="background-color: ${contactHeaderColor};">
+      <span><h3>${firstLetter}${secondLetter}</h3></span>
+  </div>
+      <div class="name"><h2>${name}</h2></div>
+  </div> 
+  <div>
+  <h4>Contact Information</h4>
+  <p class="email-contact-opened">Email</p>
+      <div class="email-contact">${email}</div>
+      <p class="email-contact-opened">Phone</p>
+      <div class="phone-contact">${telefon}</div>
+  </div>
+</div>
+    `;
+}
+
