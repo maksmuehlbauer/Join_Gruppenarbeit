@@ -188,6 +188,10 @@ h4 {
   cursor: pointer;
 }
 
+.width-100 {
+  width: 100%;
+}
+
 /***** styles for board.html ****/
 .board {
   display: flex;
