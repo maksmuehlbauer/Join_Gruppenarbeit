@@ -505,3 +505,26 @@ sup{
   display: flex;
   justify-content: center;
 }
+
+.addContactImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 758px;
+  left: 330px;
+  right: 20px;
+  height: 56px;
+  width: 56px;
+  border-radius: 100%;
+  background-color: var(--color-primary);
+}
+
+& img {
+  height: 32px;
+  width: 32px;
+}
+
+
+
+/***** end styles for contacts.html ****/
