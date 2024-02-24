@@ -1,7 +1,7 @@
 let userDataBase = [
 	{
 		"id": 1,
-		"name": "name"
+		"name": "name",
 		"email": "m.muehlbauer@kkkk.de",
 		"password": "Test123",
 		"tasks": [

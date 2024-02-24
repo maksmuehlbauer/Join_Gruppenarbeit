@@ -1,4 +1,20 @@
+async function includeHTML() {
+    let includeElements = document.querySelectorAll('[w3-include-html]');
+    for (let i = 0; i < includeElements.length; i++) {
+        const element = includeElements[i];
+        file = element.getAttribute("w3-include-html"); // "includes/header.html"
+        let resp = await fetch(file);
+        if (resp.ok) {
+            element.innerHTML = await resp.text();
+        } else {
+            element.innerHTML = 'Page not found';
+        }
+    }
+}
+
+
 async function init() {
+    await includeHTML();
     loadUserDataBase()
     renderSignUp();
 }
@@ -38,6 +54,14 @@ function login() {
         alert('Email Adresse und Passwort stimmen nicht überein')
     
     }
+}
+
+function navigationHighlight(id) {
+    let navigationElements = document.getElementById('navigation').children;
+    for (let i = 0; i < navigationElements.length; i++) {
+        navigationElements[i].classList.remove('navbox-bg-color')
+        }
+    document.getElementById(id).classList.add('navbox-bg-color');
 }
 
 
