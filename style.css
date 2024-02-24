@@ -520,6 +520,11 @@ sup{
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
+  width: 90%;
+  max-height: 80vh; 
+  overflow-y: auto; /* Vertikales scrollen im container */
+  margin: 20px 0;
+  padding-top: 30px;
 }
 
 .underline {
@@ -568,17 +573,18 @@ sup{
 }
 
 .center {
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  overflow: hidden;
 }
 
 .addContactImg {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: sticky;
+  position: fixed;
   top: 758px;
   left: 330px;
   right: 20px;
@@ -586,6 +592,7 @@ sup{
   width: 56px;
   border-radius: 100%;
   background-color: var(--color-primary);
+  z-index: 1000;
 }
 
 & img {
