@@ -451,6 +451,14 @@ header {
 /***** end styles for board.html ****/
 
 
+
+
+
+
+
+
+
+
 /***** styles for addtask.html ****/
 
 .add-task-container {
@@ -697,8 +705,6 @@ sup {
   background-color: var(--color-primary);
   z-index: 1000;
 }
-
-
 
 .name-container {
   display: flex;

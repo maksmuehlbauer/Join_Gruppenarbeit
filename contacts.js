@@ -171,10 +171,13 @@ function generateContact(firstLetter, secondLetter, name, telefon,email ,contact
       <div class="phone-contact">${telefon}</div>
       
   </div>
-   <div class="editContactImg" onclick="showEditOptions()">
+   <div id="editContactImg" class="editContactImg" onclick="showEditOptions()">
    <img src="/assets/img/more_vert.png" alt="">
    </div>
 </div>
     `;
 }
 
+function showEditOptions() {
+  
+}
