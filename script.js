@@ -12,6 +12,11 @@ async function includeHTML() {
     }
 }
 
+async function initContacts() {
+    loadContacts();
+    renderContacts();
+    await includeHTML();
+}
 
 async function init() {
     loadUserDataBase()
