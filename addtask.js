@@ -53,11 +53,11 @@ function setPriority(priority) {
         document.getElementById('highPrioButton').style.backgroundColor = 'rgba(255, 61, 0, 1)';
     }
     else if (priority == 'medium') {
-        userDataBase[0].tasks.prio = 2;
+        userDataBase[0].tasks.prio = 1;
         document.getElementById('mediumPrioButton').style.backgroundColor = 'rgba(255, 168, 0, 1)';
     }
     else if (priority == 'low') {
-        userDataBase[0].tasks.prio = 2;
+        userDataBase[0].tasks.prio = 0;
         document.getElementById('lowPrioButton').style.backgroundColor = 'rgba(122, 226, 41, 1)';
     }
 }
@@ -82,7 +82,20 @@ function renderAddTaskPage() {
 }
 
 function assignContact(contactName, contactID) {
+    highlightSelectedContact(contactName, contactID);
+    let buttonText = document.getElementById('buttontext');
+    if (assignedContacts.length == 0) {
+        buttonText.innerHTML = `Select contacts to assign`;
+    }
+    else {
+        buttonText.innerHTML = ``;
+    }
+    for (let i = 0; i < assignedContacts.length; i++) {
+        buttonText.innerHTML += `<div class="assigned-contacts-button">${assignedContacts[i]}</div>`;
+    }
+}
 
+function highlightSelectedContact(contactName, contactID) {
     let index = assignedContacts.indexOf(contactName);
     if (index === -1) {
         assignedContacts.push(contactName);
@@ -92,17 +105,4 @@ function assignContact(contactName, contactID) {
         assignedContacts.splice(index, 1);
         document.getElementById(contactID).classList.remove('checked');
     }
-    let buttonText = document.getElementById('buttontext');
-    if (assignedContacts.length == 0) {
-        buttonText.innerHTML = `Select contacts to assign`;
-    }
-    else {
-        buttonText.innerHTML = ``;
-    }
-
-    for (let i = 0; i < assignedContacts.length; i++) {
-        buttonText.innerHTML += `<div class="assigned-contacts-button">${assignedContacts[i]}</div>`;
-    }
-
-
 }

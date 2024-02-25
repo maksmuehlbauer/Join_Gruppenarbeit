@@ -456,7 +456,6 @@ header {
 .add-task-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   margin-top: 50px;
 }
 
@@ -488,12 +487,14 @@ select {
 }
 
 .add-task-footnote-container {
-  position: absolute;
-  bottom: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position:absolute;
+  bottom: 80px;
+  background-color: #f6f7f8;
+  padding: 10px;
 }
 
 .task-input-container {
@@ -563,7 +564,6 @@ select {
   font-size: 21px;
   display: flex;
   gap: 4px;
-
 }
 
 .add-task-footnote-container button img {
