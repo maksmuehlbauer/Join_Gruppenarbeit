@@ -9,7 +9,8 @@
 
 </head>
 
-<body onload="renderAddTaskPage()">
+<body onload="renderAddTaskPage(), includeHTML()">
+    <div w3-include-html="./assets/templates/header.html"></div>
     <div class="add-task-container">
         <h1>Add Task</h1>
         <div class="task-input-container">
@@ -44,10 +45,13 @@
             </div>
             <div class="assigned-to-container">
                 <label for="assigned-to-btn">Assigned to</label>
-                <button onclick="openAssignContainer()" id="assigned-to-btn"><div id="buttontext">Select contacts to assign </div><img src="assets/img/arrow_drop_down.png" alt="arrow-down"></button>
+                <button onclick="openAssignContainer()" id="assigned-to-btn">
+                    <div id="buttontext">Select contacts to assign </div><img src="assets/img/arrow_drop_down.png"
+                        alt="arrow-down">
+                </button>
                 <div id="contacts-to-assign-container" class="d-none">
                     <ul id="contacts-to-assign-list">
-                        
+
                     </ul>
                 </div>
             </div>
@@ -69,7 +73,11 @@
         </div>
 
     </div>
+    <div w3-include-html="./assets/templates/navigation.html"></div>
+
     <script src="addtask.js"></script>
+    <script src="script.js"></script>
+
 </body>
 
 </html>
