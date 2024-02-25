@@ -16,6 +16,7 @@ async function initContacts() {
     loadContacts();
     renderContacts();
     await includeHTML();
+    navigationHighlight('contact-link');
 }
 
 async function init() {
