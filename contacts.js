@@ -3,20 +3,6 @@ const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 let contacts = [];
 let contactStatus = false;
 
-async function includeHTML() {
-  let includeElements = document.querySelectorAll("[w3-include-html]");
-  for (let i = 0; i < includeElements.length; i++) {
-    const element = includeElements[i];
-    file = element.getAttribute("w3-include-html"); // "includes/header.html"
-    let resp = await fetch(file);
-    if (resp.ok) {
-      element.innerHTML = await resp.text();
-    } else {
-      element.innerHTML = "Page not found";
-    }
-  }
-}
-
 async function setItem(key, value) {
   const payload = { key, value, token: STORAGE_TOKEN };
   return fetch(STORAGE_URL, {
@@ -37,11 +23,7 @@ async function getItem(key) {
       throw `Could not find data with key "${key}".`;
     });
 }
-async function init() {
-  loadContacts();
-  renderContacts();
-  await includeHTML();
-}
+
 async function loadContacts() {
   try {
     const result = await getItem("contacts");

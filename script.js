@@ -12,12 +12,24 @@ async function includeHTML() {
     }
 }
 
+async function initContacts() {
+    loadContacts();
+    renderContacts();
+    await includeHTML();
+    navigationHighlight('contact-link');
+}
 
 async function init() {
+    loadUserDataBase()
+    renderLogIn();
+}
+
+async function initSummary() {
     await includeHTML();
     loadUserDataBase()
-    renderSignUp();
+    navigationHighlight('summary-link')
 }
+
 
 function renderSignUp() {
     document.getElementById('sign-up-box').classList.add('d-none')
