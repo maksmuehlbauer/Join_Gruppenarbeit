@@ -10,7 +10,7 @@ let userDataBase = [
                 "descripton": "Hier muss der Text hin",
                 "assignto": [],
                 "category": "cat",
-                "DueDate": "DueDate",
+                "dueDate": "DueDate",
                 "prio": "prio",
                 "subtask": [],
 
@@ -44,20 +44,22 @@ let assignedContacts = [];
 let prioButtonsColor = document.querySelectorAll('.prio-container button');
 let assignedToMenuOpen = false;
 
+
 function setPriority(priority) {
+    console.log(userDataBase[0]);
     for (let i = 0; i < 3; i++) {
         prioButtonsColor[i].style.backgroundColor = 'white';
     }
     if (priority == 'high') {
-        userDataBase[0].tasks.prio = 2;
+        userDataBase[0].tasks[0].prio = 'urgent';
         document.getElementById('highPrioButton').style.backgroundColor = 'rgba(255, 61, 0, 1)';
     }
     else if (priority == 'medium') {
-        userDataBase[0].tasks.prio = 1;
+        userDataBase[0].tasks[0].prio = 'medium';
         document.getElementById('mediumPrioButton').style.backgroundColor = 'rgba(255, 168, 0, 1)';
     }
     else if (priority == 'low') {
-        userDataBase[0].tasks.prio = 0;
+        userDataBase[0].tasks[0].prio = 'low';
         document.getElementById('lowPrioButton').style.backgroundColor = 'rgba(122, 226, 41, 1)';
     }
 }
@@ -105,4 +107,17 @@ function highlightSelectedContact(contactName, contactID) {
         assignedContacts.splice(index, 1);
         document.getElementById(contactID).classList.remove('checked');
     }
+}
+
+function createTask() {
+    let task = userDataBase[0].tasks[0];
+    task.title = document.getElementById('title').value;
+    task.descripton = document.getElementById('description').value;
+    task.dueDate = document.getElementById('due-date').value;
+    task.category = document.getElementById('category').value;
+    task.subtask = document.getElementById('subtasks').value;
+
+    
+
+
 }

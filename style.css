@@ -457,6 +457,7 @@ header {
   display: flex;
   flex-direction: column;
   margin-top: 50px;
+  max-height: calc(100vh - 240px)
 }
 
 .add-task-container h1 {
@@ -472,7 +473,6 @@ select {
   border-radius: 10px;
   width: 100%;
   font-size: 16px;
-
 }
 
 .add-task-container input,
@@ -592,7 +592,6 @@ sup {
   font-size: 16px;
   font-weight: 400;
   padding: 10px;
-  ;
 }
 
 #contacts-to-assign-list {
