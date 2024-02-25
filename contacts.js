@@ -115,6 +115,7 @@ function openContact(i) {
     contact.style.display = "flex";
     showContact(i);
     document.getElementById('center-contacts').classList.remove('center');
+    contact.style.backgroundColor = '#F6F7F8';
   }
   contactStatus = true;
 }
@@ -125,6 +126,7 @@ function closeContact() {
   addContactImg.style.display = "flex";
   contact.style.display = "none";
   document.getElementById('center-contacts').classList.add('center');
+  contact.style.backgroundColor = '#FFFFFF';
   }
   contactStatus = false;
 }
@@ -167,7 +169,11 @@ function generateContact(firstLetter, secondLetter, name, telefon,email ,contact
       <div class="email-contact">${email}</div>
       <p class="email-contact-opened">Phone</p>
       <div class="phone-contact">${telefon}</div>
+      
   </div>
+   <div class="editContactImg" onclick="showEditOptions()">
+   <img src="/assets/img/more_vert.png" alt="">
+   </div>
 </div>
     `;
 }
