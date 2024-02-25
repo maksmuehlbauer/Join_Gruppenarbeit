@@ -9,7 +9,7 @@
 
 </head>
 
-<body>
+<body onload="renderAddTaskPage()">
     <div class="add-task-container">
         <h1>Add Task</h1>
         <div class="task-input-container">
@@ -24,9 +24,12 @@
             <div class="prio-container">
                 <span>Prio</span>
                 <div id="prio">
-                    <button id="highPrioButton" onclick="setPriority('high')">Urgent<img src="assets/img/board-urgent.png" alt="arrow-up"></button>
-                    <button id="mediumPrioButton"onclick="setPriority('medium')">Medium<img src="assets/img/board-medium.png" alt="arrow-up"></button>
-                    <button id="lowPrioButton"onclick="setPriority('low')">Low<img src="assets/img/board-low.png" alt="arrow-down"></button>
+                    <button id="highPrioButton" onclick="setPriority('high')">Urgent<img
+                            src="assets/img/board-urgent.png" alt="arrow-up"></button>
+                    <button id="mediumPrioButton" onclick="setPriority('medium')">Medium<img
+                            src="assets/img/board-medium.png" alt="arrow-up"></button>
+                    <button id="lowPrioButton" onclick="setPriority('low')">Low<img src="assets/img/board-low.png"
+                            alt="arrow-down"></button>
                 </div>
             </div>
             <div class="due-date-container">
@@ -40,10 +43,13 @@
                 </select>
             </div>
             <div class="assigned-to-container">
-                <label for="assigned-to">Assigned to</label>
-                <select id="assigned-to">
-                    <option value="Select contacts to assign">Select contacts to assign</option>
-                </select>
+                <label for="assigned-to-btn">Assigned to</label>
+                <button onclick="openAssignContainer()" id="assigned-to-btn"><div id="buttontext">Select contacts to assign </div><img src="assets/img/arrow_drop_down.png" alt="arrow-down"></button>
+                <div id="contacts-to-assign-container" class="d-none">
+                    <ul id="contacts-to-assign-list">
+                        
+                    </ul>
+                </div>
             </div>
             <div class="subtasks-container">
                 <label for="subtasks">Subtasks</label>

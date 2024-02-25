@@ -452,7 +452,8 @@ select {
   height: 40px;
 }
 
-.add-task-container label, .prio-container span{
+.add-task-container label,
+.prio-container span {
   display: inline-block;
   margin-bottom: 8px;
 }
@@ -516,7 +517,7 @@ select {
 }
 
 .task-input-container .assigned-to-container {
-  height: 75px;
+  min-height: 75px;
   margin-bottom: 16px;
 }
 
@@ -543,6 +544,59 @@ select {
 
 sup {
   color: #FF8190;
+}
+
+#assigned-to-btn {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+#contacts-to-assign-container {
+  background-color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 10px;
+  ;
+}
+
+#contacts-to-assign-list {
+  list-style-type: none;
+
+}
+
+#contacts-to-assign-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.checked {
+ background-color: var(--color-primary);
+ color: white;
+ border-radius: 10px;
+}
+
+#buttontext {
+  display: flex;
+  gap: 10px;
+
+}
+
+.assigned-contacts-button {
+  background-color: var(--color-primary);
+  color: white;
+  min-width: 100px;
+  border-radius: 10px;
+  padding: 2px;
+  border: 1px black solid;
 }
 
 /***** end styles for addtask.html ****/
