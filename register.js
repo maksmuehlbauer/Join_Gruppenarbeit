@@ -42,7 +42,7 @@ async function registerUser() {
 function renderRegSuccesInfo() {
     let content = document.getElementById('content');
     content.innerHTML += /*html*/ `
-        <div id="animation-box">
+        <div id="animation-box" class="animation-box">
             <div id="registration-succes-box" class="registration-succes-box">
                 <h4>You Signed Up successfully</h4>
             </div>
