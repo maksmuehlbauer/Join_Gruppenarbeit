@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./style.css" />
+
 </head>
 
 <body>
@@ -21,11 +22,11 @@
                 <textarea id="description" type="text" placeholder="Enter a Description"></textarea>
             </div>
             <div class="prio-container">
-                <label for="prio">Prio</label>
+                <span>Prio</span>
                 <div id="prio">
-                    <button>Urgent<img src="assets/img/board-urgent.png" alt="arrow-up"></button>
-                    <button>Medium<img src="assets/img/board-medium.png" alt="arrow-up"></button>
-                    <button>Low<img src="assets/img/board-low.png" alt="arrow-up"></button>
+                    <button id="highPrioButton" onclick="setPriority('high')">Urgent<img src="assets/img/board-urgent.png" alt="arrow-up"></button>
+                    <button id="mediumPrioButton"onclick="setPriority('medium')">Medium<img src="assets/img/board-medium.png" alt="arrow-up"></button>
+                    <button id="lowPrioButton"onclick="setPriority('low')">Low<img src="assets/img/board-low.png" alt="arrow-down"></button>
                 </div>
             </div>
             <div class="due-date-container">
@@ -62,7 +63,7 @@
         </div>
 
     </div>
-
+    <script src="addtask.js"></script>
 </body>
 
 </html>

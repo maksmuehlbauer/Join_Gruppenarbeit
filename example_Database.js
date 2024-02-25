@@ -15,7 +15,7 @@ let userDataBase = [
 					"subtask": [],
 
 				}
-			]
+			],
 		"contacts": [
 				{
 						"name": "Malte",
