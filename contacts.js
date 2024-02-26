@@ -174,10 +174,14 @@ function generateContact(firstLetter, secondLetter, name, telefon,email ,contact
    <div id="editContactImg" class="editContactImg" onclick="showEditOptions()">
    <img src="/assets/img/more_vert.png" alt="">
    </div>
+   <div class="edit-contacts-options" id="">
+    <div><img src="/assets/img/edit-task.png" alt="">Edit</div>
+    <div><img src="/assets/img/delete.png" alt="">Delete</div>
+   </div>
 </div>
     `;
 }
 
 function showEditOptions() {
-  
+  edit
 }
