@@ -648,9 +648,9 @@ sup {
 
 .underline {
   height: 1px;
-  width: 350px;
   background-color: #D1D1D1;
   margin: 16px 0 16px 0;
+  width: 90%;
 }
 
 .contact {
@@ -727,6 +727,30 @@ sup {
   z-index: 1000;
 }
 
+.addContactImg:hover {
+  cursor: pointer;
+}
+
+.addContactImg img {
+  height: 32px;
+  width: 32px;
+}
+
+.editContactImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 758px;
+  left: 330px;
+  right: 20px;
+  height: 56px;
+  width: 56px;
+  border-radius: 100%;
+  background-color: var(--color-primary);
+  z-index: 1000;
+}
+
 .name-container {
   display: flex;
   align-items: center;
@@ -737,21 +761,12 @@ sup {
 .contact-opened {
   height: 80px !important;
   width: 80px !important;
-  border: 3px 3px 3px 3px, black;
+  border: 3px solid white;
 }
 
 .slogan-contact {
   margin-top: 8px;
   font-size: 20px;
-}
-
-.addContactImg:hover {
-  cursor: pointer;
-}
-
-.addContactImg img {
-  height: 32px;
-  width: 32px;
 }
 
 .contact-underline {
