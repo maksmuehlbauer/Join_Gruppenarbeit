@@ -9,7 +9,8 @@
 
 </head>
 
-<body>
+<body onload="renderAddTaskPage(), includeHTML()">
+    <div w3-include-html="./assets/templates/header.html"></div>
     <div class="add-task-container">
         <h1>Add Task</h1>
         <div class="task-input-container">
@@ -24,9 +25,12 @@
             <div class="prio-container">
                 <span>Prio</span>
                 <div id="prio">
-                    <button id="highPrioButton" onclick="setPriority('high')">Urgent<img src="assets/img/board-urgent.png" alt="arrow-up"></button>
-                    <button id="mediumPrioButton"onclick="setPriority('medium')">Medium<img src="assets/img/board-medium.png" alt="arrow-up"></button>
-                    <button id="lowPrioButton"onclick="setPriority('low')">Low<img src="assets/img/board-low.png" alt="arrow-down"></button>
+                    <button id="highPrioButton" onclick="setPriority('high')">Urgent<img
+                            src="assets/img/board-urgent.png" alt="arrow-up"></button>
+                    <button id="mediumPrioButton" onclick="setPriority('medium')">Medium<img
+                            src="assets/img/board-medium.png" alt="arrow-up"></button>
+                    <button id="lowPrioButton" onclick="setPriority('low')">Low<img src="assets/img/board-low.png"
+                            alt="arrow-down"></button>
                 </div>
             </div>
             <div class="due-date-container">
@@ -36,14 +40,22 @@
             <div class="category-container">
                 <label for="category">Category<sup>*</sup></label>
                 <select id="category">
-                    <option value="Select task category" required>Select task category</option>
+                    <option value="" required>Select task category</option>
+                    <option value="Technical Task" required>Technical Task</option>
+                    <option value="User Story" required>User Story</option>
                 </select>
             </div>
             <div class="assigned-to-container">
-                <label for="assigned-to">Assigned to</label>
-                <select id="assigned-to">
-                    <option value="Select contacts to assign">Select contacts to assign</option>
-                </select>
+                <label for="assigned-to-btn">Assigned to</label>
+                <button onclick="openAssignContainer()" id="assigned-to-btn">
+                    <div id="buttontext">Select contacts to assign </div><img src="assets/img/arrow_drop_down.png"
+                        alt="arrow-down">
+                </button>
+                <div id="contacts-to-assign-container" class="d-none">
+                    <ul id="contacts-to-assign-list">
+
+                    </ul>
+                </div>
             </div>
             <div class="subtasks-container">
                 <label for="subtasks">Subtasks</label>
@@ -58,12 +70,16 @@
 
             <div>
                 <button class="button d-none">Clear</button>
-                <button class="button">Create Task <img src="assets/img/check.png" alt="check"></button>
+                <button onclick="createTask()" class="button">Create Task <img src="assets/img/check.png" alt="check"></button>
             </div>
         </div>
 
     </div>
+    <div w3-include-html="./assets/templates/navigation.html"></div>
+
     <script src="addtask.js"></script>
+    <script src="script.js"></script>
+
 </body>
 
 </html>
