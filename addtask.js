@@ -88,13 +88,33 @@ function renderAddTaskPage() {
     let assignedToList = document.getElementById('contacts-to-assign-list');
     for (let i = 0; i < userDataBase[0].contacts.length; i++) {
         assignedToList.innerHTML +=
-            `<div class="listItem"><li class="" id="contactID${i}" onclick="assignContact('${userDataBase[0].contacts[i].name}', 'contactID${i}')"><div class="nameFrame"><img src="./assets/img/urgent.png">${userDataBase[0].contacts[i].name}</div><img src="./assets/img/check.png"> </li></div>`
+            `<div class="listItem">
+            <li class="" id="contactID${i}" onclick="assignContact('${userDataBase[0].contacts[i].name}', 'contactID${i}', 'checkButtonID${i}')">
+            <div class="nameFrame">
+            <img src="./assets/img/profile_badge_template.png">${userDataBase[0].contacts[i].name}
+            </div>
+            <img id="checkButtonID${i}" src="./assets/img/check_button.png"> </li></div>`
     };
 }
 
-function assignContact(contactName, contactID) {
-    highlightSelectedContact(contactName, contactID);
+function assignContact(contactName, contactID, checkButtonID) {
+    highlightSelectedContact(contactName, contactID, checkButtonID);
     changeButtonText(contactID);
+}
+
+function highlightSelectedContact(contactName, contactID, checkButtonID) {
+    let index = assignedContacts.indexOf(contactName);
+    if (index === -1) {
+        assignedContacts.push(contactName);
+        assignedContactsID.push(contactID);
+        document.getElementById(contactID).classList.add('checked');
+        document.getElementById(checkButtonID).src = './assets/img/check_button_checked.png';
+    }
+    else {
+        removeContactInArray(index, contactID);
+        document.getElementById(checkButtonID).src = './assets/img/check_button.png';
+
+    }
 }
 
 function changeButtonText(contactID) {
@@ -110,17 +130,7 @@ function changeButtonText(contactID) {
     }
 }
 
-function highlightSelectedContact(contactName, contactID) {
-    let index = assignedContacts.indexOf(contactName);
-    if (index === -1) {
-        assignedContacts.push(contactName);
-        assignedContactsID.push(contactID);
-        document.getElementById(contactID).classList.add('checked');
-    }
-    else {
-        removeContactInArray(index, contactID);
-    }
-}
+
 
 function removeContactInList(event, name, id) {
     event.stopPropagation();
