@@ -77,8 +77,13 @@ function renderContacts() {
                     <div class="underline"></div>
                 </div>`;
     }
-    content += generateContacts(contact.email,contact.name,secondLetter,
-      firstLetter,i);
+    content += generateContacts(
+      contact.email,
+      contact.name,
+      secondLetter,
+      firstLetter,
+      i
+    );
     getRandomColor();
   }
   contactsContainer.innerHTML = content;
@@ -109,24 +114,24 @@ function getRandomColor() {
 }
 
 function openContact(i) {
-  if(!contactStatus) {
+  if (!contactStatus) {
     contactsList.style.display = "none";
     addContactImg.style.display = "none";
     contact.style.display = "flex";
     showContact(i);
-    document.getElementById('center-contacts').classList.remove('center');
-    contact.style.backgroundColor = '#F6F7F8';
+    document.getElementById("center-contacts").classList.remove("center");
+    contact.style.backgroundColor = "#F6F7F8";
   }
   contactStatus = true;
 }
 
 function closeContact() {
-  if(contactStatus){
+  if (contactStatus) {
     contactsList.style.display = "block";
-  addContactImg.style.display = "flex";
-  contact.style.display = "none";
-  document.getElementById('center-contacts').classList.add('center');
-  contact.style.backgroundColor = '#FFFFFF';
+    addContactImg.style.display = "flex";
+    contact.style.display = "none";
+    document.getElementById("center-contacts").classList.add("center");
+    contact.style.backgroundColor = "#FFFFFF";
   }
   contactStatus = false;
 }
@@ -143,12 +148,24 @@ function showContact(i) {
   const name = contact.name;
   const phone = contact.telefon;
   const email = contact.email;
-  content.innerHTML += 
-  generateContact(firstLetter, secondLetter, name,
-                  phone,email ,contactHeaderColor);
+  content.innerHTML += generateContact(
+    firstLetter,
+    secondLetter,
+    name,
+    phone,
+    email,
+    contactHeaderColor
+  );
 }
 
-function generateContact(firstLetter, secondLetter, name, telefon,email ,contactHeaderColor) {
+function generateContact(
+  firstLetter,
+  secondLetter,
+  name,
+  telefon,
+  email,
+  contactHeaderColor
+) {
   return /*HTML*/ `
   <div class="contact-container">
     <div class="back-to-contacts-img">
@@ -174,14 +191,31 @@ function generateContact(firstLetter, secondLetter, name, telefon,email ,contact
    <div id="editContactImg" class="editContactImg" onclick="showEditOptions()">
    <img src="/assets/img/more_vert.png" alt="">
    </div>
-   <div class="edit-contacts-options" id="">
-    <div class="edit-img-contact"><img src="/assets/img/edit-task.png" alt="">Edit</div>
-    <div><img src="/assets/img/delete.png" alt="">Delete</div>
+   <div class="edit-contacts-options" id="editContactOptions">
+    <div onclick="editContact()" class="edit-image-contact"><img src="/assets/img/edit-task.png" alt="">Edit</div>
+    <div onclick="deleteContact()"><img src="/assets/img/delete.png" alt="">Delete</div>
    </div>
 </div>
     `;
 }
+let showEditOptionsStatus = false;
+
+
 
 function showEditOptions() {
-  edit
+  let editOptions = document.getElementById('editContactOptions');
+  editOptions.classList.add('edit-contacts-options-active');
+  showEditOptionsStatus = true; 
 }
+document.getElementById('editContactImg').addEventListener('click', showEditOptions);
+
+document.addEventListener('click', function(event) {
+  let editOptions = document.getElementById('editContactOptions');
+  let editButton = document.getElementById('editContactImg');
+  let isClickInsideElement = editOptions.contains(event.target) || editButton.contains(event.target);
+
+  if (!isClickInsideElement && editOptions.classList.contains('edit-contacts-options-active')) {
+      editOptions.classList.remove('edit-contacts-options-active');
+      showEditOptionsStatus = false; 
+  }
+});
