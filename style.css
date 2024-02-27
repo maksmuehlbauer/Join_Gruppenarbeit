@@ -799,12 +799,16 @@ sup {
   width: 115px;
   height: 100px;
   background-color: white;
-  gap: 8px;
+  gap: 16px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   border-radius: 20px 20px 0px 20px;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.edit-image-contact {
+  margin-left: 15px;
 }
 
 .edit-contacts-options div {
