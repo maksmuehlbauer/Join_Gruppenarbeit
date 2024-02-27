@@ -11,10 +11,12 @@ async function loadUserDataBase() {
     }
 }
 
-// async function deleteItemFromDatabase() {
-//     userDataBase.slice(4)
-//     await setItem('userDataBase', JSON.stringify(userDataBase));
-// }
+async function deleteItemFromDatabase() {
+    console.log(userDataBase)
+    userDataBase.splice(10);
+    await setItem('userDataBase', JSON.stringify(userDataBase));
+    loadUserDataBase();
+}
 
 
 async function registerUser() {

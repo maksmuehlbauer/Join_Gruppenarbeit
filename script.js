@@ -24,11 +24,7 @@ async function init() {
     renderLogIn();
 }
 
-async function initSummary() {
-    await includeHTML();
-    loadUserDataBase()
-    navigationHighlight('summary-link')
-}
+
 
 
 function renderSignUp() {
@@ -61,12 +57,14 @@ function login() {
     
     let searchedUser = userDataBase.find( user => user['email'] === email && user['password'] === password)
     if(searchedUser) {
-        window.location.href = "summary.html"
+        window.location.href = "welcome.html"
     } else {
         alert('Email Adresse und Passwort stimmen nicht überein')
     
     }
 }
+
+
 
 function navigationHighlight(id) {
     let navigationElements = document.getElementById('navigation').children;
