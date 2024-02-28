@@ -495,6 +495,11 @@ select {
   margin-bottom: 8px;
 }
 
+.required {
+  color: #FF8190;
+  font-size: 12px;
+}
+
 .add-task-footnote-container {
   width: 100%;
   display: flex;
@@ -622,6 +627,10 @@ sup {
   border: 1px solid #29ABE2 !important;
 }
 
+.red-border {
+  border: 1px solid #FF8190 !important;
+}
+
 #category {
   background-color: white;
 }
@@ -687,6 +696,19 @@ sup {
   display: flex;
   gap: 10px;
 
+}
+
+.contact-circle {
+  background-color: darkblue;
+  height: 42px;
+  margin-right: 16px;
+  width: 42px;
+  border-radius: 100%;
+  font-weight: bold;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .assigned-contacts-button {

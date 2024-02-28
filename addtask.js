@@ -11,29 +11,29 @@ let userDataBase = [
                 "assignto": [],
                 "category": "cat",
                 "dueDate": "DueDate",
-                "prio": "prio",
+                "prio": "",
                 "subtask": [],
 
             }
         ],
         "contacts": [
             {
-                "name": "Malte",
+                "name": "Malte Klose",
                 "email": "m.malte@web.de",
                 "phone": "+49 172 334 556 87"
             },
             {
-                "name": "Kai",
+                "name": "Heiko Nevoigt ",
                 "email": "m.malte@web.de",
                 "phone": "+49 172 334 556 87"
             },
             {
-                "name": "Stefan",
+                "name": "Stefan Tieze",
                 "email": "m.malte@web.de",
                 "phone": "+49 172 334 556 87"
             },
             {
-                "name": "Eva",
+                "name": "Eva Kunze",
                 "email": "m.malte@web.de",
                 "phone": "+49 172 334 556 87"
             },
@@ -45,26 +45,36 @@ let assignedContactsID = [];
 let prioButtonsColor = document.querySelectorAll('.prio-container button');
 let prioButtonsColorFont = document.querySelectorAll('.prio-container button div');
 let assignedToMenuOpen = false;
+let priority = '';
 
+function generateInitials(contactNr) {
+    let fullname = userDataBase[0].contacts[contactNr].name;
+    let name = fullname.split(' ');
+    let initials = "";
+    for (let i = 0; i < name.length; i++) {
+        name[i] = name[i].charAt(0).toUpperCase();
+        initials += name[i];
+    }
+    return initials;
+}
 
-function setPriority(priority) {
-    console.log(prioButtonsColorFont);
+function setPriority(pressedButton) {
     for (let i = 0; i < 3; i++) {
         prioButtonsColor[i].setAttribute('class', '');
         prioButtonsColorFont[i].setAttribute('class', '');
     }
-    if (priority == 'high') {
-        userDataBase[0].tasks[0].prio = 'urgent';
+    if (pressedButton == 'high') {
+        priority = 'high';
         document.getElementById('highPrioButton').classList.add('prioHigh')
         document.getElementById('highPrioButtonFont').classList.add('colored-white', 'font-weight-clicked')
     }
-    else if (priority == 'medium') {
-        userDataBase[0].tasks[0].prio = 'medium';
+    else if (pressedButton == 'medium') {
+        priority = 'medium';
         document.getElementById('mediumPrioButton').classList.add('prioMedium')
         document.getElementById('mediumPrioButtonFont').classList.add('colored-white', 'font-weight-clicked')
     }
-    else if (priority == 'low') {
-        userDataBase[0].tasks[0].prio = 'low';
+    else if (pressedButton == 'low') {
+        priority = 'low';
         document.getElementById('lowPrioButton').classList.add('prioLow')
         document.getElementById('lowPrioButtonFont').classList.add('colored-white', 'font-weight-clicked')
     }
@@ -87,11 +97,12 @@ function openAssignContainer() {
 function renderAddTaskPage() {
     let assignedToList = document.getElementById('contacts-to-assign-list');
     for (let i = 0; i < userDataBase[0].contacts.length; i++) {
+        let firstAndLastLetter = generateInitials(i);
         assignedToList.innerHTML +=
             `<div class="listItem">
             <li class="" id="contactID${i}" onclick="assignContact('${userDataBase[0].contacts[i].name}', 'contactID${i}', 'checkButtonID${i}')">
             <div class="nameFrame">
-            <img src="./assets/img/profile_badge_template.png">${userDataBase[0].contacts[i].name}
+            <div class="contact-circle">${firstAndLastLetter}</div>${userDataBase[0].contacts[i].name}
             </div>
             <img id="checkButtonID${i}" src="./assets/img/check_button.png"> </li></div>`
     };
@@ -130,8 +141,6 @@ function changeButtonText(contactID) {
     }
 }
 
-
-
 function removeContactInList(event, name, id) {
     event.stopPropagation();
     let index = assignedContacts.indexOf(name);
@@ -147,14 +156,33 @@ function removeContactInArray(index, id) {
 
 function createTask() {
     let task = userDataBase[0].tasks[0];
-    task.title = document.getElementById('title').value;
-    task.descripton = document.getElementById('description').value;
-    task.dueDate = document.getElementById('due-date').value;
-    task.category = document.getElementById('category').value;
-    task.subtask = document.getElementById('subtasks').value;
+    let title = document.getElementById('title');
+    let dueDate = document.getElementById('dueDate');
+    let category = document.getElementById('category');
 
+    checkRequiredFields(task, title);
+    checkRequiredFields(task, dueDate);
+    checkRequiredFields(task, category);
 
-
+    if (title.value !== '' && dueDate.value !== '' && category.value !== '') {
+        task.descripton = document.getElementById('description').value;
+        task.category = document.getElementById('category').value;
+        task.prio = priority;
+        task.subtask = document.getElementById('subtasks').value;
+        task.assignto = assignedContacts;
+        console.log(task);
+    }
 
 }
 
+function checkRequiredFields(task, inputField) {
+    if (inputField.value === '') {
+        document.getElementById(inputField.id).classList.add("red-border");
+        document.getElementById(inputField.id + "-required").classList.remove("d-none");
+    }
+    else {
+        document.getElementById(inputField.id).classList.remove("red-border");
+        document.getElementById(inputField.id + "-required").classList.add("d-none");
+        task.title = document.getElementById(inputField.id).value;
+    }
+}
