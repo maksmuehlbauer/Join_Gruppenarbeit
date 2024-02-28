@@ -711,6 +711,11 @@ sup {
   justify-content: center;
 }
 
+#contact-circles-container {
+  display: flex;
+
+}
+
 .assigned-contacts-button {
   background-color: var(--color-primary);
   color: white;

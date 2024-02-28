@@ -46,9 +46,14 @@ let prioButtonsColor = document.querySelectorAll('.prio-container button');
 let prioButtonsColorFont = document.querySelectorAll('.prio-container button div');
 let assignedToMenuOpen = false;
 let priority = '';
+let initialCircles = ["malte"];
 
 function generateInitials(contactNr) {
     let fullname = userDataBase[0].contacts[contactNr].name;
+    return splitAndUpperCaseInitials(fullname);
+}
+
+function splitAndUpperCaseInitials(fullname) {
     let name = fullname.split(' ');
     let initials = "";
     for (let i = 0; i < name.length; i++) {
@@ -100,17 +105,35 @@ function renderAddTaskPage() {
         let firstAndLastLetter = generateInitials(i);
         assignedToList.innerHTML +=
             `<div class="listItem">
-            <li class="" id="contactID${i}" onclick="assignContact('${userDataBase[0].contacts[i].name}', 'contactID${i}', 'checkButtonID${i}')">
-            <div class="nameFrame">
-            <div class="contact-circle">${firstAndLastLetter}</div>${userDataBase[0].contacts[i].name}
-            </div>
-            <img id="checkButtonID${i}" src="./assets/img/check_button.png"> </li></div>`
+                <li class="" id="contactID${i}" onclick="assignContact('${userDataBase[0].contacts[i].name}', 'contactID${i}', 'checkButtonID${i}')">
+                    <div class="nameFrame">
+                        <div class="contact-circle">
+                            ${firstAndLastLetter}
+                        </div>${userDataBase[0].contacts[i].name}
+                    </div>
+                    <img id="checkButtonID${i}" src="./assets/img/check_button.png"> 
+                </li>
+            </div>`
     };
+}
+
+function addCirclesToContainer() {
+    initialCircles = assignedContacts.map((element) => {
+        return splitAndUpperCaseInitials(element);
+    })
+    let circle = document.getElementById("contact-circles-container");
+    circle.innerHTML = '';
+
+    for (let i = 0; i < initialCircles.length; i++) {
+        circle.innerHTML += `<div class="contact-circle">${initialCircles[i]}</div>`
+
+    }
 }
 
 function assignContact(contactName, contactID, checkButtonID) {
     highlightSelectedContact(contactName, contactID, checkButtonID);
     changeButtonText(contactID);
+
 }
 
 function highlightSelectedContact(contactName, contactID, checkButtonID) {
@@ -128,7 +151,8 @@ function highlightSelectedContact(contactName, contactID, checkButtonID) {
     }
 }
 
-function changeButtonText(contactID) {
+function changeButtonText() {
+    addCirclesToContainer();
     let buttonText = document.getElementById('buttontext');
     if (assignedContacts.length == 0) {
         buttonText.innerHTML = `Select contacts to assign`;
@@ -137,7 +161,9 @@ function changeButtonText(contactID) {
         buttonText.innerHTML = `An:`;
     }
     for (let i = 0; i < assignedContacts.length; i++) {
-        buttonText.innerHTML += `<div class="assigned-contacts-button">${assignedContacts[i]}<button onclick="removeContactInList(event, '${assignedContacts[i]}', '${assignedContactsID[i]}')">X</button></div>`;
+        buttonText.innerHTML += `<div class="assigned-contacts-button">${assignedContacts[i]}
+                                 <button onclick="removeContactInList(event, '${assignedContacts[i]}', '${assignedContactsID[i]}')">X</button>
+                                 </div>`;
     }
 }
 
@@ -172,7 +198,6 @@ function createTask() {
         task.assignto = assignedContacts;
         console.log(task);
     }
-
 }
 
 function checkRequiredFields(task, inputField) {
