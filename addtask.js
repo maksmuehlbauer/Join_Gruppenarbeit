@@ -46,7 +46,9 @@ let prioButtonsColor = document.querySelectorAll('.prio-container button');
 let prioButtonsColorFont = document.querySelectorAll('.prio-container button div');
 let assignedToMenuOpen = false;
 let priority = '';
-let initialCircles = ["malte"];
+let initialCircles = [];
+let subtasksArray = [];
+
 
 function generateInitials(contactNr) {
     let fullname = userDataBase[0].contacts[contactNr].name;
@@ -179,6 +181,41 @@ function removeContactInArray(index, id) {
     assignedContactsID.splice(index, 1);
     document.getElementById(id).classList.remove('checked');
 }
+
+
+function addSubtasks() {
+    let subtask = document.getElementById('subtasks');
+    subtasksArray.push(subtask.value);
+    subtask.value = '';
+    refreshSubtasks();
+}
+
+function refreshSubtasks() {
+    let subtaskList = document.getElementById('subtasks-list');
+    subtaskList.innerHTML = '';
+    for (let i = 0; i < subtasksArray.length; i++) {
+        subtaskList.innerHTML += `<li id="subtaskID${i}">${subtasksArray[i]}</li><button onclick="deleteSubtask(${i})">delete</button><button onclick="editSubtask(${i}, 'subtaskID${i}')">edit</button>`
+    }
+}
+
+
+function deleteSubtask(position) {
+    subtasksArray.splice(position, 1);
+    refreshSubtasks();
+}
+
+function editSubtask(position, ID){
+    document.getElementById(ID).innerHTML = `<input id="subtaskChangeInput" placeholder="${subtasksArray[position]}"></input><button onclick="changeSubtask(${position})">change</button>`
+}
+
+function changeSubtask(position){
+    let changedText = document.getElementById('subtaskChangeInput');
+    subtasksArray[position] = changedText.value;
+    refreshSubtasks();
+
+}
+
+
 
 function createTask() {
     let task = userDataBase[0].tasks[0];
