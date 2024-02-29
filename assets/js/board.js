@@ -1,5 +1,10 @@
 'use strict';
 
+async function init() {
+  await includeHTML();
+  navigationHighlight('board-link');
+}
+
 const allowDrop = (ev) => {
   ev.preventDefault();
 };
