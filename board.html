@@ -22,7 +22,12 @@
           <img src="./assets/img/search.png" alt="seach icon" />
         </button>
       </div>
-      <section class="column" id="todo">
+      <section
+        class="column"
+        id="todo"
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+      >
         <div class="board-titel">
           <h3>To do</h3>
           <button type="button" class="add-task-btn">
@@ -31,14 +36,57 @@
         </div>
         <div class="no-tasks">No tasks To do</div>
       </section>
-      <section class="column" id="progess">
+      <section
+        class="column"
+        id="progess"
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+      >
         <div class="board-titel">
           <h3>In progress</h3>
           <button type="button" class="add-task-btn">
             <img src="./assets/img/plus-button.png" alt="add Task button" />
           </button>
         </div>
-        <div class="task-card" draggable="true">
+        <div class="no-tasks" style="display: none">No tasks To do</div>
+        <div
+          class="task-card"
+          id="task1"
+          draggable="true"
+          ondragstart="drag(event)"
+        >
+          <div class="card-category">User Story</div>
+          <div class="card-titel">Kochwelt Page & Recipe Recommender</div>
+          <div class="card-description">Build start page with recipe</div>
+          <div class="card-progress">
+            <div class="card-progressbar-container">
+              <div class="card-progressbar"></div>
+            </div>
+            <div class="card-subtasks">1/2 Subtasks</div>
+          </div>
+          <div class="card-footer">
+            <div class="card-assigned">
+              <div class="card-contacts" style="background-color: #ff7a00">
+                AM
+              </div>
+              <div class="card-contacts" style="background-color: #1fd7c1">
+                EM
+              </div>
+              <div class="card-contacts" style="background-color: #462f8a">
+                MB
+              </div>
+            </div>
+            <div class="card-priority">
+              <img src="./assets/img/board-urgent.png" alt="priority icon" />
+            </div>
+          </div>
+        </div>
+        <div
+          class="task-card"
+          id="task2"
+          draggable="true"
+          ondragstart="drag(event)"
+        >
           <div class="card-category">User Story</div>
           <div class="card-titel">Kochwelt Page & Recipe Recommender</div>
           <div class="card-description">Build start page with recipe</div>
@@ -66,25 +114,36 @@
           </div>
         </div>
       </section>
-      <section class="column" id="feedback">
+      <section
+        class="column"
+        id="feedback"
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+      >
         <div class="board-titel">
           <h3>Await feedback</h3>
           <button type="button" class="add-task-btn">
             <img src="./assets/img/plus-button.png" alt="add Task button" />
           </button>
         </div>
+        <div class="no-tasks">No tasks To do</div>
       </section>
-      <section class="column" id="done">
+      <section
+        class="column"
+        id="done"
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+      >
         <div class="board-titel">
           <h3>Done</h3>
           <button type="button" class="add-task-btn">
             <img src="./assets/img/plus-button.png" alt="add Task button" />
           </button>
         </div>
+        <div class="no-tasks">No tasks To do</div>
       </section>
     </div>
     <div w3-include-html="./assets/templates/navigation.html"></div>
-    <script src="board.js"></script>
-    <script src="script.js"></script>
+    <script src="./assets/js/board.js"></script>
   </body>
 </html>
