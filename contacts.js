@@ -77,13 +77,7 @@ function renderContacts() {
                     <div class="underline"></div>
                 </div>`;
     }
-    content += generateContacts(
-      contact.email,
-      contact.name,
-      secondLetter,
-      firstLetter,
-      i
-    );
+    content += generateContacts(contact.email,contact.name,secondLetter,firstLetter,i);
     getRandomColor();
   }
   contactsContainer.innerHTML = content;
@@ -148,24 +142,10 @@ function showContact(i) {
   const name = contact.name;
   const phone = contact.telefon;
   const email = contact.email;
-  content.innerHTML += generateContact(
-    firstLetter,
-    secondLetter,
-    name,
-    phone,
-    email,
-    contactHeaderColor
-  );
+  content.innerHTML += generateContact(firstLetter,secondLetter,name,phone,email,contactHeaderColor);
 }
 
-function generateContact(
-  firstLetter,
-  secondLetter,
-  name,
-  telefon,
-  email,
-  contactHeaderColor
-) {
+function generateContact(firstLetter,secondLetter,name,telefon,email,contactHeaderColor) {
   return /*HTML*/ `
   <div class="contact-container">
     <div class="back-to-contacts-img">
@@ -198,24 +178,37 @@ function generateContact(
 </div>
     `;
 }
-let showEditOptionsStatus = false;
-
-
+let showEditOptionsStatus;
 
 function showEditOptions() {
   let editOptions = document.getElementById('editContactOptions');
   editOptions.classList.add('edit-contacts-options-active');
-  showEditOptionsStatus = true; 
+  editContactImg.style.display = "none";
+  showEditOptionsStatus = false;
 }
-document.getElementById('editContactImg').addEventListener('click', showEditOptions);
 
-document.addEventListener('click', function(event) {
-  let editOptions = document.getElementById('editContactOptions');
-  let editButton = document.getElementById('editContactImg');
-  let isClickInsideElement = editOptions.contains(event.target) || editButton.contains(event.target);
-
-  if (!isClickInsideElement && editOptions.classList.contains('edit-contacts-options-active')) {
-      editOptions.classList.remove('edit-contacts-options-active');
-      showEditOptionsStatus = false; 
+document.addEventListener("click", function (event) {
+  let isClickInsideOptions = document.getElementById("editContactOptions")
+    .contains(event.target);
+  let isClickInsideImg = document.getElementById("editContactImg")
+  .contains(event.target);
+if(editContactOptions.style.display = 'flex'&& !isClickInsideImg) {
+  if (!isClickInsideOptions && !showEditOptionsStatus) { // zum schließen der Optionen
+    document.getElementById("editContactOptions").classList.remove("edit-contacts-options-active");
+    editContactImg.style.display = "flex";
+    showEditOptionsStatus = true;
   }
+}
 });
+
+function editContact() {
+
+}
+
+function deleteContact() {
+
+}
+
+function addContact() {
+  
+}

@@ -4,19 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kontakte</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/assets/css/contacts.css" />
   </head>
   <body onload="initContacts()">
     <div w3-include-html="./assets/templates/header.html"></div>
-    <div class="d-none">
-      <form onsubmit="save(); return false;">
-        <input required type="text" id="name" placeholder="Name" />
-        <input required type="email" id="email" placeholder="E-Mail" />
-        <input required type="tel" id="telefon" placeholder="Telefon" />
-        <button id="saveBtn">save</button>
-        <button onclick="clearForm()" id="deleteBtn">Delete</button>
-      </form>
-    </div>
+    
     <div id="center-contacts" class="center">
       <div id="contactsList"></div>
       
@@ -25,7 +17,16 @@
     <div id="addContactImg" onclick="addContact()" class="addContactImg">
       <img src="/assets/img/person_add.png" alt="" />
     </div>
-
+    
+    <div class="addContactCard" id="addContactCard">
+    <form onsubmit="save(); return false;">
+      <input required type="text" id="name" placeholder="Name" />
+      <input required type="email" id="email" placeholder="E-Mail" />
+      <input required type="tel" id="telefon" placeholder="Telefon" />
+      <button id="saveBtn">save</button>
+      <button onclick="clearForm()" id="deleteBtn">Delete</button>
+    </form>
+  </div>
     <script src="contacts.js"></script>
     <script src="script.js"></script>
 
