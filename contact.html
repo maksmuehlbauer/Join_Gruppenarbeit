@@ -8,25 +8,41 @@
   </head>
   <body onload="initContacts()">
     <div w3-include-html="./assets/templates/header.html"></div>
-    
+
     <div id="center-contacts" class="center">
       <div id="contactsList"></div>
-      
     </div>
-    <div id="contact" style="display: none;"></div>
+    <div id="contact" style="display: none"></div>
     <div id="addContactImg" onclick="addContact()" class="addContactImg">
       <img src="/assets/img/person_add.png" alt="" />
     </div>
-    
+
     <div class="addContactCard" id="addContactCard">
-    <form onsubmit="save(); return false;">
-      <input required type="text" id="name" placeholder="Name" />
-      <input required type="email" id="email" placeholder="E-Mail" />
-      <input required type="tel" id="telefon" placeholder="Telefon" />
-      <button id="saveBtn">save</button>
-      <button onclick="clearForm()" id="deleteBtn">Delete</button>
-    </form>
-  </div>
+      <div class="addContactUpperCard">
+        <div class="closeAddContact">
+          <img src="assets/img/close.png" alt="" />
+        </div>
+        <div class="vertical-center">
+          <h1>Add Contact</h1>
+          <span class="slogan-contact">Tasks are better with a team!</span>
+          <div class="contact-underline"></div>
+        </div>
+
+        <div><img src="assets/img/person.png" alt="" /></div>
+      </div>
+
+      <div class="createContactFormContainer">
+        <form class="createContactForm" onsubmit="save(); return false;">
+          <input required type="text" id="name" placeholder="Name" />
+          <input required type="email" id="email" placeholder="E-Mail" />
+          <input required type="tel" id="phone" placeholder="Phone" />
+          <div id="createContactBtn">
+            <button>Create Contact</button>
+            <img src="/assets/img/check-new.png" alt="" />
+          </div>
+        </form>
+      </div>
+    </div>
     <script src="contacts.js"></script>
     <script src="script.js"></script>
 
