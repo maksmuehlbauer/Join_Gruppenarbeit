@@ -24,10 +24,6 @@ function renderSummary() {
 }
 
 
-
-
-
-
 // HTML Template functions
 
 function firstLoginHtml() {

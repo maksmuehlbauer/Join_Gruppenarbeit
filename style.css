@@ -285,6 +285,42 @@ header {
   overflow: hidden;
 }
 
+.hidden-box {
+  width: 200px;
+  height: 168px;
+  position: absolute;
+  right: 0;
+  top: 60px;
+  overflow: hidden;
+  display: flex;
+  justify-content: end;
+}
+
+.user-menu {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--color-primary);
+  padding: 10px;
+  border-radius: 20px;
+  border-top-right-radius: 0;
+  margin-right: 10px;
+  transform: translateX(162px);
+  transition: 250ms;
+}
+
+.show-menu {
+  transform: translateX(0);
+}
+
+.user-menu a {
+  color: #CDCDCD;
+  text-decoration: none;
+  padding: 13px 12px;
+  font-weight: 400;
+}
+
 
 /***** styles for addtask.html ****/
 

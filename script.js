@@ -1,3 +1,6 @@
+let menuEnabled = true;
+
+
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
     for (let i = 0; i < includeElements.length; i++) {
@@ -23,8 +26,6 @@ async function init() {
     loadUserDataBase()
     renderLogIn();
 }
-
-
 
 
 function renderSignUp() {
@@ -74,6 +75,28 @@ function navigationHighlight(id) {
     document.getElementById(id).classList.add('navbox-bg-color');
 }
 
+function showMenu() {
+    
+    if (menuEnabled) {
+        toggleHiddenBox();
+        setTimeout(animateMenuSlider, 125)
+        menuEnabled = false;
+    } else {
+        animateMenuSlider()
+        setTimeout(toggleHiddenBox, 125)
+        menuEnabled = true;
+    }
+    
+    
+}
+
+function toggleHiddenBox() {
+    document.getElementById('hidden-box').classList.toggle('d-none');
+}
+
+function animateMenuSlider() {
+    document.getElementById('user-menu').classList.toggle('show-menu');
+}
 
 
 // HTML FUNCTIONS
@@ -107,15 +130,15 @@ function renderLogInHtml() {
 }
 
 
-
-
-
 function renderSignUpBoxHtml() {
     return /*html*/`
     <h4>Not a Join user?</h4>
     <button class="button btn-login btn-signup" onclick="renderSignUp()">Sign up</button>
 `
 }
+
+
+//pattern="(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}"
 
 function renderSignUpHtml() {
     return /*html*/`
@@ -132,7 +155,16 @@ function renderSignUpHtml() {
             <img src="./assets/img/mail.png" alt="mail">
         </div>
         <div class="input-container">
-            <input required id="password" type="password" placeholder="Password" class="login-input" autocomplete="off" minlength="8">
+            <input required 
+            id="password"
+            type="password" 
+            placeholder="Password" 
+            class="login-input" 
+            autocomplete="off"
+            
+            title="Enter an Password that contains 8 characters at least, 1 special character, 1 capital letter, 1 digit"
+            >
+            
             <img src="./assets/img/lock.png" alt="password">
         </div>
         <div class="input-container">

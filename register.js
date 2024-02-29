@@ -1,6 +1,8 @@
-let userDataBase = [];
+let userDataBase = [
 
-let id = 20;
+];
+
+let id;
 
 
 async function loadUserDataBase() {
@@ -11,22 +13,34 @@ async function loadUserDataBase() {
     }
 }
 
+
 async function deleteItemFromDatabase() {
     console.log(userDataBase)
-    userDataBase.splice(10);
+    userDataBase.splice(3);
     await setItem('userDataBase', JSON.stringify(userDataBase));
-    loadUserDataBase();
+}
+
+function passwordCheck() {
+    firstPw = getValueFromId('password');
+    secondPw = getValueFromId('password-proof');
+    if (secondPw === firstPw) {
+        alert('STIMMT')
+    } else {
+        alert('stimmt nicht')
+    }
 }
 
 
 async function registerUser() {
+
     let emailSign = getValueFromId('email-sign');
     let emailExists = userDataBase.find(user => user['email'] === emailSign);
     if (emailExists) {
         alert('E-Mail-Adresse bereits registriert');
     } else {
+        id = userDataBase[userDataBase.length - 1]['id'];
         let user = {
-            "id": id++,
+            "id": id += 1,
             "name": getValueFromId('name'),
             "email": emailSign,
             "password": getValueFromId('password'),
