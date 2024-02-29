@@ -13,21 +13,25 @@ const drop = (ev) => {
   const data = ev.dataTransfer.getData('text');
   let dropTarget = ev.target;
 
-  while (!dropTarget.classList.contains('column') && dropTarget.parentNode) {
+  while (
+    !dropTarget.classList.contains('task-cards-container') &&
+    dropTarget.parentNode
+  ) {
     dropTarget = dropTarget.parentNode;
   }
 
-  if (dropTarget.classList.contains('column')) {
+  if (dropTarget.classList.contains('task-cards-container')) {
     const element = document.getElementById(data);
     dropTarget.appendChild(element);
-
-    document.querySelectorAll('.column').forEach(updateNoTasksMessage);
+    document
+      .querySelectorAll('.task-cards-container')
+      .forEach(updateNoTasksMessage);
   }
 };
 
-const updateNoTasksMessage = (column) => {
-  const noTasksElement = column.querySelector('.no-tasks');
-  const hasTasks = column.querySelectorAll('.task-card').length > 0;
+const updateNoTasksMessage = (taskCardsContainer) => {
+  const noTasksElement = taskCardsContainer.querySelector('.no-tasks');
+  const hasTasks = taskCardsContainer.querySelectorAll('.task-card').length > 0;
 
   noTasksElement.style.display = hasTasks ? 'none' : 'flex';
 };

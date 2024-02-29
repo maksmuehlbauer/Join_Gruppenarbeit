@@ -73,6 +73,13 @@ header {
     background-color: var(--color-primary);
   }
 
+  & .task-cards-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
   & .no-tasks {
     color: #a8a8a8;
     display: flex;
@@ -94,6 +101,7 @@ header {
     background-color: var(--color-white);
     border-radius: 24px;
     box-shadow: 0 0 10px 3px rgba(0, 0, 0, 8%);
+    white-space: wrap;
 
     & .card-category {
       color: var(--color-white);
