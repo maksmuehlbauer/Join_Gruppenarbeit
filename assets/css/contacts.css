@@ -929,5 +929,89 @@
   .edit-img-contact {
     margin-right: 10px;
   }
+
+  .addContactCard {
+    height: 760px;
+    width: 390px;
+  }
+
+  .createContactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .createContactForm input {
+    width: 350px;
+    height:40px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+  }
+
+  .createContactForm input::placeholder {
+    font-size: 20px;
+    color: #D1D1D1;
+    font-weight: 400;
+  }
+
+  .createContactForm button {
+    border: none;
+    background-color: transparent;
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: 700;
+    color: white;
+  }
+
+  #createContactBtn {
+    background-color: #2a3647;
+    width: 202px !important;
+    height: 50px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 32px;
+   
+  }
+
+  #createContactBtn img {
+    width: 15px;
+    height: 12px;
+  }
+
+  .createContactFormContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 92px;
+  }
   
+  .addContactUpperCard {
+    height: 396px;
+    background-color: var(--color-primary);
+    color: white;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+  }
+
+  .vertical-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 100px;
+    margin-left: 10px;
+  }
+
+  .closeAddContact{
+    display: flex;
+    justify-content: end;
+    padding-right: 25px;
+    padding-top: 25px;
+
+  }
   /***** end styles for contacts.html ****/

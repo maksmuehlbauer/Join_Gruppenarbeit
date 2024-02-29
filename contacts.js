@@ -35,7 +35,7 @@ async function loadContacts() {
   renderContacts();
 }
 
-async function save() {
+async function createContactBtn() {
   saveBtn.disabled = true;
   let name = document.getElementById("name").value;
   let email = document.getElementById("email").value;
@@ -210,5 +210,5 @@ function deleteContact() {
 }
 
 function addContact() {
-  
+
 }
