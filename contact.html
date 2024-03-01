@@ -16,33 +16,40 @@
     <div id="addContactImg" onclick="openAddContact()" class="addContactImg">
       <img src="/assets/img/person_add.png" alt="" />
     </div>
-
-    <div class="addContactCard" id="addContactCard">
-      <div class="addContactUpperCard">
-        <div onclick="closeAddContactCard()" class="closeAddContact">
-          <img src="assets/img/close.png" alt="" />
-        </div>
-        <div class="vertical-center">
-          <h1>Add Contact</h1>
-          <span class="slogan-contact">Tasks are better with a team!</span>
-          <div class="contact-underline"></div>
-        </div>
-
-        <div class="personImgaAddContact"><img src="assets/img/add-contact-person.png" alt="" /></div>
-      </div>
-
-      <div class="createContactFormContainer">
-        <form class="createContactForm" onsubmit="createContact(); return false;">
-          <input required type="text" id="name" placeholder="Name" />
-          <input required type="email" id="email" placeholder="E-Mail" />
-          <input required type="tel" id="phone" placeholder="Phone" />
-          <div id="createContactBtn">
-            <button>Create Contact</button>
-            <img src="/assets/img/check-new.png" alt="" />
+    <div class="center-add-card" id="center-add-card">
+      <div class="addContactCard" id="addContactCard">
+        <div class="addContactUpperCard">
+          <div onclick="closeAddContactCard()" class="closeAddContact">
+            <img src="assets/img/close.png" alt="" />
           </div>
-        </form>
+          <div class="vertical-center">
+            <h1>Add Contact</h1>
+            <span class="slogan-contact">Tasks are better with a team!</span>
+            <div class="contact-underline"></div>
+          </div>
+
+          <div class="personImgaAddContact">
+            <img src="assets/img/add-contact-person.png" alt="" />
+          </div>
+        </div>
+
+        <div class="createContactFormContainer">
+          <form
+            class="createContactForm"
+            onsubmit="createContact(); return false;"
+          >
+            <input required type="text" id="name" placeholder="Name" />
+            <input required type="email" id="email" placeholder="E-Mail" />
+            <input required type="tel" id="phone" placeholder="Phone" />
+            <div id="createContactBtn">
+              <button>Create Contact</button>
+              <img src="/assets/img/check-new.png" alt="" />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
+
     <script src="contacts.js"></script>
     <script src="script.js"></script>
 

@@ -2,6 +2,8 @@ const STORAGE_TOKEN = "PMSYFRVR552SZW6MAG0T95301L1BCNVFHWSKVHMK";
 const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 let contacts = [];
 let contactStatus = false;
+let showEditOptionsStatus;
+let contactOpenedStatus = false;
 
 async function setItem(key, value) {
   const payload = { key, value, token: STORAGE_TOKEN };
@@ -77,7 +79,7 @@ function renderContacts() {
                     <div class="underline"></div>
                 </div>`;
     }
-    content += generateContacts(contact.email,contact.name,secondLetter,firstLetter,i);
+    content += generateContacts(contact.email,contact.name,secondLetter,firstLetter,);
     getRandomColor();
   }
   contactsContainer.innerHTML = content;
@@ -128,9 +130,11 @@ function closeContact() {
     contact.style.backgroundColor = "#FFFFFF";
   }
   contactStatus = false;
+  contactOpenedStatus = false;
 }
 
 function showContact(i) {
+  contactOpenedStatus = true;
   let content = document.getElementById("contact");
   content.innerHTML = "";
   let contact = contacts[i];
@@ -172,49 +176,53 @@ function generateContact(firstLetter,secondLetter,name,telefon,email,contactHead
    <img src="/assets/img/more_vert.png" alt="">
    </div>
    <div class="edit-contacts-options" id="editContactOptions">
-    <div onclick="editContact()" class="edit-image-contact"><img src="/assets/img/edit-task.png" alt="">Edit</div>
+    <div onclick="openEditContact()" class="edit-image-contact"><img src="/assets/img/edit-task.png" alt="">Edit</div>
     <div onclick="deleteContact()"><img src="/assets/img/delete.png" alt="">Delete</div>
    </div>
 </div>
     `;
 }
-let showEditOptionsStatus;
 
 function showEditOptions() {
-  let editOptions = document.getElementById('editContactOptions');
-  editOptions.classList.add('edit-contacts-options-active');
+  let editOptions = document.getElementById("editContactOptions");
+  editOptions.classList.add("edit-contacts-options-active");
   editContactImg.style.display = "none";
   showEditOptionsStatus = false;
 }
 
 document.addEventListener("click", function (event) {
-  let isClickInsideOptions = document.getElementById("editContactOptions")
-    .contains(event.target);
-  let isClickInsideImg = document.getElementById("editContactImg")
-  .contains(event.target);
-if(editContactOptions.style.display = 'flex'&& !isClickInsideImg) {
-  if (!isClickInsideOptions && !showEditOptionsStatus) { // zum schließen der Optionen
-    document.getElementById("editContactOptions").classList.remove("edit-contacts-options-active");
-    editContactImg.style.display = "flex";
-    showEditOptionsStatus = true;
+  if (contactOpenedStatus) {
+    let isClickInsideOptions = document
+      .getElementById("editContactOptions")
+      .contains(event.target);
+    let isClickInsideImg = document
+      .getElementById("editContactImg")
+      .contains(event.target);
+    if ((editContactOptions.style.display = "flex" && !isClickInsideImg)) {
+      if (!isClickInsideOptions && !showEditOptionsStatus) {
+        // zum schließen der Optionen
+        document
+          .getElementById("editContactOptions")
+          .classList.remove("edit-contacts-options-active");
+        editContactImg.style.display = "flex";
+        showEditOptionsStatus = true;
+      }
+    }
   }
-}
 });
 
-function editContact() {
+function openEditContact() {}
 
-}
-
-function deleteContact() {
-
-}
+function deleteContact() {}
 
 function openAddContact() {
-  document.getElementById('modalContainer').classList.add('active');
-  document.getElementById('addContactCard').classList.add('active');
+  document.getElementById("center-add-card").classList.add("active");
+  document.getElementById("addContactCard").classList.add("active");
+  addContactImg.style.display = 'none';
 }
 
 function closeAddContactCard() {
-  document.getElementById('modalContainer').classList.remove('active');
-  document.getElementById('addContactCard').classList.remove('active');
+  document.getElementById("center-add-card").classList.remove("active");
+  document.getElementById("addContactCard").classList.remove("active");
+  addContactImg.style.display = 'flex';
 }
