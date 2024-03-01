@@ -1,5 +1,5 @@
 let menuEnabled = true;
-
+let userObject;
 
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
@@ -53,17 +53,58 @@ function getValueFromId(id) {
 
 
 function login() {
-    let email = getValueFromId('email')
-    let password = getValueFromId('password')
-    
-    let searchedUser = userDataBase.find( user => user['email'] === email && user['password'] === password)
-    if(searchedUser) {
-        window.location.href = "welcome.html"
+    let email = getValueFromId('email');
+    let password = getValueFromId('password');
+  
+    let searchedUser = userDataBase.find((user) => user['email'] === email && user['password'] === password);
+    if (searchedUser) {
+      localStorage.setItem('userId', searchedUser.id);
+      window.location.href = 'welcome.html';
     } else {
-        alert('Email Adresse und Passwort stimmen nicht überein')
-    
+      alert('Email Adresse und Passwort stimmen nicht überein');
     }
-}
+  }
+
+
+
+  async function checkUserloggedIn() {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      await loadUserObject(userId);
+    } else {
+      window.location.href = 'index.html';
+    }
+  }
+  
+  async function loadUserObject(userId) {
+    try {
+      const userDataBase = JSON.parse(await getItem('userDataBase'));
+      userObject = userDataBase.find((user) => user.id.toString() === userId);
+      console.log(userObject)
+    } catch (e) {
+      console.error('Loading error:', e);
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -76,7 +117,6 @@ function navigationHighlight(id) {
 }
 
 function showMenu() {
-    
     if (menuEnabled) {
         toggleHiddenBox();
         setTimeout(animateMenuSlider, 125)
@@ -86,8 +126,6 @@ function showMenu() {
         setTimeout(toggleHiddenBox, 125)
         menuEnabled = true;
     }
-    
-    
 }
 
 function toggleHiddenBox() {

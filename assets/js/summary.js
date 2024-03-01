@@ -1,6 +1,7 @@
 
 async function initWelcome() {
     await includeHTML();
+    checkUserloggedIn();
     loadUserDataBase();
     navigationHighlight('summary-link');
     firstLoginHtml();
