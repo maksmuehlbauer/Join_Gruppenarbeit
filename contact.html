@@ -13,13 +13,13 @@
       <div id="contactsList"></div>
     </div>
     <div id="contact" style="display: none"></div>
-    <div id="addContactImg" onclick="addContact()" class="addContactImg">
+    <div id="addContactImg" onclick="openAddContact()" class="addContactImg">
       <img src="/assets/img/person_add.png" alt="" />
     </div>
 
     <div class="addContactCard" id="addContactCard">
       <div class="addContactUpperCard">
-        <div class="closeAddContact">
+        <div onclick="closeAddContactCard()" class="closeAddContact">
           <img src="assets/img/close.png" alt="" />
         </div>
         <div class="vertical-center">
@@ -28,11 +28,11 @@
           <div class="contact-underline"></div>
         </div>
 
-        <div><img src="assets/img/person.png" alt="" /></div>
+        <div class="personImgaAddContact"><img src="assets/img/add-contact-person.png" alt="" /></div>
       </div>
 
       <div class="createContactFormContainer">
-        <form class="createContactForm" onsubmit="save(); return false;">
+        <form class="createContactForm" onsubmit="createContact(); return false;">
           <input required type="text" id="name" placeholder="Name" />
           <input required type="email" id="email" placeholder="E-Mail" />
           <input required type="tel" id="phone" placeholder="Phone" />

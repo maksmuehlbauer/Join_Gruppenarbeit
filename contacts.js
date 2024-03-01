@@ -35,8 +35,8 @@ async function loadContacts() {
   renderContacts();
 }
 
-async function createContactBtn() {
-  saveBtn.disabled = true;
+async function createContact() {
+  createContactBtn.disabled = true;
   let name = document.getElementById("name").value;
   let email = document.getElementById("email").value;
   let phone = document.getElementById("phone").value;
@@ -209,6 +209,12 @@ function deleteContact() {
 
 }
 
-function addContact() {
+function openAddContact() {
+  document.getElementById('modalContainer').classList.add('active');
+  document.getElementById('addContactCard').classList.add('active');
+}
 
+function closeAddContactCard() {
+  document.getElementById('modalContainer').classList.remove('active');
+  document.getElementById('addContactCard').classList.remove('active');
 }
