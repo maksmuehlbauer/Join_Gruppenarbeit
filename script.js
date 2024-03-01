@@ -87,6 +87,12 @@ function login() {
   }
 
 
+function userLogout() {
+    localStorage.removeItem('userId')
+    // window.location.href = 'index.html';
+}
+
+
 
 
 
