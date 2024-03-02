@@ -79,7 +79,7 @@ function renderContacts() {
                     <div class="underline"></div>
                 </div>`;
     }
-    content += generateContacts(contact.email,contact.name,secondLetter,firstLetter,);
+    content += generateContacts(contact.email,contact.name,secondLetter,firstLetter,i);
     getRandomColor();
   }
   contactsContainer.innerHTML = content;
@@ -219,10 +219,16 @@ function openAddContact() {
   document.getElementById("center-add-card").classList.add("active");
   document.getElementById("addContactCard").classList.add("active");
   addContactImg.style.display = 'none';
+  overlayContacts.style.display = 'block';
 }
 
 function closeAddContactCard() {
-  document.getElementById("center-add-card").classList.remove("active");
-  document.getElementById("addContactCard").classList.remove("active");
-  addContactImg.style.display = 'flex';
+  const addContactCard = document.getElementById("addContactCard");
+  const centerAddCard = document.getElementById("center-add-card");
+  addContactCard.classList.remove("active");
+  setTimeout(() => {
+    centerAddCard.classList.remove("active");
+    addContactImg.style.display = 'flex';
+    overlayContacts.style.display = 'none';
+  }, 500); 
 }
