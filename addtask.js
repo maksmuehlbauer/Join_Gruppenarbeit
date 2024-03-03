@@ -28,12 +28,12 @@ let userDataBase = [
                 "phone": "+49 172 334 556 87"
             },
             {
-                "name": "Stefan Tieze",
+                "name": "Stefan",
                 "email": "m.malte@web.de",
                 "phone": "+49 172 334 556 87"
             },
             {
-                "name": "Eva Kunze",
+                "name": "Eva Maria Kunze",
                 "email": "m.malte@web.de",
                 "phone": "+49 172 334 556 87"
             },
@@ -47,7 +47,8 @@ let prioButtonsColorFont = document.querySelectorAll('.prio-container button div
 let assignedToMenuOpen = false;
 let priority = '';
 let initialCircles = [];
-let subtasksArray = [];
+let subtasksArray = ["waschen", "kochen"];
+let subtaskPosition = 0;
 
 
 function generateInitials(contactNr) {
@@ -182,6 +183,22 @@ function removeContactInArray(index, id) {
     document.getElementById(id).classList.remove('checked');
 }
 
+document.getElementById('subtasks').addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        addSubtasks();
+    }
+})
+
+document.getElementById('subtasks').addEventListener('focus', function (event) {
+    document.getElementById('subtasks-input-button-container').classList.add('blue-border');
+
+})
+
+document.getElementById('subtasks').addEventListener('blur', function (event) {
+    document.getElementById('subtasks-input-button-container').classList.remove('blue-border');
+})
+
+
 
 function addSubtasks() {
     let subtask = document.getElementById('subtasks');
@@ -194,7 +211,7 @@ function refreshSubtasks() {
     let subtaskList = document.getElementById('subtasks-list');
     subtaskList.innerHTML = '';
     for (let i = 0; i < subtasksArray.length; i++) {
-        subtaskList.innerHTML += `<li id="subtaskID${i}">${subtasksArray[i]}</li><button onclick="deleteSubtask(${i})">delete</button><button onclick="editSubtask(${i}, 'subtaskID${i}')">edit</button>`
+        subtaskList.innerHTML += `<div id="subtaskID${i}" class="input-button-container"><span id="subtaskID${i}">${subtasksArray[i]}</span><div class="subtask-button-container"><button onclick="deleteSubtask(${i})"><img src="assets/img/delete.png"></button><button onclick="editSubtask(${i}, 'subtaskID${i}')"><img src="assets/img/edit-task.png"></button></div></div>`
     }
 }
 
@@ -204,11 +221,25 @@ function deleteSubtask(position) {
     refreshSubtasks();
 }
 
-function editSubtask(position, ID){
-    document.getElementById(ID).innerHTML = `<input id="subtaskChangeInput" placeholder="${subtasksArray[position]}"></input><button onclick="changeSubtask(${position})">change</button>`
+function editSubtask(position, ID) {
+    subtaskPosition = position;
+    console.log(ID);
+
+    refreshSubtasks();
+    document.getElementById(ID).innerHTML = `<div class="input-button-container"><input id="subtaskChangeInput" type="text"></input><button onclick="changeSubtask(${subtaskPosition})"><img src="assets/img/check.png"></button></div>`
+    document.getElementById('subtaskChangeInput').value = subtasksArray[position];
+    document.getElementById(ID).style.backgroundColor = "white";
+    document.getElementById('subtaskChangeInput').addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            changeSubtask(subtaskPosition);
+        }
+    })
+
 }
 
-function changeSubtask(position){
+
+
+function changeSubtask(position) {
     let changedText = document.getElementById('subtaskChangeInput');
     subtasksArray[position] = changedText.value;
     refreshSubtasks();

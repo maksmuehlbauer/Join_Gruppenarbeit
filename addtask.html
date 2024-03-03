@@ -70,14 +70,21 @@
             </div>
             <div class="subtasks-container">
                 <label for="subtasks">Subtasks</label>
-                <input id="subtasks" type="text" placeholder="Add new subtask"></input>
+                <div id="subtasks-input-button-container" class="input-button-container">
+                    <input id="subtasks" type="text" placeholder="Add new subtask"></input>
+                    <div class="subtask-button-container">
+                        <button id="add-subtask-button" onclick="addSubtasks()"><img
+                                src="assets/img/plus-button.png"></button>
+                    </div>
+                </div>
+
                 <div id="subtasks-list-container">
-                    <button onclick="addSubtasks()">add subtask</button>
-                    <ul id="subtasks-list">
-                    </ul>
+
+                    <div id="subtasks-list">
+                    </div>
                 </div>
             </div>
-            
+
         </div>
         <div class="add-task-footnote-container">
             <div class="footnote">

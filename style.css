@@ -376,6 +376,11 @@ select:focus {
   outline: none;
 }
 
+.input-button-container input:focus{
+  outline: none;
+  border: none;
+}
+
 .add-task-container input,
 select {
   height: 40px;
@@ -607,6 +612,38 @@ sup {
   display: flex;
 
 }
+
+.input-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 48px;
+  background-color: white;
+}
+
+#subtasks-list .input-button-container{
+  border: none;
+  background-color: transparent;
+  width: 100%;
+}
+
+
+.subtasks-container input{
+  flex: 1;
+  border: none;
+  height: 46px;
+}
+
+.input-button-container button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding-right: 16px;
+}
+
+
 
 .assigned-contacts-button {
   background-color: var(--color-primary);
