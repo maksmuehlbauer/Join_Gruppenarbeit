@@ -80,38 +80,16 @@ function login() {
     try {
       const userDataBase = JSON.parse(await getItem('userDataBase'));
       userObject = userDataBase.find((user) => user.id.toString() === userId);
-      console.log(userObject)
+      getInitials();
     } catch (e) {
       console.error('Loading error:', e);
     }
   }
 
-
 function userLogout() {
     localStorage.removeItem('userId')
     // window.location.href = 'index.html';
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 function navigationHighlight(id) {
@@ -143,9 +121,42 @@ function animateMenuSlider() {
 }
 
 
+async function initPrivacy() {
+    await includeHTML();
+    checkLocalStorage()
+    deleteDivElement('user-circle')
+
+}
+
+function checkLocalStorage() {
+    let localStorageExist = localStorage.getItem('userId')
+    if (!localStorageExist) {
+        deleteDivElement('navigation')
+    } 
+}
+
+function deleteDivElement(divId) {
+    document.getElementById(divId).remove();
+}
+
+function getUrl() {
+    let x = document.URL
+    localStorage.setItem('URL', x);
+}
+
+
+function linkToPreviousPage() {
+    let localStorageExist = localStorage.getItem('userId')
+    if (!localStorageExist) {
+        window.location.href = 'index.html';
+    } else {
+        url = localStorage.getItem('URL')
+        window.location.href = url;
+        localStorage.removeItem('URL')
+    }
+}
+
 // HTML FUNCTIONS
-
-
 
 
 function renderLogInHtml() {
@@ -215,7 +226,7 @@ function renderSignUpHtml() {
             <input required id="password-proof" type="password" placeholder="Password" class="login-input" autocomplete="off" minlength="8">
             <img src="./assets/img/lock.png" alt="password">
         </div>
-        <div id="checkbox-container align-center">
+        <div id="checkbox-container" class="align-center">
             <input required type="checkbox" id="checkbox" class="checkbox">
             <label for="checkbox">I Accept the Privacy policy</label>
         </div>

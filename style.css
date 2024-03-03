@@ -184,6 +184,7 @@ h5 {
 
 .align-center {
   align-self: initial !important;
+  justify-content: center;
 }
 
 .arrow-left-line {
@@ -321,6 +322,28 @@ header {
   font-weight: 400;
 }
 
+.privay-policy {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 128px;
+  padding: 0 16px;
+}
+
+.privacy-h3 {
+  margin: 32px 0 10px 0;
+}
+
+.privacy-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.privacy-arrow {
+  object-fit: cover;
+  cursor: pointer;
+  height: 40px;
+}
 
 /***** styles for addtask.html ****/
 

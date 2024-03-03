@@ -1,17 +1,19 @@
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const currentDate = new Date;
 
 async function initWelcome() {
     await includeHTML();
-    checkUserloggedIn();
+    await checkUserloggedIn();
     loadUserDataBase();
     navigationHighlight('summary-link');
     firstLoginHtml();
     setTimeout(initSummary, 3000)
-    
 }
 
 
 async function initSummary() {
     await includeHTML();
+    await checkUserloggedIn();
     loadUserDataBase();
     navigationHighlight('summary-link');
     renderSummary();
@@ -24,16 +26,39 @@ function renderSummary() {
     summaryContainer.innerHTML = renderSummaryHtml();
 }
 
+async function getInitials() {
+    let initials = ''
+    let splittedName = userObject.name.split(' ')
+    for (let i = 0; i < splittedName.length; i++) {
+        initials += splittedName[i].charAt(0).toUpperCase();
+    }  
+    document.getElementById('user-circle').innerHTML = `${initials}`
+}
+
+
+function displayDate() {
+    let day = currentDate.getDate();
+    let monthIndex = currentDate.getMonth();
+    let year = currentDate.getFullYear();
+
+    let formatedTime = month[monthIndex] + ' ' + day + ', ' + year;
+
+    return formatedTime
+
+}
+
 
 // HTML Template functions
 
 function firstLoginHtml() {
     let content = document.getElementById('summary-content');
     content.innerHTML += /*html*/`
+    <div class="align-center">
         <div class="greetings">
             <h2>Good morning,</h2>
-            <h1 class="h1-blue">Max Mühlbauer</h1>
+            <h1 id="greet-user" class="h1-blue">${userObject.name}</h1>
         </div>
+    </div>
     `
 }
 
@@ -49,7 +74,7 @@ function renderSummaryHtml() {
                 <img src="./assets/img/pencil-new.png">
             </div>
             <div class="card-info">
-                <h1>1</h1>
+                <h1>${userObject.tasks.length}</h1>
                 <h5>To-do</h5>
             </div>
         </div>
@@ -58,7 +83,7 @@ function renderSummaryHtml() {
                 <img src="./assets/img/check-new.png">
             </div>
             <div class="card-info">
-                <h1>1</h1>
+                <h1>${userObject.tasks.length}</h1>
                 <h5>Done</h5>
             </div>
         </div>
@@ -71,13 +96,13 @@ function renderSummaryHtml() {
                     <img src="./assets/img/urgent.png">
                 </div>
                 <div class="card-info">
-                    <h1>1</h1>
+                    <h1>${userObject.tasks.length}</h1>
                     <h5>Urgent</h5>
                 </div>
             </div>
             <div class="vertical-divider"></div>
             <div class="task-card-right">
-                <span class="actual-date">February 27, 2024</span>
+                <span class="actual-date">${displayDate()}</span>
                 <h5>Upcoming Deadline</h5> 
             </div>
 
@@ -86,19 +111,19 @@ function renderSummaryHtml() {
     <div id="task-row-3">
         <div class="task-card task-card-width-33">
             <div class="card-info">
-                <h1>5</h1>
+                <h1>${userObject.tasks.length}</h1>
                 <h5>Tasks in Board</h5>
             </div>
         </div>
         <div class="task-card task-card-width-33">
             <div class="card-info">
-                <h1>2</h1>
+                <h1>${userObject.tasks.length}</h1>
                 <h5>Tasks in Progress</h5>
             </div>
         </div>
         <div class="task-card task-card-width-33">
             <div class="card-info">
-                <h1>2</h1>
+                <h1>${userObject.tasks.length}</h1>
                 <h5>Awaiting Feedback</h5>
             </div>
         </div>
