@@ -163,8 +163,7 @@ function closeAddContactCard() {
   setTimeout(() => {
     centerAddCard.classList.remove("active");
     addContactImg.style.display = 'flex';
-    overlayContacts.style.display = 'none';
-  }, 500); 
+    overlayContacts.style.display = 'none';}, 500); 
 }
 
 document.addEventListener("click", function (event) {

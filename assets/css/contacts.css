@@ -720,7 +720,9 @@ sup {
 #contactsList {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; 
+  margin-left: auto;
+  margin-right: auto;
   margin-left: auto;
   margin-right: auto;
   width: 90%;
