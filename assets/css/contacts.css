@@ -724,7 +724,7 @@ sup {
   margin-left: auto;
   margin-right: auto;
   width: 90%;
-  max-height: 80vh;
+  max-height: 80%;
   overflow-y: auto;
   /* Vertikales scrollen im container */
   margin: 20px 0;
