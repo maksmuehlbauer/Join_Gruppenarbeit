@@ -119,6 +119,7 @@ function showContact(i) {
   content.innerHTML += generateContact(firstLetter,secondLetter,name,phone,email,contactHeaderColor,i);
 }
 
+
 function closeContact() {
   if (contactStatus) {
     contactsList.style.display = "block";
@@ -139,7 +140,30 @@ function showEditOptions() {
 }
 
 function openEditContact() {
+  document.getElementById("center-edit-card").classList.add("active");
+  document.getElementById("editContactCard").classList.add("active");
+  addContactImg.style.display = 'none';
+  overlayContacts.style.display = 'block';
+  document.getElementById("edit-name").value = contacts[contactIndex].name;
+  document.getElementById("edit-email").value = contacts[contactIndex].email;
+  document.getElementById("edit-phone").value = contacts[contactIndex].phone;
+  
+}
 
+async function updateContact() {
+  let name = document.getElementById("edit-name").value;
+  let email = document.getElementById("edit-email").value;
+  let phone = document.getElementById("edit-phone").value;
+  contacts[contactIndex] = { name, email, phone };
+  await setItem("contacts", JSON.stringify(contacts)); 
+  renderContacts();
+  closeEditContactCard();
+}
+
+
+function closeEditContactCard() {
+  document.getElementById("center-edit-card").style.display = "none";
+  overlayContacts.style.display = 'none';
 }
 
 async function deleteContact() {
@@ -232,7 +256,7 @@ function generateContact(firstLetter,secondLetter,name,telefon,email,contactHead
    <img src="/assets/img/more_vert.png" alt="">
    </div>
    <div class="edit-contacts-options" id="editContactOptions">
-    <div onclick="openEditContact()" class="edit-image-contact"><img src="/assets/img/edit-task.png" alt="">Edit</div>
+    <div onclick="openEditContact(${contactIndex})" class="edit-image-contact"><img src="/assets/img/edit-task.png" alt="">Edit</div>
     <div onclick="deleteContact()"><img src="/assets/img/delete.png" alt="">Delete</div>
    </div>
 </div>
