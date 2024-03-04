@@ -63,7 +63,12 @@ function login() {
     } else {
       alert('Email Adresse und Passwort stimmen nicht überein');
     }
-  }
+}
+
+function guestLogin(guestId) {
+    localStorage.setItem('userId', guestId);
+    window.location.href = 'welcome.html';
+}
 
 
 
@@ -156,6 +161,15 @@ function linkToPreviousPage() {
     }
 }
 
+async function getInitials() {
+    let initials = ''
+    let splittedName = userObject.name.split(' ')
+    for (let i = 0; i < splittedName.length; i++) {
+        initials += splittedName[i].charAt(0).toUpperCase();
+    }  
+    document.getElementById('user-circle').innerHTML = `${initials}`
+}
+
 // HTML FUNCTIONS
 
 
@@ -178,9 +192,11 @@ function renderLogInHtml() {
         </div>
         <div class="button-box">
             <button class="button btn-login">Log in</button>
-            <button class="button btn-gust-login">Guest Log in</button>
-        </div>
+            
+            </div>
     </form>
+    <button class="button btn-gust-login" onclick="guestLogin('8')">Guest Log in</button>
+
 `
 }
 

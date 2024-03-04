@@ -26,25 +26,13 @@ function renderSummary() {
     summaryContainer.innerHTML = renderSummaryHtml();
 }
 
-async function getInitials() {
-    let initials = ''
-    let splittedName = userObject.name.split(' ')
-    for (let i = 0; i < splittedName.length; i++) {
-        initials += splittedName[i].charAt(0).toUpperCase();
-    }  
-    document.getElementById('user-circle').innerHTML = `${initials}`
-}
-
 
 function displayDate() {
     let day = currentDate.getDate();
     let monthIndex = currentDate.getMonth();
     let year = currentDate.getFullYear();
-
     let formatedTime = month[monthIndex] + ' ' + day + ', ' + year;
-
     return formatedTime
-
 }
 
 

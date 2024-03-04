@@ -61,6 +61,7 @@ h5 {
 }
 
 .btn-gust-login {
+  margin-top: 21px;
   background-color: var(--color-white);
   color: var(--color-primary);
   width: 180px;
@@ -330,8 +331,16 @@ header {
   padding: 0 16px;
 }
 
+.privacy-h2 {
+  margin: 32px 0 10px 0;
+}
+
 .privacy-h3 {
   margin: 32px 0 10px 0;
+}
+
+.privacy-h4 {
+  margin: 16px 0 10px 0;
 }
 
 .privacy-header {
@@ -344,6 +353,8 @@ header {
   cursor: pointer;
   height: 40px;
 }
+
+
 
 /***** styles for addtask.html ****/
 
