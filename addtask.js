@@ -199,11 +199,13 @@ document.getElementById('subtasks').addEventListener('keypress', function (event
 
 document.getElementById('subtasks').addEventListener('focus', function (event) {
     document.getElementById('subtasks-input-button-container').classList.add('blue-border');
+    document.getElementById('erase-subtask').classList.remove('d-none');
 
 })
 
 document.getElementById('subtasks').addEventListener('blur', function (event) {
     document.getElementById('subtasks-input-button-container').classList.remove('blue-border');
+    document.getElementById('erase-subtask').classList.add('d-none');
 })
 
 
@@ -220,7 +222,9 @@ function refreshSubtasks() {
     let subtaskList = document.getElementById('subtasks-list');
     subtaskList.innerHTML = '';
     for (let i = 0; i < subtasksArray.length; i++) {
-        subtaskList.innerHTML += `<div id="subtaskID${i}" class="input-button-container"><span id="subtaskID${i}">${subtasksArray[i]}</span><div class="subtask-button-container"><button onclick="editSubtask(${i}, 'subtaskID${i}')"><img src="assets/img/edit-task.png"></button><div class="separator"></div><button onclick="deleteSubtask(${i})"><img src="assets/img/delete.png"></button></div></div>`
+        subtaskList.innerHTML += `<div id="subtaskID${i}" class="input-button-container"><span id="subtaskID${i}">${subtasksArray[i]}</span>
+                                    <div class="subtask-button-container"><button onclick="editSubtask(${i}, 'subtaskID${i}')"><img src="assets/img/edit-task.png"></button>
+                                    <div class="separator"></div><button onclick="deleteSubtask(${i})"><img src="assets/img/delete.png"></button></div></div>`
     }
 }
 
