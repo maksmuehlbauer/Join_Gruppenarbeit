@@ -433,8 +433,8 @@ sup {
   margin-left: 16px;
 }
 
-.nameFrame img {
-  margin-right: 16px;
+.listItem img {
+  margin-right: 28px;
 }
 
 .checked {
@@ -452,7 +452,7 @@ sup {
 .contact-circle {
   background-color: darkblue;
   height: 42px;
-  margin-right: 16px;
+  margin: 8px;
   width: 42px;
   border-radius: 100%;
   font-weight: bold;
@@ -460,6 +460,8 @@ sup {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid white;
+  font-size: 12px;
 }
 
 #contact-circles-container {
@@ -475,6 +477,11 @@ sup {
   border-radius: 10px;
   height: 48px;
   background-color: white;
+}
+
+.input-button-container span{
+  display: list-item;
+  margin-left: 40px;
 }
 
 #subtasks-list .input-button-container{
@@ -497,6 +504,19 @@ sup {
   padding-right: 16px;
 }
 
+.subtask-button-container{
+  display: flex;
+}
+.subtask-button-container img{
+  height: 24px;
+  width: 24px;
+}
+#subtaskChangeInput{
+  border-radius: 0;
+  border-bottom: #29ABE2 solid 1px;
+}
+
+
 
 
 .assigned-contacts-button {
@@ -504,8 +524,19 @@ sup {
   color: white;
   min-width: 100px;
   border-radius: 10px;
-  padding: 2px;
+  padding: 4px;
+  font-size: 12px;
   border: 1px black solid;
+}
+
+.assigned-contacts-button button {
+  background-color: transparent;
+border: none;
+}
+
+.separator{
+  height: 24px;
+  border: solid 1px #D1D1D1;
 }
 
 /***** end styles for addtask.html ****/

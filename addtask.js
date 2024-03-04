@@ -102,13 +102,21 @@ function openAssignContainer() {
     }
 }
 
+document.addEventListener('click', function (event) {
+    if (event.target.id !== 'assigned-to-btn' && event.target.parentNode.className !== 'listItem' && event.target.className !== 'nameFrame' && event.target.className !== 'contact-circle') {
+        document.getElementById('contacts-to-assign-container').classList.add('d-none');
+        document.getElementById('assigned-to-btn').classList.remove('blue-border');
+        assignedToMenuOpen = false;
+    }
+});
+
 function renderAddTaskPage() {
     let assignedToList = document.getElementById('contacts-to-assign-list');
     for (let i = 0; i < userDataBase[0].contacts.length; i++) {
         let firstAndLastLetter = generateInitials(i);
         assignedToList.innerHTML +=
             `<div class="listItem">
-                <li class="" id="contactID${i}" onclick="assignContact('${userDataBase[0].contacts[i].name}', 'contactID${i}', 'checkButtonID${i}')">
+                <li class="clickable" id="contactID${i}" onclick="assignContact('${userDataBase[0].contacts[i].name}', 'contactID${i}', 'checkButtonID${i}')">
                     <div class="nameFrame">
                         <div class="contact-circle">
                             ${firstAndLastLetter}
@@ -165,7 +173,7 @@ function changeButtonText() {
     }
     for (let i = 0; i < assignedContacts.length; i++) {
         buttonText.innerHTML += `<div class="assigned-contacts-button">${assignedContacts[i]}
-                                 <button onclick="removeContactInList(event, '${assignedContacts[i]}', '${assignedContactsID[i]}')">X</button>
+                                 <button onclick="removeContactInList(event, '${assignedContacts[i]}', '${assignedContactsID[i]}')"><img src="assets/img/close.png"></button>
                                  </div>`;
     }
 }
@@ -200,6 +208,7 @@ document.getElementById('subtasks').addEventListener('blur', function (event) {
 
 
 
+
 function addSubtasks() {
     let subtask = document.getElementById('subtasks');
     subtasksArray.push(subtask.value);
@@ -211,7 +220,7 @@ function refreshSubtasks() {
     let subtaskList = document.getElementById('subtasks-list');
     subtaskList.innerHTML = '';
     for (let i = 0; i < subtasksArray.length; i++) {
-        subtaskList.innerHTML += `<div id="subtaskID${i}" class="input-button-container"><span id="subtaskID${i}">${subtasksArray[i]}</span><div class="subtask-button-container"><button onclick="deleteSubtask(${i})"><img src="assets/img/delete.png"></button><button onclick="editSubtask(${i}, 'subtaskID${i}')"><img src="assets/img/edit-task.png"></button></div></div>`
+        subtaskList.innerHTML += `<div id="subtaskID${i}" class="input-button-container"><span id="subtaskID${i}">${subtasksArray[i]}</span><div class="subtask-button-container"><button onclick="editSubtask(${i}, 'subtaskID${i}')"><img src="assets/img/edit-task.png"></button><div class="separator"></div><button onclick="deleteSubtask(${i})"><img src="assets/img/delete.png"></button></div></div>`
     }
 }
 
@@ -234,6 +243,7 @@ function editSubtask(position, ID) {
             changeSubtask(subtaskPosition);
         }
     })
+
 
 }
 
@@ -260,9 +270,11 @@ function createTask() {
 
     if (title.value !== '' && dueDate.value !== '' && category.value !== '') {
         task.descripton = document.getElementById('description').value;
-        task.category = document.getElementById('category').value;
+        task.category = category.value;
         task.prio = priority;
-        task.subtask = document.getElementById('subtasks').value;
+        task.subtask = subtasksArray
+        task.title = title.value;
+        task.dueDate = dueDate.value;
         task.assignto = assignedContacts;
         console.log(task);
     }
@@ -276,6 +288,5 @@ function checkRequiredFields(task, inputField) {
     else {
         document.getElementById(inputField.id).classList.remove("red-border");
         document.getElementById(inputField.id + "-required").classList.add("d-none");
-        task.title = document.getElementById(inputField.id).value;
     }
 }
