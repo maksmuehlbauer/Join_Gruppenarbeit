@@ -57,22 +57,18 @@ async function registerUser() {
 
 function renderRegSuccesInfo() {
     let content = document.getElementById('content');
-    content.innerHTML += /*html*/ `
-        <div id="animation-box" class="animation-box">
-            <div id="registration-succes-box" class="registration-succes-box">
-                <h4>You Signed Up successfully</h4>
-            </div>
-        </div>
-    `;
+    content.innerHTML += renderRegSuccesInfoHtml();
     setTimeout(FadeInOutRegSuccesBox, 250);
     
 }
 
 function FadeInOutRegSuccesBox() {
     document.getElementById('registration-succes-box').classList.add('show-reg-box')
-    setTimeout(removeQuickinfo, 2000);
+    setTimeout(removeQuickinfo, 2000); 
     setTimeout(renderLogIn, 2000)
 }
+
+// default setTimeout(renderLogIn, 2000)
 
 function removeQuickinfo() {
     let div = document.getElementById('animation-box')
@@ -85,6 +81,17 @@ function resetForm() {
     document.getElementById('email-sign').value = '';
     document.getElementById('password').value = '';
     document.getElementById('password-proof').value = '';
+}
+
+
+function renderRegSuccesInfoHtml() {
+    return /*html*/ `
+        <div id="animation-box" class="animation-box">
+            <div id="registration-succes-box" class="registration-succes-box">
+                <h4>You Signed Up successfully</h4>
+            </div>
+        </div>
+    `;
 }
 
 

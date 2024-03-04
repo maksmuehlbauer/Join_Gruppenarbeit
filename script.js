@@ -177,7 +177,7 @@ function renderLogInHtml() {
     return /*html*/`
     <h1>Log in</h1>
     <div class="divider-line"></div>
-    <form class="width-100" onsubmit="login(); return false">
+    <form class="form-width" onsubmit="login(); return false">
         <div class="input-container" >
             <input required type="email" id="email" placeholder="Email" class="login-input">
             <img src="./assets/img/mail.png" alt="mail">
@@ -192,11 +192,9 @@ function renderLogInHtml() {
         </div>
         <div class="button-box">
             <button class="button btn-login">Log in</button>
-            
+            <button class="button btn-gust-login" onclick="guestLogin('8')">Guest Log in</button>
             </div>
     </form>
-    <button class="button btn-gust-login" onclick="guestLogin('8')">Guest Log in</button>
-
 `
 }
 
@@ -216,7 +214,7 @@ function renderSignUpHtml() {
     <img src="./assets/img/arrow-left-line.png" class="arrow-left-line" onclick="renderLogIn()">
     <h1>Sign up</h1>
     <div class="divider-line"></div>
-    <form class="width-100" onsubmit="registerUser(); return false">
+    <form class="form-width" onsubmit="registerUser(); return false">
         <div class="input-container">
             <input required id="name" type="text" placeholder="Name" class="login-input" minlength="2">
             <img src="./assets/img/person.png" alt="person">
