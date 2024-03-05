@@ -22,6 +22,8 @@ async function initContacts() {
     navigationHighlight('contact-link');
 }
 
+
+
 async function init() {
     loadUserDataBase()
     renderLogIn();

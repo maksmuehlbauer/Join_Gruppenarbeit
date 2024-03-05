@@ -43,7 +43,24 @@ function addContact() {
 }
 
 
-
+async function createContact() {
+	createContactBtn.disabled = true;
+	let name = document.getElementById("name").value;
+	let email = document.getElementById("email").value;
+	let phone = document.getElementById("phone").value;
+	let contact = {
+		name: name,
+		email: email,
+		phone: phone,
+	}
+	
+	userDataBase[hier muss die id rein].contacts.push(contact)
+	
+	await setItem("userDataBase", JSON.stringify(userDataBase));
+	renderContacts();
+	closeAddContactCard();
+	clearForm();
+  }
 
 
 
