@@ -9,7 +9,7 @@
 
 </head>
 
-<body onload="renderAddTaskPage(), includeHTML()">
+<body onload="renderAddTaskPage(), includeHTML(), checkUserloggedIn(), navigationHighlight('addtask-link')">
     <div w3-include-html="./assets/templates/header.html"></div>
     <div class="add-task-container">
         <h1>Add Task</h1>
@@ -75,7 +75,7 @@
                     <div class="subtask-button-container">
                         <button class="d-none" id="erase-subtask" onclick="eraseSubtask()"><img
                                 src="assets/img/close_black.png"></button>
-                        <div class="d-none separator"></div>
+                        <div id="separator" class="d-none separator"></div>
                         <button id="add-subtask-button" onclick="addSubtasks()"><img src="assets/img/tick.png"></button>
                     </div>
                 </div>
@@ -106,6 +106,8 @@
 
     <script src="addtask.js"></script>
     <script src="script.js"></script>
+    <script src="register.js"></script>
+    <script src="storage.js"></script>
 
 </body>
 
