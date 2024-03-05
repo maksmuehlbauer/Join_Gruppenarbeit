@@ -1,30 +1,9 @@
-// const STORAGE_TOKEN = "PMSYFRVR552SZW6MAG0T95301L1BCNVFHWSKVHMK";
-// const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
+
 let contacts = [];
 let contactStatus = false;
 let showEditOptionsStatus;
 let contactOpenedStatus = false;
 let contactIndex;
-
-// async function setItem(key, value) {
-//   const payload = { key, value, token: STORAGE_TOKEN };
-//   return fetch(STORAGE_URL, {
-//     method: "POST",
-//     body: JSON.stringify(payload),
-//   }).then((res) => res.json());
-// }
-
-// async function getItem(key) {
-//   const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-//   return fetch(url)
-//     .then((res) => res.json())
-//     .then((res) => {
-//       if (res.data) {
-//         return res.data.value;
-//       }
-//       throw `Could not find data with key "${key}".`;
-//     });
-// }
 
 async function initContacts() {
   renderContacts();
@@ -64,11 +43,17 @@ async function createContact() {
 }
 
 function clearForm() {
-  let saveBtn = document.getElementById('saveBtn');
   document.getElementById("name").value = "";
   document.getElementById("email").value = "";
   document.getElementById("phone").value = "";
-  saveBtn.disabled = false;
+}
+
+function extractInitials(contact) {
+  const firstLetter = contact.name[0].toUpperCase();
+  const parts = contact.name.split(" ");
+  const lastName = parts[parts.length - 1];
+  const secondLetter = lastName[0].toUpperCase();
+  return { firstLetter, secondLetter };
 }
 
 function renderContacts() {
@@ -78,10 +63,7 @@ function renderContacts() {
   let currentLetter = "";
   for (let i = 0; i < sortedContacts.length; i++) {
     const contact = sortedContacts[i];
-    const firstLetter = contact.name[0].toUpperCase();
-    const parts = contact.name.split(" ");
-    const lastName = parts[parts.length - 1];
-    const secondLetter = lastName[0].toUpperCase();
+    const { firstLetter, secondLetter } = extractInitials(contact);
     if (currentLetter !== firstLetter) {
       currentLetter = firstLetter;
       content += generateHeadline(currentLetter);
@@ -118,10 +100,7 @@ function showContact(i) {
   let content = document.getElementById("contact");
   content.innerHTML = "";
   let contact = contacts[i];
-  const firstLetter = contact.name[0].toUpperCase();
-  const parts = contact.name.split(" ");
-  const lastName = parts[parts.length - 1];
-  const secondLetter = lastName[0].toUpperCase();
+  const { firstLetter, secondLetter } = extractInitials(contact);
   const contactHeaderColor = getRandomColor();
   const name = contact.name;
   const phone = contact.phone;
@@ -150,7 +129,6 @@ function showEditOptions() {
 }
 
 function closeEditContactCard() {
-  document.getElementById("centerEditCard").classList.remove("active");
   document.getElementById("editContactCard").classList.remove("active");
   editContactCard.classList.remove("active");
   editContactOptions.style.display = 'flex';
@@ -179,11 +157,11 @@ async function updateContact() {
   await setItem("contacts", JSON.stringify(contacts)); 
   renderContacts();
   closeEditContactCard();
-
 }
+
 async function deleteContact() {
     contacts.splice(contactIndex, 1)
-    await setItem("contacts", JSON.stringify(contacts)); 
+    await setItem("userDataBase", JSON.stringify(userDataBase)); 
     renderContacts();
     closeContact();
 }
