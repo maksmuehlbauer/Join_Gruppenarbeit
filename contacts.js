@@ -1,35 +1,44 @@
-const STORAGE_TOKEN = "PMSYFRVR552SZW6MAG0T95301L1BCNVFHWSKVHMK";
-const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
+// const STORAGE_TOKEN = "PMSYFRVR552SZW6MAG0T95301L1BCNVFHWSKVHMK";
+// const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 let contacts = [];
 let contactStatus = false;
 let showEditOptionsStatus;
 let contactOpenedStatus = false;
 let contactIndex;
 
-async function setItem(key, value) {
-  const payload = { key, value, token: STORAGE_TOKEN };
-  return fetch(STORAGE_URL, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  }).then((res) => res.json());
-}
+// async function setItem(key, value) {
+//   const payload = { key, value, token: STORAGE_TOKEN };
+//   return fetch(STORAGE_URL, {
+//     method: "POST",
+//     body: JSON.stringify(payload),
+//   }).then((res) => res.json());
+// }
 
-async function getItem(key) {
-  const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-  return fetch(url)
-    .then((res) => res.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data.value;
-      }
-      throw `Could not find data with key "${key}".`;
-    });
-}
+// async function getItem(key) {
+//   const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
+//   return fetch(url)
+//     .then((res) => res.json())
+//     .then((res) => {
+//       if (res.data) {
+//         return res.data.value;
+//       }
+//       throw `Could not find data with key "${key}".`;
+//     });
+// }
 
+async function initContacts() {
+  renderContacts();
+  await includeHTML();
+  navigationHighlight('contact-link');
+  checkUserloggedIn();
+  loadContacts();
+}
+let userDataBase;
 async function loadContacts() {
   try {
-    const result = await getItem("contacts");
-    contacts = JSON.parse(result);
+    const result = await getItem("userDataBase");
+    userDataBase = JSON.parse(result);
+    contacts = userDataBase[userObject["id"]].contacts;
   } catch (e) {
     console.error("Loading error:", e);
     contacts = [];
@@ -42,12 +51,13 @@ async function createContact() {
   let name = document.getElementById("name").value;
   let email = document.getElementById("email").value;
   let phone = document.getElementById("phone").value;
-  contacts.push({
-    name: name,
-    email: email,
-    phone: phone,
-  });
-  await setItem("contacts", JSON.stringify(contacts));
+  let contact = {
+      name: name,
+      email: email,
+      phone: phone,
+  }
+  userDataBase[userObject["id"]].contacts.push(contact);
+  await setItem("userDataBase", JSON.stringify(userDataBase));
   renderContacts();
   closeAddContactCard();
   clearForm();
@@ -114,7 +124,7 @@ function showContact(i) {
   const secondLetter = lastName[0].toUpperCase();
   const contactHeaderColor = getRandomColor();
   const name = contact.name;
-  const phone = contact.telefon;
+  const phone = contact.phone;
   const email = contact.email;
   content.innerHTML += generateContact(firstLetter,secondLetter,name,phone,email,contactHeaderColor,i);
 }
@@ -139,33 +149,38 @@ function showEditOptions() {
   showEditOptionsStatus = false;
 }
 
-function openEditContact() {
-  document.getElementById("center-edit-card").classList.add("active");
+function closeEditContactCard() {
+  document.getElementById("centerEditCard").classList.remove("active");
+  document.getElementById("editContactCard").classList.remove("active");
+  editContactCard.classList.remove("active");
+  editContactOptions.style.display = 'flex';
+  setTimeout(() => {
+    centerEditCard.classList.remove("active");
+    editContactImg.classList.add("flex");
+    overlayContacts.style.display = 'none';}, 500); 
+}
+
+function openEditContact(contactIndex) {
+  document.getElementById("centerEditCard").classList.add("active");
   document.getElementById("editContactCard").classList.add("active");
+  editContactOptions.style.display = 'none';
   addContactImg.style.display = 'none';
   overlayContacts.style.display = 'block';
   document.getElementById("edit-name").value = contacts[contactIndex].name;
   document.getElementById("edit-email").value = contacts[contactIndex].email;
   document.getElementById("edit-phone").value = contacts[contactIndex].phone;
-  
 }
 
 async function updateContact() {
   let name = document.getElementById("edit-name").value;
   let email = document.getElementById("edit-email").value;
   let phone = document.getElementById("edit-phone").value;
-  contacts[contactIndex] = { name, email, phone };
+  contacts[contactIndex] = {name, email, phone};
   await setItem("contacts", JSON.stringify(contacts)); 
   renderContacts();
   closeEditContactCard();
+
 }
-
-
-function closeEditContactCard() {
-  document.getElementById("center-edit-card").style.display = "none";
-  overlayContacts.style.display = 'none';
-}
-
 async function deleteContact() {
     contacts.splice(contactIndex, 1)
     await setItem("contacts", JSON.stringify(contacts)); 
@@ -230,7 +245,7 @@ function generateContacts(email, name, secondLetter, firstLetter, i) {
       `;
 }
 
-function generateContact(firstLetter,secondLetter,name,telefon,email,contactHeaderColor,i) {
+function generateContact(firstLetter,secondLetter,name,phone,email,contactHeaderColor,i) {
   return /*HTML*/ `
   <div class="contact-container" id=${i}>
     <div class="back-to-contacts-img">
@@ -243,14 +258,14 @@ function generateContact(firstLetter,secondLetter,name,telefon,email,contactHead
     <div class="contact-header contact-opened" style="background-color: ${contactHeaderColor};">
       <span><h3>${firstLetter}${secondLetter}</h3></span>
   </div>
-      <div class="name"><h2>${name}</h2></div>
+      <div id="contactOpenedName" class="name"><h2>${name}</h2></div>
   </div> 
   <div>
   <h4>Contact Information</h4>
   <p class="email-contact-opened">Email</p>
-      <div class="email-contact">${email}</div>
+      <div id="contactOpenedEmail" class="email-contact">${email}</div>
       <p class="email-contact-opened">Phone</p>
-      <div class="phone-contact">${telefon}</div>
+      <div id="contactOpenedPhone" class="phone-contact">${phone}</div>
   </div>
    <div id="editContactImg" class="editContactImg" onclick="showEditOptions()">
    <img src="/assets/img/more_vert.png" alt="">
