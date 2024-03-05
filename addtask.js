@@ -48,8 +48,6 @@ let assignedToMenuOpen = false;
 let priority = '';
 let initialCircles = [];
 let subtasksArray = ["waschen", "kochen"];
-let subtaskPosition = 0;
-
 
 function generateInitials(contactNr) {
     let fullname = userDataBase[0].contacts[contactNr].name;
@@ -67,24 +65,49 @@ function splitAndUpperCaseInitials(fullname) {
 }
 
 function setPriority(pressedButton) {
+    resetButton();
+    if (pressedButton == 'high') {
+        if (priority == 'high') {
+            resetButton();
+            priority = '';
+        }
+        else {
+            priority = 'high';
+            document.getElementById('highPrioButton').classList.add('prioHigh')
+            document.getElementById('highPrioButtonFont').classList.add('colored-white', 'font-weight-clicked')
+        }
+    }
+    else if (pressedButton == 'medium') {
+        if (priority == 'medium') {
+            resetButton();
+            priority = '';
+        }
+        else{
+           priority = 'medium';
+        document.getElementById('mediumPrioButton').classList.add('prioMedium')
+        document.getElementById('mediumPrioButtonFont').classList.add('colored-white', 'font-weight-clicked') 
+        }
+        
+    }
+    else if (pressedButton == 'low') {
+        if (priority == 'low') {
+            resetButton();
+            priority = '';
+        }
+        else{
+          priority = 'low';
+        document.getElementById('lowPrioButton').classList.add('prioLow')
+        document.getElementById('lowPrioButtonFont').classList.add('colored-white', 'font-weight-clicked')  
+        }
+        
+    }
+}
+
+function resetButton() {
     for (let i = 0; i < 3; i++) {
         prioButtonsColor[i].setAttribute('class', '');
         prioButtonsColorFont[i].setAttribute('class', '');
-    }
-    if (pressedButton == 'high') {
-        priority = 'high';
-        document.getElementById('highPrioButton').classList.add('prioHigh')
-        document.getElementById('highPrioButtonFont').classList.add('colored-white', 'font-weight-clicked')
-    }
-    else if (pressedButton == 'medium') {
-        priority = 'medium';
-        document.getElementById('mediumPrioButton').classList.add('prioMedium')
-        document.getElementById('mediumPrioButtonFont').classList.add('colored-white', 'font-weight-clicked')
-    }
-    else if (pressedButton == 'low') {
-        priority = 'low';
-        document.getElementById('lowPrioButton').classList.add('prioLow')
-        document.getElementById('lowPrioButtonFont').classList.add('colored-white', 'font-weight-clicked')
+        
     }
 }
 
@@ -173,7 +196,9 @@ function changeButtonText() {
     }
     for (let i = 0; i < assignedContacts.length; i++) {
         buttonText.innerHTML += `<div class="assigned-contacts-button">${assignedContacts[i]}
-                                 <button onclick="removeContactInList(event, '${assignedContacts[i]}', '${assignedContactsID[i]}')"><img src="assets/img/close.png"></button>
+                                    <button onclick="removeContactInList(event, '${assignedContacts[i]}', '${assignedContactsID[i]}')">
+                                        <img src="assets/img/close.png">
+                                    </button>
                                  </div>`;
     }
 }
@@ -200,12 +225,14 @@ document.getElementById('subtasks').addEventListener('keypress', function (event
 document.getElementById('subtasks').addEventListener('focus', function (event) {
     document.getElementById('subtasks-input-button-container').classList.add('blue-border');
     document.getElementById('erase-subtask').classList.remove('d-none');
+    document.getElementById('separator').classList.remove('d-none');
 
 })
 
 document.getElementById('subtasks').addEventListener('blur', function (event) {
     document.getElementById('subtasks-input-button-container').classList.remove('blue-border');
     document.getElementById('erase-subtask').classList.add('d-none');
+    document.getElementById('separator').classList.add('d-none');
 })
 
 
@@ -213,6 +240,10 @@ document.getElementById('subtasks').addEventListener('blur', function (event) {
 
 function addSubtasks() {
     let subtask = document.getElementById('subtasks');
+    if (subtask.value == '') {
+
+        return;
+    }
     subtasksArray.push(subtask.value);
     subtask.value = '';
     refreshSubtasks();
@@ -222,12 +253,17 @@ function refreshSubtasks() {
     let subtaskList = document.getElementById('subtasks-list');
     subtaskList.innerHTML = '';
     for (let i = 0; i < subtasksArray.length; i++) {
-        subtaskList.innerHTML += `<div id="subtaskID${i}" class="input-button-container"><span id="subtaskID${i}">${subtasksArray[i]}</span>
-                                    <div class="subtask-button-container"><button onclick="editSubtask(${i}, 'subtaskID${i}')"><img src="assets/img/edit-task.png"></button>
-                                    <div class="separator"></div><button onclick="deleteSubtask(${i})"><img src="assets/img/delete.png"></button></div></div>`
+        subtaskList.innerHTML += `<div id="subtaskID${i}" class="input-button-container">
+                                            <span id="subtaskID${i}">${subtasksArray[i]}
+                                            </span>
+                                    <div class="subtask-button-container">
+                                            <button onclick="editSubtask(${i}, 'subtaskID${i}')"><img src="assets/img/edit-task.png"></button>
+                                            <div id="separator" class="separator"></div>
+                                            <button onclick="deleteSubtask(${i})"><img src="assets/img/delete.png"></button>
+                                    </div>
+                                  </div>`
     }
 }
-
 
 function deleteSubtask(position) {
     subtasksArray.splice(position, 1);
@@ -235,32 +271,27 @@ function deleteSubtask(position) {
 }
 
 function editSubtask(position, ID) {
-    subtaskPosition = position;
-    console.log(ID);
-
     refreshSubtasks();
-    document.getElementById(ID).innerHTML = `<div class="input-button-container"><input id="subtaskChangeInput" type="text"></input><button onclick="changeSubtask(${subtaskPosition})"><img src="assets/img/check.png"></button></div>`
+    document.getElementById(ID).innerHTML = `<div class="input-button-container">
+                                                <input id="subtaskChangeInput" type="text"></input>
+                                                <button onclick="changeSubtask(${position})">
+                                                <img src="assets/img/tick.png">
+                                                </button>
+                                            </div>`
     document.getElementById('subtaskChangeInput').value = subtasksArray[position];
     document.getElementById(ID).style.backgroundColor = "white";
     document.getElementById('subtaskChangeInput').addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
-            changeSubtask(subtaskPosition);
+            changeSubtask(position);
         }
     })
-
-
 }
-
-
 
 function changeSubtask(position) {
     let changedText = document.getElementById('subtaskChangeInput');
     subtasksArray[position] = changedText.value;
     refreshSubtasks();
-
 }
-
-
 
 function createTask() {
     let task = userDataBase[0].tasks[0];
@@ -281,8 +312,25 @@ function createTask() {
         task.dueDate = dueDate.value;
         task.assignto = assignedContacts;
         console.log(task);
+        resetEverything(title, dueDate, category, description);
     }
 }
+
+function resetEverything(title, dueDate, category, description) {
+    title.value = '';
+    dueDate.value = '';
+    category.value = '';
+    description.value = '';
+    priority = 0;
+    subtasksArray = [];
+    assignedContacts = [];
+    assignedContactsID = [];
+    refreshSubtasks();
+    changeButtonText();
+    resetButton();
+}
+
+
 
 function checkRequiredFields(task, inputField) {
     if (inputField.value === '') {
