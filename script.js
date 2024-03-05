@@ -1,5 +1,7 @@
 let menuEnabled = true;
+let checkboxChecked = true;
 let userObject;
+
 
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
@@ -163,6 +165,16 @@ async function getInitials() {
     document.getElementById('user-circle').innerHTML = `${initials}`
 }
 
+function changeCheckboxStatus() {
+    if (checkboxChecked) {
+        document.getElementById('checkbox-img').src = "./assets/img/checked.png"
+        checkboxChecked = false;
+    } else {
+        document.getElementById('checkbox-img').src = "./assets/img/unchecked.png"
+        checkboxChecked = true;
+    }
+}
+
 // HTML FUNCTIONS
 
 
@@ -180,8 +192,10 @@ function renderLogInHtml() {
             <img src="./assets/img/lock.png" alt="password">
         </div>
         <div id="checkbox-container">
-            <input type="checkbox" id="checkbox" class="checkbox">
-            <label for="checkbox">Remember me</label>
+            <label for="checkbox" class="checkbox-label">
+            <img src="./assets/img/unchecked.png" id="checkbox-img">
+            <input type="checkbox" id="checkbox" class="checkbox" onclick="changeCheckboxStatus()">
+            Remember me</label>
         </div>
         <div class="button-box">
             <button class="button btn-login">Log in</button>
@@ -234,8 +248,10 @@ function renderSignUpHtml() {
             <img src="./assets/img/lock.png" alt="password">
         </div>
         <div id="checkbox-container" class="align-center">
-            <input required type="checkbox" id="checkbox" class="checkbox">
-            <label for="checkbox">I Accept the Privacy policy</label>
+            <label for="checkbox" class="checkbox-label j-center">
+                <img src="./assets/img/unchecked.png" id="checkbox-img">
+                <input type="checkbox" id="checkbox" class="checkbox" onclick="changeCheckboxStatus()">I Accept the Privacy policy
+            </label>
         </div>
         <div class="button-box">
             <button class="button btn-login">Sign up</button>

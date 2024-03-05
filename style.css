@@ -70,7 +70,7 @@ h5 {
 
 
 header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -171,7 +171,7 @@ header {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 128px;
+  margin: 128px 0;
   padding: 0 16px;
 }
 
