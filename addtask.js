@@ -82,24 +82,24 @@ function setPriority(pressedButton) {
             resetButton();
             priority = '';
         }
-        else{
-           priority = 'medium';
-        document.getElementById('mediumPrioButton').classList.add('prioMedium')
-        document.getElementById('mediumPrioButtonFont').classList.add('colored-white', 'font-weight-clicked') 
+        else {
+            priority = 'medium';
+            document.getElementById('mediumPrioButton').classList.add('prioMedium')
+            document.getElementById('mediumPrioButtonFont').classList.add('colored-white', 'font-weight-clicked')
         }
-        
+
     }
     else if (pressedButton == 'low') {
         if (priority == 'low') {
             resetButton();
             priority = '';
         }
-        else{
-          priority = 'low';
-        document.getElementById('lowPrioButton').classList.add('prioLow')
-        document.getElementById('lowPrioButtonFont').classList.add('colored-white', 'font-weight-clicked')  
+        else {
+            priority = 'low';
+            document.getElementById('lowPrioButton').classList.add('prioLow')
+            document.getElementById('lowPrioButtonFont').classList.add('colored-white', 'font-weight-clicked')
         }
-        
+
     }
 }
 
@@ -107,7 +107,7 @@ function resetButton() {
     for (let i = 0; i < 3; i++) {
         prioButtonsColor[i].setAttribute('class', '');
         prioButtonsColorFont[i].setAttribute('class', '');
-        
+
     }
 }
 
