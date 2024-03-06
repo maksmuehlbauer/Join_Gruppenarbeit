@@ -47,12 +47,9 @@ function createContactAnimation() {
   document.getElementById("centerAddContactAnimation").classList.add("active");
   document.getElementById("createContactAnimation").classList.add("active");
   setTimeout(() => {
-    document.getElementById("centerAddContactAnimation").classList.remove("active");
-    setTimeout(() => {
-      
-      document.getElementById("createContactAnimation").classList.remove("active");
-    },500)
-  }, 2000);
+  document.getElementById("centerAddContactAnimation").classList.remove("active");
+  document.getElementById("createContactAnimation").classList.remove("active");
+    ;}, 500);
 }
 
 function clearForm() {
