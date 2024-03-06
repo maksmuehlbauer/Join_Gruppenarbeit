@@ -9,8 +9,7 @@
   margin-right: auto;
   width: 90%;
   max-height: 80%;
-  overflow-y: auto;
-  /* Vertikales scrollen im container */
+  overflow-y: auto;  /* Vertikales scrollen im container */
   margin: 20px 0;
   padding-top: 30px;
 }
@@ -217,11 +216,11 @@
 
 .createContactForm input {
   width: 350px;
-  height: 42px; /* Höhe angepasst, um das Padding zu berücksichtigen */
+  height: 42px; 
   border-radius: 10px;
   border: 1px solid #d1d1d1;
-  padding: 16px 16px; /* Padding von 16px auf allen Seiten */
-  line-height: 24px; /* Line-height angepasst für den Text */
+  padding: 16px 16px; 
+  line-height: 24px;
   font-size: 20px;
   color: #d1d1d1;
   font-weight: 400;
@@ -321,7 +320,6 @@
   align-items: center;
   border-radius: 50%;
   border: 3px solid white;
-  
 }
 
 .personImgaAddContact img {
@@ -410,4 +408,19 @@
 .margin-top-32 {
   margin-top: 32px;
 }
-/***** end styles for contacts.html ****/
+
+.createContactAnimation {
+  width: 326px;
+  height: 74px;
+  border-radius: 20px;
+  background-color: #2A3647;
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+  box-shadow: 0px 0px 4px 0px #0000001a;
+  transition: transform 0.5s ease-in-out;
+  transform: translateY(100%); /* Beginnt außerhalb des Bildschirms */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

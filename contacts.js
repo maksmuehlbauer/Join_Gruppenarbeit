@@ -40,6 +40,19 @@ async function createContact() {
   renderContacts();
   closeAddContactCard();
   clearForm();
+  createContactAnimation();
+}
+
+function createContactAnimation() {
+  document.getElementById("centerAddContactAnimation").classList.add("active");
+  document.getElementById("createContactAnimation").classList.add("active");
+  setTimeout(() => {
+    document.getElementById("centerAddContactAnimation").classList.remove("active");
+    setTimeout(() => {
+      
+      document.getElementById("createContactAnimation").classList.remove("active");
+    },500)
+  }, 2000);
 }
 
 function clearForm() {
@@ -164,6 +177,7 @@ async function deleteContact() {
     await setItem("userDataBase", JSON.stringify(userDataBase)); 
     renderContacts();
     closeContact();
+    closeEditContactCard();
 }
 
 function openAddContact() {
@@ -180,7 +194,8 @@ function closeAddContactCard() {
   setTimeout(() => {
     centerAddCard.classList.remove("active");
     addContactImg.style.display = 'flex';
-    overlayContacts.style.display = 'none';}, 500); 
+    overlayContacts.style.display = 'none';}, 500);
+  
 }
 
 document.addEventListener("click", function (event) {
