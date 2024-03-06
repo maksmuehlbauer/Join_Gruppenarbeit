@@ -9,7 +9,7 @@
 
 </head>
 
-<body onload="renderAddTaskPage(), includeHTML(), checkUserloggedIn(), navigationHighlight('addtask-link')">
+<body onload="initAddTaskPage()">
     <div w3-include-html="./assets/templates/header.html"></div>
     <div class="add-task-container">
         <h1>Add Task</h1>
@@ -47,11 +47,15 @@
             </div>
             <div class="category-container">
                 <label for="category">Category<sup>*</sup></label>
-                <select id="category">
-                    <option value="" required>Select task category</option>
-                    <option value="Technical Task" required>Technical Task</option>
-                    <option value="User Story" required>User Story</option>
-                </select>
+                <button onclick="openCategoryContainer()" id="category-btn">
+                    <div id="category-selected">Select task category</div><img src="assets/img/arrow_drop_down.png"
+                        alt="arrow-down">
+                </button>
+                <div id="category-dropdown-menu" class="d-none">
+                    <span onclick="selectCategory('Technical Task')">Technical Task</span>
+                    <span onclick="selectCategory('User Story')">User Story</span>
+                    <span onclick="selectCategory('Other')">Other</span>
+                </div>
                 <div class="d-none required" id="category-required">This field is required</div>
             </div>
             <div class="assigned-to-container">

@@ -44,10 +44,19 @@ let assignedContacts = [];
 let assignedContactsID = [];
 let prioButtonsColor = document.querySelectorAll('.prio-container button');
 let prioButtonsColorFont = document.querySelectorAll('.prio-container button div');
+let categoryMenuOpen = false;
+let category = '';
 let assignedToMenuOpen = false;
 let priority = '';
 let initialCircles = [];
 let subtasksArray = ["waschen", "kochen"];
+
+function initAddTaskPage() {
+    renderAddTaskPage();
+    includeHTML();
+    //checkUserloggedIn();
+    navigationHighlight('addtask-link');
+}
 
 function generateInitials(contactNr) {
     let fullname = userDataBase[0].contacts[contactNr].name;
@@ -107,16 +116,17 @@ function resetButton() {
     for (let i = 0; i < 3; i++) {
         prioButtonsColor[i].setAttribute('class', '');
         prioButtonsColorFont[i].setAttribute('class', '');
-
     }
 }
 
 
 function openAssignContainer() {
+
     if (assignedToMenuOpen == false) {
         document.getElementById('contacts-to-assign-container').classList.remove('d-none');
         document.getElementById('assigned-to-btn').classList.add('blue-border');
         assignedToMenuOpen = true;
+
     }
     else {
         document.getElementById('contacts-to-assign-container').classList.add('d-none');
@@ -125,8 +135,37 @@ function openAssignContainer() {
     }
 }
 
+function openCategoryContainer() {
+    if (categoryMenuOpen == false) {
+        document.getElementById('category-dropdown-menu').classList.remove('d-none');
+        document.getElementById('category-btn').classList.add('blue-border');
+        categoryMenuOpen = true;
+    }
+    else {
+        document.getElementById('category-dropdown-menu').classList.add('d-none');
+        document.getElementById('category-btn').classList.remove('blue-border');
+        categoryMenuOpen = false;
+    }
+}
+
+function selectCategory(categorySelected) {
+    document.getElementById('category-dropdown-menu').classList.add('d-none');
+    document.getElementById('category-btn').classList.remove('blue-border');
+    categoryMenuOpen = false;
+    category = categorySelected;
+    document.getElementById('category-selected').innerText = categorySelected;
+}
+
 document.addEventListener('click', function (event) {
-    if (event.target.id !== 'assigned-to-btn' && event.target.parentNode.className !== 'listItem' && event.target.className !== 'nameFrame' && event.target.className !== 'contact-circle') {
+    if (event.target.id !== 'category-selected' && event.target.id !== 'category-btn') {
+        document.getElementById('category-dropdown-menu').classList.add('d-none');
+        document.getElementById('category-btn').classList.remove('blue-border');
+        categoryMenuOpen = false;
+    }
+});
+
+document.addEventListener('click', function (event) {
+    if (event.target.id !== 'assigned-to-btn' && event.target.id !== 'buttontext' && event.target.parentNode.className !== 'listItem' && event.target.className !== 'nameFrame' && event.target.className !== 'contact-circle') {
         document.getElementById('contacts-to-assign-container').classList.add('d-none');
         document.getElementById('assigned-to-btn').classList.remove('blue-border');
         assignedToMenuOpen = false;
@@ -215,6 +254,8 @@ function removeContactInArray(index, id) {
     assignedContactsID.splice(index, 1);
     document.getElementById(id).classList.remove('checked');
 }
+
+
 
 document.getElementById('subtasks').addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
