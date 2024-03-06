@@ -231,22 +231,33 @@ function renderSignUpHtml() {
             <img src="./assets/img/mail.png" alt="mail">
         </div>
         <div class="input-container">
-            <input required 
+            <input  
             id="password"
             type="password" 
             placeholder="Password" 
             class="login-input" 
             autocomplete="off"
-            
-            title="Enter an Password that contains 8 characters at least, 1 special character, 1 capital letter, 1 digit"
+            minlength="8"
+            pattern="^(?=.*[A-Z]).{8,}$"
+            title="At least 1 capital letter are required"
+            required
+            onkeyup="hideDontMatchBox(); changePasswordIcon()"
             >
             
-            <img src="./assets/img/lock.png" alt="password">
+            <img src="./assets/img/lock.png" alt="password" id="pw-lock">
         </div>
+
+
         <div class="input-container">
-            <input required id="password-proof" type="password" placeholder="Password" class="login-input" autocomplete="off" minlength="8">
+            <input required id="password-proof" type="password" placeholder="Confirm Password" class="login-input" autocomplete="off" minlength="8" required onclick="hideDontMatchBox()">
             <img src="./assets/img/lock.png" alt="password">
+            <div id="password-dont-match" class="d-none">
+                <span class="dont-match">Your Passwords don't match. Try again.</span>
+            </div>
         </div>
+
+
+
         <div id="checkbox-container" class="align-center">
             <label for="checkbox" class="checkbox-label j-center">
                 <img src="./assets/img/unchecked.png" id="checkbox-img">

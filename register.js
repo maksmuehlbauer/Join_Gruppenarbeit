@@ -20,18 +20,46 @@ async function deleteItemFromDatabase() {
     await setItem('userDataBase', JSON.stringify(userDataBase));
 }
 
-function passwordCheck() {
-    firstPw = getValueFromId('password');
-    secondPw = getValueFromId('password-proof');
-    if (secondPw === firstPw) {
-        alert('STIMMT')
-    } else {
-        alert('stimmt nicht')
+
+function passworVerification() {
+    let password = getValueFromId('password');
+    let confirmPassword = getValueFromId('password-proof')
+    
+    if (password !== confirmPassword) {
+        document.getElementById('password-dont-match').classList.remove('d-none')
+        document.getElementById('password-proof').classList.add('pw-dont-match-border')
+        return false;
+    }
+    return true;
+}
+
+function hideDontMatchBox() {
+    document.getElementById('password').addEventListener('click', function() {
+        document.getElementById('password-dont-match').classList.add('d-none');
+        document.getElementById('password-proof').classList.remove('pw-dont-match-border');
+    })
+
+    document.getElementById('password-proof').addEventListener('click', function() {
+        document.getElementById('password-dont-match').classList.add('d-none');
+        document.getElementById('password-proof').classList.remove('pw-dont-match-border');
+    })
+}
+
+function changePasswordIcon() {
+    let password = getValueFromId('password');
+    console.log(password)
+    if (password.length >= 1) {
+        document.getElementById('pw-lock').src = "./assets/img/visibility_off.png"
+    } else { 
+        document.getElementById('pw-lock').src = "./assets/img/lock.png"
     }
 }
 
 
 async function registerUser() {
+    if (!passworVerification()) {
+        return;
+    }
 
     let emailSign = getValueFromId('email-sign');
     let emailExists = userDataBase.find(user => user['email'] === emailSign);
@@ -68,7 +96,6 @@ function FadeInOutRegSuccesBox() {
     setTimeout(renderLogIn, 2000)
 }
 
-// default setTimeout(renderLogIn, 2000)
 
 function removeQuickinfo() {
     let div = document.getElementById('animation-box')
