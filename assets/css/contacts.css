@@ -10,7 +10,7 @@
   max-height: 80%;
   overflow-y: auto; /* Vertikales scrollen im container */
   margin: 20px 0;
-  padding-top: 30px;
+  padding-top: 30px !important;
 }
 
 .underline {
