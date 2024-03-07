@@ -46,6 +46,10 @@ function getValueFromId(id) {
     return document.getElementById(id).value
 }
 
+function getHtmlElementById(id) {
+    return document.getElementById(id);
+}
+
 
 function login() {
     let email = getValueFromId('email');
@@ -56,7 +60,8 @@ function login() {
       localStorage.setItem('userId', searchedUser.id);
       window.location.href = 'welcome.html';
     } else {
-      alert('Email Adresse und Passwort stimmen nicht überein');
+      document.getElementById('password-dont-match').classList.remove('d-none')
+      document.getElementById('password').classList.add('pw-dont-match-border')
     }
 }
 
@@ -188,8 +193,20 @@ function renderLogInHtml() {
             <img src="./assets/img/mail.png" alt="mail">
         </div>
         <div class="input-container">
-            <input required type="password" id="password" placeholder="Password" class="login-input" minlength="8" autocomplete="off">
-            <img src="./assets/img/lock.png" alt="password">
+            <input 
+            required 
+            type="password" 
+            id="password" 
+            placeholder="Password" 
+            class="login-input" 
+            minlength="8" 
+            autocomplete="off" 
+            onkeyup="changePasswordIcon('password', 'img-login-pw')" 
+            onclick="hideDontMatchBox('password', 'password')">
+            <img id="img-login-pw" src="./assets/img/lock.png" alt="password" onclick="showPassword('password', 'img-login-pw')">
+            <div id="password-dont-match" class="d-none">
+                <span class="dont-match">Wrong password Ups! Try again.</span>
+            </div>
         </div>
         <div id="checkbox-container">
             <label for="checkbox" class="checkbox-label">
@@ -232,7 +249,7 @@ function renderSignUpHtml() {
         </div>
         <div class="input-container">
             <input  
-            id="password"
+            id="password-signup"
             type="password" 
             placeholder="Password" 
             class="login-input" 
@@ -241,16 +258,30 @@ function renderSignUpHtml() {
             pattern="^(?=.*[A-Z]).{8,}$"
             title="At least 1 capital letter are required"
             required
-            onkeyup="hideDontMatchBox(); changePasswordIcon()"
+            onkeyup="changePasswordIcon('password-signup', 'pw-signup-img')"
+            onclick="hideDontMatchBox('password-signup', 'password-proof')"
             >
             
-            <img src="./assets/img/lock.png" alt="password" id="pw-lock">
+            <img src="./assets/img/lock.png" alt="password" id="pw-signup-img" onclick="showPassword('password-signup', 'pw-signup-img')">
         </div>
 
 
         <div class="input-container">
-            <input required id="password-proof" type="password" placeholder="Confirm Password" class="login-input" autocomplete="off" minlength="8" required onclick="hideDontMatchBox()">
-            <img src="./assets/img/lock.png" alt="password">
+            <input 
+            required 
+            id="password-proof" 
+            type="password" 
+            placeholder="Confirm Password" 
+            class="login-input" 
+            autocomplete="off" 
+            minlength="8" 
+            required 
+            onkeyup="changePasswordIcon('password-proof', 'pw-proof-lock-img')"
+            onclick="hideDontMatchBox('password-proof', 'password-proof')"
+            >
+            
+            
+            <img src="./assets/img/lock.png" alt="password" id="pw-proof-lock-img" onclick="showPasswordProof('password-proof', 'pw-proof-lock-img')">
             <div id="password-dont-match" class="d-none">
                 <span class="dont-match">Your Passwords don't match. Try again.</span>
             </div>

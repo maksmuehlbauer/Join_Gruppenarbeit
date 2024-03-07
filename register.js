@@ -3,6 +3,8 @@ let userDataBase = [
 ];
 
 let id;
+let showPwEnabled = true;
+let showPwProoEnabled = true;
 
 
 async function loadUserDataBase() {
@@ -22,7 +24,7 @@ async function deleteItemFromDatabase() {
 
 
 function passworVerification() {
-    let password = getValueFromId('password');
+    let password = getValueFromId('password-signup');
     let confirmPassword = getValueFromId('password-proof')
     
     if (password !== confirmPassword) {
@@ -33,27 +35,73 @@ function passworVerification() {
     return true;
 }
 
-function hideDontMatchBox() {
-    document.getElementById('password').addEventListener('click', function() {
+function hideDontMatchBox(id, redBorderId) {
+    let selectedElement = getHtmlElementById(id)
+    let redBorderInput = getHtmlElementById(redBorderId)
+    
+    selectedElement.addEventListener('click', function() {
         document.getElementById('password-dont-match').classList.add('d-none');
-        document.getElementById('password-proof').classList.remove('pw-dont-match-border');
+        document.getElementById(redBorderId).classList.remove('pw-dont-match-border');
     })
 
-    document.getElementById('password-proof').addEventListener('click', function() {
-        document.getElementById('password-dont-match').classList.add('d-none');
-        document.getElementById('password-proof').classList.remove('pw-dont-match-border');
-    })
 }
 
-function changePasswordIcon() {
-    let password = getValueFromId('password');
-    console.log(password)
-    if (password.length >= 1) {
-        document.getElementById('pw-lock').src = "./assets/img/visibility_off.png"
-    } else { 
-        document.getElementById('pw-lock').src = "./assets/img/lock.png"
+function changePasswordIcon(pwId, imgId) {
+    let password = getValueFromId(pwId);
+    let element = getHtmlElementById(imgId)
+    let passwordType = getHtmlElementById(pwId)
+    
+    if (password.length >= 1 && passwordType.type === "password") {
+        element.src = "./assets/img/visibility_off.png"
+    }    
+
+    if (password.length === 0) { 
+        element.src = "./assets/img/lock.png"
+        passwordType.type = "password";
+        showPwEnabled = true;
+        showPwProoEnabled = true;
     }
 }
+
+
+function showPassword(pwId, imgId) {
+    let element = getHtmlElementById(imgId)
+    if (showPwEnabled) {
+        element.src = "./assets/img/visibility.png";
+        showPwEnabled = false;
+        togglePassword(pwId);
+    } else {
+        element.src = "./assets/img/visibility_off.png";
+        showPwEnabled = true;
+        togglePassword(pwId);
+    }
+}
+
+function showPasswordProof(pwId, imgId) {
+    let element = getHtmlElementById(imgId)
+    if (showPwProoEnabled) {
+        element.src = "./assets/img/visibility.png";
+        showPwProoEnabled = false;
+        togglePassword(pwId);
+    } else {
+        element.src = "./assets/img/visibility_off.png";
+        showPwProoEnabled = true;
+        togglePassword(pwId);
+    }
+}
+
+
+function togglePassword(pwId) {
+    let passwordInput = getHtmlElementById(pwId)
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+    } else {
+      passwordInput.type = "password";
+    }
+  }
+
+
+
 
 
 async function registerUser() {
@@ -71,7 +119,7 @@ async function registerUser() {
             "id": id += 1,
             "name": getValueFromId('name'),
             "email": emailSign,
-            "password": getValueFromId('password'),
+            "password": getValueFromId('password-signup'),
             "tasks": [],
             "contacts": [],
         };
@@ -106,7 +154,7 @@ function removeQuickinfo() {
 function resetForm() {
     document.getElementById('name').value = '';
     document.getElementById('email-sign').value = '';
-    document.getElementById('password').value = '';
+    document.getElementById('password-signup').value = '';
     document.getElementById('password-proof').value = '';
 }
 
