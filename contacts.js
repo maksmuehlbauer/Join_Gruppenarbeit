@@ -46,10 +46,10 @@ async function createContact() {
 function createContactAnimation() {
   document.getElementById("centerAddContactAnimation").classList.add("active");
   document.getElementById("createContactAnimation").classList.add("active");
-  setTimeout(() => {
-  document.getElementById("centerAddContactAnimation").classList.remove("active");
-  document.getElementById("createContactAnimation").classList.remove("active");
-    ;}, 500);
+  setTimeout(function() {
+    document.getElementById("centerAddContactAnimation").classList.remove("active");
+    document.getElementById("createContactAnimation").classList.remove("active");
+  }, 3000); 
 }
 
 function clearForm() {
