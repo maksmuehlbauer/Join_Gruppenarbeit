@@ -130,7 +130,6 @@ async function initPrivacy() {
     await includeHTML();
     checkLocalStorage()
     deleteDivElement('user-circle')
-
 }
 
 function checkLocalStorage() {
@@ -148,7 +147,6 @@ function getUrl() {
     let x = document.URL
     localStorage.setItem('URL', x);
 }
-
 
 function linkToPreviousPage() {
     let localStorageExist = localStorage.getItem('userId')

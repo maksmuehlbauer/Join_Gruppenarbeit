@@ -1,4 +1,3 @@
-
 let contacts = [];
 let contactStatus = false;
 let showEditOptionsStatus;
@@ -46,10 +45,10 @@ async function createContact() {
 function createContactAnimation() {
   document.getElementById("centerAddContactAnimation").classList.add("active");
   document.getElementById("createContactAnimation").classList.add("active");
-  setTimeout(() => {
-  document.getElementById("centerAddContactAnimation").classList.remove("active");
-  document.getElementById("createContactAnimation").classList.remove("active");
-    ;}, 500);
+  setTimeout(function() {
+    document.getElementById("centerAddContactAnimation").classList.remove("active");
+    document.getElementById("createContactAnimation").classList.remove("active");
+  },2500); 
 }
 
 function clearForm() {
@@ -167,6 +166,7 @@ async function updateContact() {
   await setItem("contacts", JSON.stringify(contacts)); 
   renderContacts();
   closeEditContactCard();
+  showContact(contactIndex);
 }
 
 async function deleteContact() {
