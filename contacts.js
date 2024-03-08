@@ -3,6 +3,7 @@ let contactStatus = false;
 let showEditOptionsStatus;
 let contactOpenedStatus = false;
 let contactIndex;
+let userDataBase;
 
 async function initContacts() {
   renderContacts();
@@ -11,7 +12,7 @@ async function initContacts() {
   checkUserloggedIn();
   loadContacts();
 }
-let userDataBase;
+
 async function loadContacts() {
   try {
     const result = await getItem("userDataBase");
@@ -29,10 +30,12 @@ async function createContact() {
   let name = document.getElementById("name").value;
   let email = document.getElementById("email").value;
   let phone = document.getElementById("phone").value;
+  const bgrColor = getRandomColor();
   let contact = {
       name: name,
       email: email,
       phone: phone,
+      bgrColor: bgrColor,
   }
   userDataBase[userObject["id"]].contacts.push(contact);
   await setItem("userDataBase", JSON.stringify(userDataBase));
@@ -77,7 +80,7 @@ function renderContacts() {
       currentLetter = firstLetter;
       content += generateHeadline(currentLetter);
     }
-    content += generateContacts(contact.email,contact.name,secondLetter,firstLetter,i);
+    content += generateContacts(contact.email,contact.name,secondLetter,firstLetter,i,contact.bgrColor);
   }
   contactsContainer.innerHTML = content;
 }
@@ -91,14 +94,18 @@ function getRandomColor() {
   return color;
 }
 
+function closeContactList() {
+  contactsList.style.display = "none";
+  addContactImg.style.display = "none";
+  contact.style.display = "flex";
+  document.getElementById("center-contacts").classList.remove("center");
+  contact.style.backgroundColor = "#F6F7F8";
+}
+
 function openContact(i) {
   if (!contactStatus) {
-    contactsList.style.display = "none";
-    addContactImg.style.display = "none";
-    contact.style.display = "flex";
+    closeContactList()
     showContact(i);
-    document.getElementById("center-contacts").classList.remove("center");
-    contact.style.backgroundColor = "#F6F7F8";
   }
   contactStatus = true;
 }
@@ -110,13 +117,12 @@ function showContact(i) {
   content.innerHTML = "";
   let contact = contacts[i];
   const { firstLetter, secondLetter } = extractInitials(contact);
-  const contactHeaderColor = getRandomColor();
   const name = contact.name;
   const phone = contact.phone;
   const email = contact.email;
-  content.innerHTML += generateContact(firstLetter,secondLetter,name,phone,email,contactHeaderColor,i);
+  const bgrColor = contact.bgrColor;
+  content.innerHTML += generateContact(firstLetter,secondLetter,name,phone,email,i,bgrColor);
 }
-
 
 function closeContact() {
   if (contactStatus) {
@@ -147,7 +153,7 @@ function closeEditContactCard() {
     overlayContacts.style.display = 'none';}, 500); 
 }
 
-function openEditContact(contactIndex) {
+function openEditContactCard(contactIndex) {
   document.getElementById("centerEditCard").classList.add("active");
   document.getElementById("editContactCard").classList.add("active");
   editContactOptions.style.display = 'none';
@@ -162,8 +168,9 @@ async function updateContact() {
   let name = document.getElementById("edit-name").value;
   let email = document.getElementById("edit-email").value;
   let phone = document.getElementById("edit-phone").value;
-  contacts[contactIndex] = {name, email, phone};
-  await setItem("contacts", JSON.stringify(contacts)); 
+  contacts[contactIndex] = {name, email, phone, bgrColor};
+  userDataBase[userObject["id"]].contacts = contacts;
+  await setItem("userDataBase", JSON.stringify(userDataBase));
   renderContacts();
   closeEditContactCard();
   showContact(contactIndex);
@@ -214,17 +221,16 @@ document.addEventListener("click", function (event) {
 function generateHeadline(currentLetter) {
   return /*HTML*/ `
     <div>
-                    <h4 class="contact-headline-letter">${currentLetter}</h4>
-                    <div class="underline"></div>
-                </div>
+      <h4 class="contact-headline-letter">${currentLetter}</h4>
+      <div class="underline"></div>
+    </div>
   `;
 }
 
-function generateContacts(email, name, secondLetter, firstLetter, i) {
-  const contactHeaderColor = getRandomColor();
+function generateContacts(email, name, secondLetter, firstLetter, i,bgrColor) {
   return /*HTML*/ `
       <div class="contact" id="${i}" onclick="openContact(${i})">
-          <div class="contact-header" style="background-color: ${contactHeaderColor};">
+          <div class="contact-header" style="background-color: ${bgrColor};">
               <span>${firstLetter}${secondLetter}</span>
           </div> 
           <div class="contact-info">
@@ -235,7 +241,7 @@ function generateContacts(email, name, secondLetter, firstLetter, i) {
       `;
 }
 
-function generateContact(firstLetter,secondLetter,name,phone,email,contactHeaderColor,i) {
+function generateContact(firstLetter,secondLetter,name,phone,email,i,bgrColor) {
   return /*HTML*/ `
   <div class="contact-container" id=${i}>
     <div class="back-to-contacts-img">
@@ -245,7 +251,7 @@ function generateContact(firstLetter,secondLetter,name,phone,email,contactHeader
   <span class="slogan-contact">Better with a Team</span>
   <div class="contact-underline"></div>
   <div class="name-container">
-    <div class="contact-header contact-opened" style="background-color: ${contactHeaderColor};">
+    <div class="contact-header contact-opened" style="background-color: ${bgrColor};">
       <span><h3>${firstLetter}${secondLetter}</h3></span>
   </div>
       <div id="contactOpenedName" class="name"><h2>${name}</h2></div>
@@ -261,7 +267,7 @@ function generateContact(firstLetter,secondLetter,name,phone,email,contactHeader
    <img src="/assets/img/more_vert.png" alt="">
    </div>
    <div class="edit-contacts-options" id="editContactOptions">
-    <div onclick="openEditContact(${contactIndex})" class="edit-image-contact"><img src="/assets/img/edit-task.png" alt="">Edit</div>
+    <div onclick="openEditContactCard(${contactIndex})" class="edit-image-contact"><img src="/assets/img/edit-task.png" alt="">Edit</div>
     <div onclick="deleteContact()"><img src="/assets/img/delete.png" alt="">Delete</div>
    </div>
 </div>
