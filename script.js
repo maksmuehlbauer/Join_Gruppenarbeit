@@ -159,6 +159,10 @@ function linkToPreviousPage() {
     }
 }
 
+function linkToPreviousPageLegalNotice() {
+    history.back();
+  }
+
 async function getInitials() {
     let initials = ''
     let splittedName = userObject.name.split(' ')
