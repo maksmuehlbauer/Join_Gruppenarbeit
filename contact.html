@@ -10,10 +10,13 @@
   <body onload="initContacts()">
     <div w3-include-html="./assets/templates/header.html"></div>
     <div class="overlay-contacts" id="overlayContacts"></div>
-    <div id="center-contacts" class="center">
-      <div id="contactsList"></div>
+    <div class="container-desktop">
+      <div id="center-contacts" class="center">
+        <div id="contactsList"></div>
+      </div>
+      <div id="contact" style="display: none"></div>
     </div>
-    <div id="contact" style="display: none"></div>
+
     <div id="addContactImg" onclick="openAddContact()" class="addContactImg">
       <img src="/assets/img/person_add.png" alt="" />
     </div>

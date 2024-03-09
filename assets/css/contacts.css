@@ -7,6 +7,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 90%;
+  max-width: 450px;
   max-height: 80%;
   overflow-y: auto; /* Vertikales scrollen im container */
   margin: 20px 0;
@@ -79,21 +80,6 @@
   overflow: hidden;
 }
 
-.addContactImg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 758px;
-  left: 330px;
-  right: 20px;
-  height: 56px;
-  width: 56px;
-  border-radius: 100%;
-  background-color: var(--color-primary);
-  z-index: 1000;
-}
-
 .addContactImg:hover {
   cursor: pointer;
 }
@@ -103,7 +89,7 @@
   width: 32px;
 }
 
-.editContactImg {
+.editContactImg, .addContactImg {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -437,6 +423,37 @@
   align-items: center;
 }
 
+.edit-delete-desktop {
+  display: flex;
+  align-items: center !important;
+  gap: 10px;
+  margin-top: 10px;
+}
+.edit-delete-desktop div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+#footer, #header {
+  z-index: 10000;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 90%;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d1d1d1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: #eee;
+  border-radius: 10px;
+}
+
 .createContactAnimation.active {
   transform: translateY(0);
 }
@@ -447,3 +464,40 @@
   z-index: 1001;
   transition: opacity 0.5s linear;
 }
+
+
+@media(min-width:1440px) {
+  #sidebar {
+    width: 230px;
+    background-color: #2a3647;
+    height: 100%;
+    display: flex !important;
+  }
+  #footer, #editContactImg, #addContactImg {
+    display: none !important;
+  }
+  .center {
+    justify-content: flex-start;
+  }
+  #contactsList {
+    padding-left: 10px;
+    max-height: 96% !important;
+    padding-top: 92px !important;
+    display: flex !important;
+    overflow-y: auto !important;
+    width: 450px;
+    height: 95vh;
+    margin-left: 242px;
+  }
+  .contacts-container {
+    display: flex;
+  }
+  #header {
+    display: flex !important;
+  }
+  #contact{
+    z-index: auto;
+  }
+  .container-desktop {
+    display: flex;
+  }}

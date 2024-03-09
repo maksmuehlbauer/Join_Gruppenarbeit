@@ -254,7 +254,20 @@ function generateContact(firstLetter,secondLetter,name,phone,email,i,bgrColor) {
     <div class="contact-header contact-opened" style="background-color: ${bgrColor};">
       <span><h3>${firstLetter}${secondLetter}</h3></span>
   </div>
-      <div id="contactOpenedName" class="name"><h2>${name}</h2></div>
+  <div>
+<div id="contactOpenedName" class="name">
+        <h2>${name}</h2>
+      </div>
+      <div class="edit-delete-desktop">
+      <div onclick="openEditContactCard(${contactIndex})" class="edit-image-contact">
+        <img src="/assets/img/edit-task.png" alt="">Edit
+      </div>
+      <div class="center-img-text" onclick="deleteContact()">
+        <img src="/assets/img/delete.png" alt=""> Delete
+      </div>
+  </div>
+      
+    </div>
   </div> 
   <div>
   <h4>Contact Information</h4>
