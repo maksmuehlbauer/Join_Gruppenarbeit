@@ -10,10 +10,10 @@ let initialCircles = [];
 let subtasksArray = [];
 let contacts;
 
-function initAddTaskPage() {
-    includeHTML();
+async function initAddTaskPage() {  
     checkUserloggedIn();
     loadContacts();
+    await includeHTML();
     navigationHighlight('addtask-link');
 }
 
@@ -145,6 +145,7 @@ document.addEventListener('click', function (event) {
 
 function renderAddTaskPage() {
     let assignedToList = document.getElementById('contacts-to-assign-list');
+    assignedToList.innerHTML = '';
     for (let i = 0; i < contacts.length; i++) {
         let firstAndLastLetter = generateInitials(i);
         assignedToList.innerHTML +=
@@ -226,8 +227,6 @@ function removeContactInArray(index, id) {
     document.getElementById(id).classList.remove('checked');
 }
 
-
-
 document.getElementById('subtasks').addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
         addSubtasks();
@@ -305,33 +304,40 @@ function changeSubtask(position) {
     refreshSubtasks();
 }
 
-function createTask() {
-    let task = userDataBase[userObject.id].tasks;
+async function createTask() {
+    let task = {};
+    //userDataBase[userObject.id].tasks;
     let title = document.getElementById('title');
     let dueDate = document.getElementById('dueDate');
-    let category = document.getElementById('category');
 
-    checkRequiredFields(task, title);
-    checkRequiredFields(task, dueDate);
-    checkRequiredFields(task, category);
+    checkRequiredFields(title);
+    checkRequiredFields(dueDate);
+    checkCategoryField();
 
-    if (title.value !== '' && dueDate.value !== '' && category.value !== '') {
+    if (title.value !== '' && dueDate.value !== '' && category !== '') {
         task.descripton = document.getElementById('description').value;
-        task.category = category.value;
+        task.category = category;
         task.prio = priority;
         task.subtask = subtasksArray
         task.title = title.value;
         task.dueDate = dueDate.value;
         task.assignto = assignedContacts;
+        userDataBase[userObject.id].tasks.push(task);
+        await setItem("userDataBase", JSON.stringify(userDataBase));
         console.log(task);
         resetEverything(title, dueDate, category, description);
     }
 }
 
+async function deleteTask(){
+    userDataBase[userObject.id].tasks.shift();
+    await setItem("userDataBase", JSON.stringify(userDataBase));
+}
+
 function resetEverything(title, dueDate, category, description) {
     title.value = '';
     dueDate.value = '';
-    category.value = '';
+    category = '';
     description.value = '';
     priority = 0;
     subtasksArray = [];
@@ -340,11 +346,10 @@ function resetEverything(title, dueDate, category, description) {
     refreshSubtasks();
     changeButtonText();
     resetButton();
+    renderAddTaskPage();
 }
 
-
-
-function checkRequiredFields(task, inputField) {
+function checkRequiredFields(inputField) {
     if (inputField.value === '') {
         document.getElementById(inputField.id).classList.add("red-border");
         document.getElementById(inputField.id + "-required").classList.remove("d-none");
@@ -352,5 +357,16 @@ function checkRequiredFields(task, inputField) {
     else {
         document.getElementById(inputField.id).classList.remove("red-border");
         document.getElementById(inputField.id + "-required").classList.add("d-none");
+    }
+}
+
+function checkCategoryField(){
+    if(category === ''){
+        document.getElementById('category-btn').classList.add("red-border");
+        document.getElementById('category' + "-required").classList.remove("d-none");
+    }
+    else{
+        document.getElementById('category-btn').classList.remove("red-border");
+        document.getElementById('category' + "-required").classList.add("d-none");
     }
 }
