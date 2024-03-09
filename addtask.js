@@ -1,45 +1,3 @@
-let userDataBase = [
-    {
-        "id": 1,
-        "name": "name",
-        "email": "m.muehlbauer@kkkk.de",
-        "password": "Test123",
-        "tasks": [
-            {
-                "title": "Titel Muster",
-                "descripton": "Hier muss der Text hin",
-                "assignto": [],
-                "category": "cat",
-                "dueDate": "DueDate",
-                "prio": "",
-                "subtask": [],
-
-            }
-        ],
-        "contacts": [
-            {
-                "name": "Malte Klose",
-                "email": "m.malte@web.de",
-                "phone": "+49 172 334 556 87"
-            },
-            {
-                "name": "Heiko Nevoigt ",
-                "email": "m.malte@web.de",
-                "phone": "+49 172 334 556 87"
-            },
-            {
-                "name": "Stefan",
-                "email": "m.malte@web.de",
-                "phone": "+49 172 334 556 87"
-            },
-            {
-                "name": "Eva Maria Kunze",
-                "email": "m.malte@web.de",
-                "phone": "+49 172 334 556 87"
-            },
-        ],
-    }
-]
 let assignedContacts = [];
 let assignedContactsID = [];
 let prioButtonsColor = document.querySelectorAll('.prio-container button');
@@ -49,17 +7,30 @@ let category = '';
 let assignedToMenuOpen = false;
 let priority = '';
 let initialCircles = [];
-let subtasksArray = ["waschen", "kochen"];
+let subtasksArray = [];
+let contacts;
 
 function initAddTaskPage() {
-    renderAddTaskPage();
     includeHTML();
-    //checkUserloggedIn();
+    checkUserloggedIn();
+    loadContacts();
     navigationHighlight('addtask-link');
 }
 
+async function loadContacts() {
+    try {
+        const result = await getItem("userDataBase");
+        userDataBase = JSON.parse(result);
+        contacts = userDataBase[userObject.id].contacts;
+        renderAddTaskPage();
+    } catch (e) {
+        console.error("Loading error:", e);
+        contacts = [];
+    }
+}
+
 function generateInitials(contactNr) {
-    let fullname = userDataBase[0].contacts[contactNr].name;
+    let fullname = contacts[contactNr].name;
     return splitAndUpperCaseInitials(fullname);
 }
 
@@ -174,15 +145,15 @@ document.addEventListener('click', function (event) {
 
 function renderAddTaskPage() {
     let assignedToList = document.getElementById('contacts-to-assign-list');
-    for (let i = 0; i < userDataBase[0].contacts.length; i++) {
+    for (let i = 0; i < contacts.length; i++) {
         let firstAndLastLetter = generateInitials(i);
         assignedToList.innerHTML +=
             `<div class="listItem">
-                <li class="clickable" id="contactID${i}" onclick="assignContact('${userDataBase[0].contacts[i].name}', 'contactID${i}', 'checkButtonID${i}')">
+                <li class="clickable" id="contactID${i}" onclick="assignContact('${contacts[i].name}', 'contactID${i}', 'checkButtonID${i}')">
                     <div class="nameFrame">
                         <div class="contact-circle">
                             ${firstAndLastLetter}
-                        </div>${userDataBase[0].contacts[i].name}
+                        </div>${contacts[i].name}
                     </div>
                     <img id="checkButtonID${i}" src="./assets/img/check_button.png"> 
                 </li>
@@ -335,7 +306,7 @@ function changeSubtask(position) {
 }
 
 function createTask() {
-    let task = userDataBase[0].tasks[0];
+    let task = userDataBase[userObject.id].tasks;
     let title = document.getElementById('title');
     let dueDate = document.getElementById('dueDate');
     let category = document.getElementById('category');
