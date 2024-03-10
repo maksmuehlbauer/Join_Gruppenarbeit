@@ -2,10 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-left: auto;
-  margin-right: auto;
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
   width: 90%;
   max-width: 450px;
   max-height: 80%;
@@ -26,7 +23,9 @@
   flex-direction: row;
   align-items: center;
   gap: 35px;
-  margin-bottom: 30px;
+  padding: 15px 0 15px 20px;
+  border-radius: 10px;
+  height: 80px !important;
 }
 
 .contact:hover {
@@ -46,6 +45,11 @@
   font-size: 16px !important;
   color: #007cee;
   margin-top: 5px;
+}
+
+.contact-background-color-clicked {
+  color: white;
+  background-color: #2a3647;
 }
 
 .email-contact-opened {
@@ -130,10 +134,16 @@
   margin-bottom: 48px;
 }
 
-.back-to-contacts-img {
+.back-to-contacts-img{
   display: flex;
   justify-content: flex-end;
   margin-right: 16px;
+  cursor: pointer;
+}
+
+.back-to-contacts-img img:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
 }
 
 #contact {
@@ -428,14 +438,21 @@
   align-items: center !important;
   gap: 10px;
   margin-top: 10px;
+  cursor: pointer;
+  
 }
+
+.edit-image-contact:hover, .center-img-text:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
 .edit-delete-desktop div {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
 }
-
 
 #footer, #header {
   z-index: 10000;
@@ -465,8 +482,51 @@
   transition: opacity 0.5s linear;
 }
 
+.d-none {
+  display: none !important;
+}
 
 @media(min-width:1440px) {
+
+  .slogan-container-desktop {
+    display: flex !important;
+    padding: 210px 0 0 50px;
+    justify-content: center;
+    height: 100px;
+  }
+  .slogan-container-desktop div {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .slogan-show-contact {
+    display: flex !important;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 40px;
+  }
+
+  .contact {
+    width: 350px !important;
+    height:80px !important;
+  }
+
+  .contact:hover {
+    color: black;
+    background-color: #eee;
+  }
+  .contact-line-desktop {
+    height: 60px;
+    width: 3px;
+    background-color: #29abe2;
+    display: block !important;
+  }
+
+  .contact-underline {
+    display: none !important;
+  }
+
   #sidebar {
     width: 230px;
     background-color: #2a3647;

@@ -4,6 +4,7 @@ let showEditOptionsStatus;
 let contactOpenedStatus = false;
 let contactIndex;
 let userDataBase;
+let lastClickedContactId = null;
 
 async function initContacts() {
   renderContacts();
@@ -11,6 +12,7 @@ async function initContacts() {
   navigationHighlight('contact-link');
   checkUserloggedIn();
   loadContacts();
+  getScreenSize();
 }
 
 async function loadContacts() {
@@ -101,13 +103,38 @@ function closeContactList() {
   document.getElementById("center-contacts").classList.remove("center");
   contact.style.backgroundColor = "#F6F7F8";
 }
+let screenSize;
+window.addEventListener("resize", getScreenSize);
+
+function getScreenSize() {
+  screenSize = window.innerWidth;
+  console.log(screenSize);
+}
 
 function openContact(i) {
   if (!contactStatus) {
-    closeContactList()
+    closeContactList();
     showContact(i);
+    addBgrColorContact();
+  if(screenSize <= 1440) {
+    contactStatus = true;
   }
-  contactStatus = true;
+}
+
+function addBgrColorContact() {
+  document.getElementById("sloganContainerDesktop").classList.add('d-none');
+  if (lastClickedContactId !== null) {
+    let lastContactElement = document.getElementById(lastClickedContactId);
+    if (lastContactElement) {
+      lastContactElement.classList.remove('contact-background-color-clicked');
+    }
+  }
+  let contactElement = document.getElementById(i.toString()); 
+  if (contactElement) {
+    contactElement.classList.add('contact-background-color-clicked');
+    lastClickedContactId = i.toString();
+  }
+}
 }
 
 function showContact(i) {
@@ -125,12 +152,16 @@ function showContact(i) {
 }
 
 function closeContact() {
-  if (contactStatus) {
+  if (contactStatus || screenSize <=1440 || screenSize >= 1440) {
     contactsList.style.display = "block";
     addContactImg.style.display = "flex";
     contact.style.display = "none";
     document.getElementById("center-contacts").classList.add("center");
     contact.style.backgroundColor = "#FFFFFF";
+  }
+  if(screenSize>1440)
+  {
+    document.getElementById('sloganContainerDesktop').classList.remove('d-none');
   }
   contactStatus = false;
   contactOpenedStatus = false;
@@ -247,9 +278,16 @@ function generateContact(firstLetter,secondLetter,name,phone,email,i,bgrColor) {
     <div class="back-to-contacts-img">
     <img onclick="closeContact()" src="assets/img/back.png" alt="">
     </div>
-  <h1>Contacts</h1>
-  <span class="slogan-contact">Better with a Team</span>
-  <div class="contact-underline"></div>
+    <div>
+      
+    </div>
+    <div class="slogan-show-contact">
+      <h1>Contacts</h1>
+      <div class="contact-line-desktop"  style="display: none"></div>
+      <span class="slogan-contact">Better with a Team</span>
+      <div class="contact-underline"></div>
+    </div>
+  
   <div class="name-container">
     <div class="contact-header contact-opened" style="background-color: ${bgrColor};">
       <span><h3>${firstLetter}${secondLetter}</h3></span>
