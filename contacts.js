@@ -9,7 +9,7 @@ let lastClickedContactId = null;
 async function initContacts() {
   renderContacts();
   await includeHTML();
-  navigationHighlight('contact-link');
+  navigationHighlight("contact-link");
   checkUserloggedIn();
   loadContacts();
   getScreenSize();
@@ -27,20 +27,24 @@ async function loadContacts() {
   renderContacts();
 }
 
-async function createContact() {
-  createContactBtn.disabled = true;
+ async function addValueToContact() {
   let name = document.getElementById("name").value;
   let email = document.getElementById("email").value;
   let phone = document.getElementById("phone").value;
   const bgrColor = getRandomColor();
   let contact = {
-      name: name,
-      email: email,
-      phone: phone,
-      bgrColor: bgrColor,
-  }
+    name: name,
+    email: email,
+    phone: phone,
+    bgrColor: bgrColor,
+  };
   userDataBase[userObject["id"]].contacts.push(contact);
   await setItem("userDataBase", JSON.stringify(userDataBase));
+}
+
+async function createContact() {
+  createContactBtn.disabled = true;
+  addValueToContact();
   renderContacts();
   closeAddContactCard();
   clearForm();
@@ -50,10 +54,14 @@ async function createContact() {
 function createContactAnimation() {
   document.getElementById("centerAddContactAnimation").classList.add("active");
   document.getElementById("createContactAnimation").classList.add("active");
-  setTimeout(function() {
-    document.getElementById("centerAddContactAnimation").classList.remove("active");
-    document.getElementById("createContactAnimation").classList.remove("active");
-  },2500); 
+  setTimeout(function () {
+    document
+      .getElementById("centerAddContactAnimation")
+      .classList.remove("active");
+    document
+      .getElementById("createContactAnimation")
+      .classList.remove("active");
+  }, 2500);
 }
 
 function clearForm() {
@@ -115,26 +123,27 @@ function openContact(i) {
   if (!contactStatus) {
     closeContactList();
     showContact(i);
-    addBgrColorContact();
-  if(screenSize <= 1440) {
-    contactStatus = true;
-  }
-}
-
-function addBgrColorContact() {
-  document.getElementById("sloganContainerDesktop").classList.add('d-none');
-  if (lastClickedContactId !== null) {
-    let lastContactElement = document.getElementById(lastClickedContactId);
-    if (lastContactElement) {
-      lastContactElement.classList.remove('contact-background-color-clicked');
+    addBgrColorContact(i);
+    if (screenSize <= 1440) {
+      contactStatus = true;
     }
   }
-  let contactElement = document.getElementById(i.toString()); 
-  if (contactElement) {
-    contactElement.classList.add('contact-background-color-clicked');
-    lastClickedContactId = i.toString();
-  }
 }
+function addBgrColorContact(i) {
+  if (screenSize > 1440) {
+    document.getElementById("sloganContainerDesktop").classList.add("d-none");
+    if (lastClickedContactId !== null) {
+      let lastContactElement = document.getElementById(lastClickedContactId);
+      if (lastContactElement) {
+        lastContactElement.classList.remove("contact-background-color-clicked");
+      }
+    }
+    let contactElement = document.getElementById(i.toString());
+    if (contactElement) {
+      contactElement.classList.add("contact-background-color-clicked");
+      lastClickedContactId = i.toString();
+    }
+  }
 }
 
 function showContact(i) {
@@ -148,20 +157,25 @@ function showContact(i) {
   const phone = contact.phone;
   const email = contact.email;
   const bgrColor = contact.bgrColor;
-  content.innerHTML += generateContact(firstLetter,secondLetter,name,phone,email,i,bgrColor);
+  content.innerHTML += generateContact(firstLetter,secondLetter,name,phone,email,i,bgrColor
+  );
+}
+
+function closeContactStyles() {
+  contactsList.style.display = "block";
+  addContactImg.style.display = "flex";
+  contact.style.display = "none";
+  document.getElementById("center-contacts").classList.add("center");
+  contact.style.backgroundColor = "#FFFFFF";
+  document.getElementById(contactIndex.toString()).classList.remove('contact-background-color-clicked');
 }
 
 function closeContact() {
-  if (contactStatus || screenSize <=1440 || screenSize >= 1440) {
-    contactsList.style.display = "block";
-    addContactImg.style.display = "flex";
-    contact.style.display = "none";
-    document.getElementById("center-contacts").classList.add("center");
-    contact.style.backgroundColor = "#FFFFFF";
+  if (contactStatus || screenSize <= 1440 || screenSize >= 1440) {
+   closeContactStyles();
   }
-  if(screenSize>1440)
-  {
-    document.getElementById('sloganContainerDesktop').classList.remove('d-none');
+  if (screenSize > 1440) {
+    document.getElementById("sloganContainerDesktop").classList.remove("d-none");
   }
   contactStatus = false;
   contactOpenedStatus = false;
@@ -177,19 +191,20 @@ function showEditOptions() {
 function closeEditContactCard() {
   document.getElementById("editContactCard").classList.remove("active");
   editContactCard.classList.remove("active");
-  editContactOptions.style.display = 'flex';
+  editContactOptions.style.display = "flex";
   setTimeout(() => {
     centerEditCard.classList.remove("active");
     editContactImg.classList.add("flex");
-    overlayContacts.style.display = 'none';}, 500); 
+    overlayContacts.style.display = "none";
+  }, 500);
 }
 
 function openEditContactCard(contactIndex) {
   document.getElementById("centerEditCard").classList.add("active");
   document.getElementById("editContactCard").classList.add("active");
-  editContactOptions.style.display = 'none';
-  addContactImg.style.display = 'none';
-  overlayContacts.style.display = 'block';
+  editContactOptions.style.display = "none";
+  addContactImg.style.display = "none";
+  overlayContacts.style.display = "block";
   document.getElementById("edit-name").value = contacts[contactIndex].name;
   document.getElementById("edit-email").value = contacts[contactIndex].email;
   document.getElementById("edit-phone").value = contacts[contactIndex].phone;
@@ -199,7 +214,7 @@ async function updateContact() {
   let name = document.getElementById("edit-name").value;
   let email = document.getElementById("edit-email").value;
   let phone = document.getElementById("edit-phone").value;
-  contacts[contactIndex] = {name, email, phone, bgrColor};
+  contacts[contactIndex] = { name, email, phone, bgrColor };
   userDataBase[userObject["id"]].contacts = contacts;
   await setItem("userDataBase", JSON.stringify(userDataBase));
   renderContacts();
@@ -208,18 +223,18 @@ async function updateContact() {
 }
 
 async function deleteContact() {
-    contacts.splice(contactIndex, 1)
-    await setItem("userDataBase", JSON.stringify(userDataBase)); 
-    renderContacts();
-    closeContact();
-    closeEditContactCard();
+  contacts.splice(contactIndex, 1);
+  await setItem("userDataBase", JSON.stringify(userDataBase));
+  renderContacts();
+  closeContact();
+  closeEditContactCard();
 }
 
 function openAddContact() {
   document.getElementById("center-add-card").classList.add("active");
   document.getElementById("addContactCard").classList.add("active");
-  addContactImg.style.display = 'none';
-  overlayContacts.style.display = 'block';
+  addContactImg.style.display = "none";
+  overlayContacts.style.display = "block";
 }
 
 function closeAddContactCard() {
@@ -228,9 +243,9 @@ function closeAddContactCard() {
   addContactCard.classList.remove("active");
   setTimeout(() => {
     centerAddCard.classList.remove("active");
-    addContactImg.style.display = 'flex';
-    overlayContacts.style.display = 'none';}, 500);
-  
+    addContactImg.style.display = "flex";
+    overlayContacts.style.display = "none";
+  }, 500);
 }
 
 document.addEventListener("click", function (event) {
@@ -258,7 +273,7 @@ function generateHeadline(currentLetter) {
   `;
 }
 
-function generateContacts(email, name, secondLetter, firstLetter, i,bgrColor) {
+function generateContacts(email, name, secondLetter, firstLetter, i, bgrColor) {
   return /*HTML*/ `
       <div class="contact" id="${i}" onclick="openContact(${i})">
           <div class="contact-header" style="background-color: ${bgrColor};">
@@ -272,7 +287,15 @@ function generateContacts(email, name, secondLetter, firstLetter, i,bgrColor) {
       `;
 }
 
-function generateContact(firstLetter,secondLetter,name,phone,email,i,bgrColor) {
+function generateContact(
+  firstLetter,
+  secondLetter,
+  name,
+  phone,
+  email,
+  i,
+  bgrColor
+) {
   return /*HTML*/ `
   <div class="contact-container" id=${i}>
     <div class="back-to-contacts-img">

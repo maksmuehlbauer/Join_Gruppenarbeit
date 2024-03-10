@@ -486,8 +486,27 @@
   display: none !important;
 }
 
+#addContactDesktop {
+  position: absolute;
+  left: 280px;
+  top: 150px;
+  display: flex;
+  gap: 18px;
+  background-color: #2a3647;
+  width:350px;
+  height: 55px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 @media(min-width:1440px) {
 
+  #addContactDesktop {
+    display: flex !important;
+  }
   .slogan-container-desktop {
     display: flex !important;
     padding: 210px 0 0 50px;
@@ -542,12 +561,13 @@
   #contactsList {
     padding-left: 10px;
     max-height: 96% !important;
-    padding-top: 92px !important;
+    padding-top: 200px !important;
     display: flex !important;
     overflow-y: auto !important;
     width: 450px;
     height: 95vh;
     margin-left: 242px;
+    background-color: white;
   }
   .contacts-container {
     display: flex;
