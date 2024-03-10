@@ -99,7 +99,9 @@ async function initTasks() {
     });
 
     card.innerHTML = `
-    <div class="card-category" id="">${task.category}</div>
+    <div class="card-category" style="${
+      task.category === "Technical Task" ? "background-color: #1FD7C1;" : ""
+    }">${task.category}</div>
     <div class="card-titel">${task.title}</div>
     <div class="card-description">${task.descripton}</div>
     <div class="card-progress">
