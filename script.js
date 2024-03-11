@@ -51,26 +51,28 @@ function getHtmlElementById(id) {
 }
 
 
-function login() {
+async function login() {
     let email = getValueFromId('email');
     let password = getValueFromId('password');
   
     let searchedUser = userDataBase.find((user) => user['email'] === email && user['password'] === password);
     if (searchedUser) {
-      localStorage.setItem('userId', searchedUser.id);
-      window.location.href = 'welcome.html';
+        localStorage.setItem('userId', searchedUser.id);
+        window.location.href = 'welcome.html';
     } else {
       document.getElementById('password-dont-match').classList.remove('d-none')
       document.getElementById('password').classList.add('pw-dont-match-border')
     }
 }
 
+function skipToSummary() {
+    console.log('Hallo')
+}
+
 function guestLogin(guestId) {
     localStorage.setItem('userId', guestId);
     window.location.href = 'welcome.html';
 }
-
-
 
   async function checkUserloggedIn() {
     const userId = localStorage.getItem('userId');
@@ -232,8 +234,6 @@ function renderSignUpBoxHtml() {
 `
 }
 
-
-//pattern="(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}"
 
 function renderSignUpHtml() {
     return /*html*/`

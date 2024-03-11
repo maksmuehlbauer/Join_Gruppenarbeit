@@ -195,6 +195,10 @@
   #login-container {
     width: 625px
   }
+
+  .form-width {
+    width: 422px;
+  }
 }
 
 @media (min-width: 1440px) {
