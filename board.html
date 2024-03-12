@@ -9,6 +9,7 @@
   </head>
   <body onload="init()">
     <div w3-include-html="./assets/templates/header.html"></div>
+    <div class="overlay-task"></div>
     <div class="board">
       <div class="board-titel board-titel-head">
         <h1>Board</h1>
@@ -17,7 +18,12 @@
         </button>
       </div>
       <div class="searchbar">
-        <input type="search" placeholder="Find Task" />
+        <input
+          type="search"
+          placeholder="Find Task"
+          id="searchbar"
+          onkeyup="searchTask()"
+        />
         <button class="search-icon">
           <img src="./assets/img/search.png" alt="seach icon" />
         </button>
