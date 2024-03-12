@@ -1,5 +1,6 @@
 let assignedContacts = [];
 let assignedContactsID = [];
+let assignedContactColor = [];
 let prioButtonsColor = document.querySelectorAll('.prio-container button');
 let prioButtonsColorFont = document.querySelectorAll('.prio-container button div');
 let categoryMenuOpen = false;
@@ -10,7 +11,7 @@ let initialCircles = [];
 let subtasksArray = [];
 let contacts;
 
-async function initAddTaskPage() {  
+async function initAddTaskPage() {
     checkUserloggedIn();
     loadContacts();
     await includeHTML();
@@ -148,11 +149,12 @@ function renderAddTaskPage() {
     assignedToList.innerHTML = '';
     for (let i = 0; i < contacts.length; i++) {
         let firstAndLastLetter = generateInitials(i);
+        let backgroundColor = contacts[i].bgrColor;
         assignedToList.innerHTML +=
             `<div class="listItem">
-                <li class="clickable" id="contactID${i}" onclick="assignContact('${contacts[i].name}', 'contactID${i}', 'checkButtonID${i}')">
+                <li class="clickable" id="contactID${i}" onclick="assignContact('${contacts[i].name}', 'contactID${i}', 'checkButtonID${i}', '${backgroundColor}')">
                     <div class="nameFrame">
-                        <div class="contact-circle">
+                        <div class="contact-circle" style="background-color: ${backgroundColor}">
                             ${firstAndLastLetter}
                         </div>${contacts[i].name}
                     </div>
@@ -170,22 +172,23 @@ function addCirclesToContainer() {
     circle.innerHTML = '';
 
     for (let i = 0; i < initialCircles.length; i++) {
-        circle.innerHTML += `<div class="contact-circle">${initialCircles[i]}</div>`
+        circle.innerHTML += `<div class="contact-circle" style="background-color: ${assignedContactColor[i]}">${initialCircles[i]}</div>`
 
     }
 }
 
-function assignContact(contactName, contactID, checkButtonID) {
-    highlightSelectedContact(contactName, contactID, checkButtonID);
+function assignContact(contactName, contactID, checkButtonID, color) {
+    highlightSelectedContact(contactName, contactID, checkButtonID, color);
     changeButtonText(contactID);
 
 }
 
-function highlightSelectedContact(contactName, contactID, checkButtonID) {
+function highlightSelectedContact(contactName, contactID, checkButtonID, color) {
     let index = assignedContacts.indexOf(contactName);
     if (index === -1) {
         assignedContacts.push(contactName);
         assignedContactsID.push(contactID);
+        assignedContactColor.push(color);
         document.getElementById(contactID).classList.add('checked');
         document.getElementById(checkButtonID).src = './assets/img/check_button_checked.png';
     }
@@ -224,6 +227,7 @@ function removeContactInList(event, name, id) {
 function removeContactInArray(index, id) {
     assignedContacts.splice(index, 1);
     assignedContactsID.splice(index, 1);
+    assignedContactColor.splice(index, 1);
     document.getElementById(id).classList.remove('checked');
 }
 
@@ -329,7 +333,7 @@ async function createTask() {
     }
 }
 
-async function deleteTask(){
+async function deleteTask() {
     userDataBase[userObject.id].tasks.shift();
     await setItem("userDataBase", JSON.stringify(userDataBase));
 }
@@ -360,12 +364,12 @@ function checkRequiredFields(inputField) {
     }
 }
 
-function checkCategoryField(){
-    if(category === ''){
+function checkCategoryField() {
+    if (category === '') {
         document.getElementById('category-btn').classList.add("red-border");
         document.getElementById('category' + "-required").classList.remove("d-none");
     }
-    else{
+    else {
         document.getElementById('category-btn').classList.remove("red-border");
         document.getElementById('category' + "-required").classList.add("d-none");
     }
