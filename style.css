@@ -232,7 +232,7 @@ header {
 .add-task-container input,
 textarea,
 select {
-  border: black solid 1px;
+  border: var(--color-input-placeholder) solid 1px;
   border-radius: 10px;
   width: 100%;
   font-size: 16px;
@@ -406,7 +406,7 @@ sup {
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  border: 1px solid black;
+  border: 1px solid var(--color-input-placeholder);
   border-radius: 10px;
 }
 
@@ -510,7 +510,7 @@ sup {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid black;
+  border: 1px solid var(--color-input-placeholder);
   border-radius: 10px;
   height: 48px;
   background-color: white;
@@ -579,14 +579,27 @@ sup {
   .add-task-container {
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
-    margin-left: 232px;
+    margin-top: 206px;
+    margin-left: 328px;
+    width: calc(100% - 328px);
   }
+
+  .add-task-footnote-container{
+    width: calc(100% - 328px - 136px);
+  }
+
+  .add-task-container h1 {
+    margin-top: 0;
+    margin-bottom: 48px;
+    padding-left: 0;
+    font-size: 61px;
+}
 
   .task-input-container {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    margin: 0;
   }
 
   .title-container,
@@ -596,10 +609,6 @@ sup {
   .prio-container,
   .category-container,
   .subtasks-container {
-    padding-bottom: 50px;
-    padding-right: 40px;
-    padding-left: 40px;
-    margin-bottom: 0px !important;
     height: auto !important;
     width: 50% !important;
   }
