@@ -609,7 +609,6 @@ sup {
   .prio-container,
   .category-container,
   .subtasks-container {
-    height: auto !important;
     width: 50% !important;
   }
 
