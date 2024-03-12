@@ -184,6 +184,11 @@ function changeCheckboxStatus() {
     }
 }
 
+
+function getLength() {
+    let x = document.getElementById('toDo').children;
+}
+
 // HTML FUNCTIONS
 
 

@@ -2,6 +2,7 @@ const month = ["January","February","March","April","May","June","July","August"
 const currentDate = new Date;
 
 
+
 async function initSummary() {
     await includeHTML();
     await checkUserloggedIn();
@@ -17,8 +18,8 @@ async function initWelcome() {
     await includeHTML();
     await checkUserloggedIn();
     navigationHighlight('summary-link');
-    renderFirstLogin();
     renderSummary();
+    renderFirstLogin();
 }
 
 
@@ -30,7 +31,7 @@ function renderFirstLogin() {
 
 function renderSummary() {
     let summaryContainer = document.getElementById('summary-content');
-    summaryContainer.style.height = '0px';
+    // summaryContainer.style.height = '0px';
     summaryContainer.innerHTML += renderSummaryHtml();
 }
 
@@ -54,16 +55,38 @@ function displayDate() {
     return formatedTime
 }
 
+function getTasksLength(tasks, status) {
+    return tasks.filter( task => task.status === status)
+}
 
 
-// HTML Template functions
+function tasksCount(status) {
+    const feedbackCount = getTasksLength(userObject.tasks, status)
+    return feedbackCount.length
+}
+
+
+function getPrioLength(tasks, status) {
+    return tasks.filter( task => task.prio === status)
+}
+
+
+function prioCount(status) {
+    const feedbackCount = getPrioLength(userObject.tasks, status)
+    return feedbackCount.length
+}
+
+
+
+
+// HTML Template functionsa
 
 function firstLoginHtml() {
     return /*html*/`
     <div class="align-center">
         <div id="greetings" class="greetings">
-            <h2>Good morning,</h2>
-            <h1 id="greet-user" class="h1-blue">${userObject.name}</h1>
+            <h2 class="h2-desktop">Good morning,</h2>
+            <h1 id="greet-user" class="h1-blue h1-tasks-numbers">${userObject.name}</h1>
         </div>
     </div>
     `
@@ -73,69 +96,73 @@ function firstLoginHtml() {
 function renderSummaryHtml() {
     return /*html*/`
     <div id="summary-overview">
-        <h1 class="m-bot8">Join 360</h1>
-        <h4>Key Metrics at a Glance</h4>
-        <div class="divider-line"></div>
-        <div id="task-row-1">
-            <div class="task-card task-card-width-50">
-                <div class="img-box">
-                    <img src="./assets/img/pencil-new.png">
-                </div>
-                <div class="card-info">
-                    <h1>${userObject.tasks.length}</h1>
-                    <h5>To-do</h5>
-                </div>
-            </div>
-            <div class="task-card task-card-width-50">
-                <div class="img-box">
-                    <img src="./assets/img/check-new.png">
-                </div>
-                <div class="card-info">
-                    <h1>${userObject.tasks.length}</h1>
-                    <h5>Done</h5>
-                </div>
-            </div>
-
+        <div class="topic-box">
+            <h1 class="m-bot8 h1-desktop">Join 360</h1>
+            <h4 class="h4-desktop">Key Metrics at a Glance</h4>
+            <div class="divider-line"></div>
         </div>
-        <div id="task-row-2">
-            <div class="task-card task-card-width-100">
-                <div class="task-card-left">
+        <div class="desktop-width">
+            <div id="task-row-1">
+                <div class="task-card task-card-width-50">
                     <div class="img-box">
-                        <img src="./assets/img/urgent.png">
+                        <img src="./assets/img/pencil-new.png" class="img-scale img-hover">
                     </div>
                     <div class="card-info">
-                        <h1>${userObject.tasks.length}</h1>
-                        <h5>Urgent</h5>
+                        <h1 class="h1-tasks-numbers">${tasksCount('toDo')}</h1>
+                        <h5 class="h5-desktop-20px">To-do</h5>
                     </div>
                 </div>
-                <div class="vertical-divider"></div>
-                <div class="task-card-right">
-                    <span class="actual-date">${displayDate()}</span>
-                    <h5>Upcoming Deadline</h5> 
+                <div class="task-card task-card-width-50 scale-left">
+                    <div class="img-box">
+                        <img src="./assets/img/check-new.png" class="img-scale img-hover">
+                    </div>
+                    <div class="card-info">
+                        <h1 class="h1-tasks-numbers">${tasksCount('done')}</h1>
+                        <h5 class="h5-desktop-20px">Done</h5>
+                    </div>
                 </div>
 
             </div>
-        </div>
-        <div id="task-row-3">
-            <div class="task-card task-card-width-33">
-                <div class="card-info">
-                    <h1>${userObject.tasks.length}</h1>
-                    <h5>Tasks in Board</h5>
-                </div>
-            </div>
-            <div class="task-card task-card-width-33">
-                <div class="card-info">
-                    <h1>${userObject.tasks.length}</h1>
-                    <h5>Tasks in Progress</h5>
-                </div>
-            </div>
-            <div class="task-card task-card-width-33">
-                <div class="card-info">
-                    <h1>${userObject.tasks.length}</h1>
-                    <h5>Awaiting Feedback</h5>
-                </div>
-            </div>
+            <div id="task-row-2">
+                <div class="task-card task-card-width-100">
+                    <div class="task-card-left">
+                        <div class="img-box">
+                            <img src="./assets/img/urgent.png">
+                        </div>
+                        <div class="card-info">
+                            <h1 class="h1-tasks-numbers">${prioCount('high')}</h1>
+                            <h5 class="h5-desktop-20px">Urgent</h5>
+                        </div>
+                    </div>
+                    <div class="vertical-divider"></div>
+                    <div class="task-card-right">
+                        <span class="actual-date">${displayDate()}</span>
+                        <h5 class="h5-desktop-16px">Upcoming Deadline</h5> 
+                    </div>
 
+                </div>
+            </div>
+            <div id="task-row-3">
+                <div class="task-card task-card-width-33">
+                    <div class="card-info">
+                        <h1 class="h1-tasks-numbers">${userObject.tasks.length}</h1>
+                        <h5 class="h5-desktop-20px">Tasks in Board</h5>
+                    </div>
+                </div>
+                <div class="task-card task-card-width-33 scale-center">
+                    <div class="card-info">
+                        <h1 class="h1-tasks-numbers">${tasksCount('progress')}</h1>
+                        <h5 class="h5-desktop-20px">Tasks in Progress</h5>
+                    </div>
+                </div>
+                <div class="task-card task-card-width-33 scale-left">
+                    <div class="card-info">
+                        <h1 class="h1-tasks-numbers">${tasksCount('feedback')}</h1>
+                        <h5 class="h5-desktop-20px">Awaiting Feedback</h5>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 `
