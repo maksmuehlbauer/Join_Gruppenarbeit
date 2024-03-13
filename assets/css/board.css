@@ -186,6 +186,15 @@ input {
   }
 }
 
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .task-card-open {
   display: flex;
   flex-direction: column;
@@ -194,14 +203,66 @@ input {
   padding: 32px 24px;
   border-radius: 30px;
   background-color: var(--color-white);
+  animation: slideInFromRight 0.2s ease-out;
+
+  & .txt-gray {
+    color: #42526e;
+  }
 
   & .card-category-wrapper {
     display: flex;
     justify-content: space-between;
   }
 
+  & .card-category {
+    color: var(--color-white);
+    display: inline-block;
+    padding: 4px 16px;
+    background-color: var(--color-userstory);
+    border-radius: 8px;
+  }
+
+  & .card-titel {
+    font-size: 36px;
+    font-weight: 700;
+  }
+
+  & .card-due-date > span {
+    margin-right: 25px;
+  }
+
+  & .card-priority {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    & span {
+      margin-right: 35px;
+    }
+  }
+
+  & .card-contacts-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 10px 0 10px 16px;
+    gap: 12px;
+
+    & .card-contacts {
+      font-size: 12px;
+      color: var(--color-white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--color-white);
+      border-radius: 50%;
+    }
+  }
+
   .card-close {
     cursor: pointer;
+    width: 13.15px;
+    height: 13.15px;
   }
 
   & .card-edit {
@@ -222,5 +283,14 @@ input {
       height: 24px;
       border-left: solid #d1d1d1 1px;
     }
+  }
+}
+
+@keyframes slideOutToRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
   }
 }

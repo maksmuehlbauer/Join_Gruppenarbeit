@@ -78,16 +78,9 @@ async function initTasks() {
       task.status = "toDo";
     }
     task.id = index;
-    const parentDiv = document.getElementById(task.status);
-    const card = document.createElement("div");
-    card.className = "task-card";
-    card.id = task.id;
-    card.setAttribute("draggable", true);
-    card.setAttribute("ondragstart", "drag(event)");
-    card.setAttribute("onclick", "openTask(this.id)");
-
-    const colorPalette = ["#ff7a00", "#1fd7c1", "#462f8a"];
     let assignedHTML = "";
+    let assignedHTMLforOpenCard = "";
+    const colorPalette = ["#ff7a00", "#1fd7c1", "#462f8a"];
     task.assignto.forEach((fullName, index) => {
       const initials = fullName
         .split(" ")
@@ -96,7 +89,18 @@ async function initTasks() {
         .join("");
       const color = colorPalette[index % colorPalette.length];
       assignedHTML += `<div class="card-contacts" style="background-color: ${color}">${initials}</div>`;
+      assignedHTMLforOpenCard += `<div class="card-contacts-wrapper"><div class="card-contacts" style="background-color: ${color}">${initials}</div><div>${fullName}</div></div>`;
     });
+    const parentDiv = document.getElementById(task.status);
+    const card = document.createElement("div");
+    card.className = "task-card";
+    card.id = task.id;
+    card.setAttribute("draggable", true);
+    card.setAttribute("ondragstart", "drag(event)");
+    card.setAttribute(
+      "onclick",
+      `openTask(this.id, '${assignedHTMLforOpenCard}')`
+    );
 
     card.innerHTML = `
     <div class="card-category" style="${
@@ -127,23 +131,35 @@ async function initTasks() {
   });
 }
 
-function openTask(id) {
+function openTask(id, assignedHTML) {
   const overlayTask = document.querySelector(".overlay-task");
   const task = userObject.tasks[id];
+  const dateString = task.dueDate;
+  const date = new Date(dateString);
+  const usDate = date.toLocaleDateString("en-US", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
   overlayTask.innerHTML = `<div class="task-card-open">
   <div class="card-category-wrapper">
-    <div class="card-category">${task.category}</div>
+    <div class="card-category" style="${
+      task.category === "Technical Task" ? "background-color: #1FD7C1;" : ""
+    }">${task.category}</div>
     <img src="./assets/img/close_black.png" alt="close icon" class="card-close" onclick="closeTask()" />
   </div>
   <div class="card-titel">${task.title}</div>
   <div class="card-description">${task.descripton}</div>
-  <div class="card-due-date"><span>Due date:</span> ${task.dueDate}</div>
+  <div class="card-due-date"><span class="txt-gray">Due date:</span> ${usDate}</div>
   <div class="card-priority">
-    <span>Priority</span> ${task.prio}
+    <span class="txt-gray">Priority:</span> ${task.prio}
     <img src="./assets/img/${task.prio}.png" alt="priority icon" />
   </div>
-  <div class="card-assigned"><span>Assigned To:</span>123</div>
-  <div class="card-subtasks"><span>Subtasks</span></div>
+  <div class="card-assigned"><span class="txt-gray">Assigned To:</span><div class="card-assigned">
+  ${assignedHTML}
+  </div></div>
+  <div class="card-subtasks"><span class="txt-gray">Subtasks</span></div>
   <div class="card-edit">
     <div onclick="deleteTask(${id})">
       <img src="./assets/img/delete.png" alt="delete icon" /><span>Delete</span>
@@ -159,7 +175,12 @@ function openTask(id) {
 
 function closeTask() {
   const overlayTask = document.querySelector(".overlay-task");
-  overlayTask.style.display = "none";
+  const taskCardOpen = document.querySelector(".task-card-open");
+  taskCardOpen.style.animation = "slideOutToRight 0.1s ease-in-out forwards";
+  taskCardOpen.addEventListener("animationend", () => {
+    overlayTask.style.display = "none";
+    taskCardOpen.style.animation = "";
+  });
 }
 
 async function deleteTask(id) {
