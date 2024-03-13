@@ -295,6 +295,10 @@ input {
   }
 }
 
+.add-task-btn-desktop {
+  display: none;
+}
+
 @media screen and (min-width: 1440px) {
   .board {
     width: 1440px;
