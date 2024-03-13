@@ -11,87 +11,95 @@
     <div w3-include-html="./assets/templates/header.html"></div>
     <div class="overlay-task"></div>
     <div class="board">
-      <div class="board-titel board-titel-head">
-        <h1>Board</h1>
-        <button type="button" class="add-task-btn btn-head">
+      <div class="header-wrapper">
+        <div class="board-titel board-titel-head">
+          <h1>Board</h1>
+          <button type="button" class="add-task-btn btn-head">
+            <img src="./assets/img/board-plus.png" alt="add Task button" />
+          </button>
+        </div>
+        <div class="searchbar">
+          <input
+            type="search"
+            placeholder="Find Task"
+            id="searchbar"
+            onkeyup="searchTask()"
+          />
+          <button class="search-icon">
+            <img src="./assets/img/search.png" alt="seach icon" />
+          </button>
+        </div>
+        <button type="button" class="add-task-btn-desktop btn-head">
+          <span>Add Task</span>
           <img src="./assets/img/board-plus.png" alt="add Task button" />
         </button>
       </div>
-      <div class="searchbar">
-        <input
-          type="search"
-          placeholder="Find Task"
-          id="searchbar"
-          onkeyup="searchTask()"
-        />
-        <button class="search-icon">
-          <img src="./assets/img/search.png" alt="seach icon" />
-        </button>
+      <div class="columns-wrapper">
+        <section class="column">
+          <div class="board-titel">
+            <h3>To do</h3>
+            <button type="button" class="add-task-btn">
+              <img src="./assets/img/plus-button.png" alt="add Task button" />
+            </button>
+          </div>
+          <div
+            class="task-cards-container"
+            ondrop="drop(event)"
+            ondragover="allowDrop(event)"
+            id="toDo"
+          >
+            <div class="no-tasks">No tasks To do</div>
+          </div>
+        </section>
+        <section class="column">
+          <div class="board-titel">
+            <h3>In progress</h3>
+            <button type="button" class="add-task-btn">
+              <img src="./assets/img/plus-button.png" alt="add Task button" />
+            </button>
+          </div>
+          <div
+            class="task-cards-container"
+            ondrop="drop(event)"
+            ondragover="allowDrop(event)"
+            id="progress"
+          >
+            <div class="no-tasks">No tasks To do</div>
+          </div>
+        </section>
+        <section class="column">
+          <div class="board-titel">
+            <h3>Await feedback</h3>
+            <button type="button" class="add-task-btn">
+              <img src="./assets/img/plus-button.png" alt="add Task button" />
+            </button>
+          </div>
+          <div
+            class="task-cards-container"
+            ondrop="drop(event)"
+            ondragover="allowDrop(event)"
+            id="feedback"
+          >
+            <div class="no-tasks">No tasks To do</div>
+          </div>
+        </section>
+        <section class="column">
+          <div class="board-titel">
+            <h3>Done</h3>
+            <button type="button" class="add-task-btn">
+              <img src="./assets/img/plus-button.png" alt="add Task button" />
+            </button>
+          </div>
+          <div
+            class="task-cards-container"
+            ondrop="drop(event)"
+            ondragover="allowDrop(event)"
+            id="done"
+          >
+            <div class="no-tasks">No tasks To do</div>
+          </div>
+        </section>
       </div>
-      <section class="column">
-        <div class="board-titel">
-          <h3>To do</h3>
-          <button type="button" class="add-task-btn">
-            <img src="./assets/img/plus-button.png" alt="add Task button" />
-          </button>
-        </div>
-        <div
-          class="task-cards-container"
-          ondrop="drop(event)"
-          ondragover="allowDrop(event)"
-          id="toDo"
-        >
-          <div class="no-tasks">No tasks To do</div>
-        </div>
-      </section>
-      <section class="column">
-        <div class="board-titel">
-          <h3>In progress</h3>
-          <button type="button" class="add-task-btn">
-            <img src="./assets/img/plus-button.png" alt="add Task button" />
-          </button>
-        </div>
-        <div
-          class="task-cards-container"
-          ondrop="drop(event)"
-          ondragover="allowDrop(event)"
-          id="progress"
-        >
-          <div class="no-tasks">No tasks To do</div>
-        </div>
-      </section>
-      <section class="column">
-        <div class="board-titel">
-          <h3>Await feedback</h3>
-          <button type="button" class="add-task-btn">
-            <img src="./assets/img/plus-button.png" alt="add Task button" />
-          </button>
-        </div>
-        <div
-          class="task-cards-container"
-          ondrop="drop(event)"
-          ondragover="allowDrop(event)"
-          id="feedback"
-        >
-          <div class="no-tasks">No tasks To do</div>
-        </div>
-      </section>
-      <section class="column">
-        <div class="board-titel">
-          <h3>Done</h3>
-          <button type="button" class="add-task-btn">
-            <img src="./assets/img/plus-button.png" alt="add Task button" />
-          </button>
-        </div>
-        <div
-          class="task-cards-container"
-          ondrop="drop(event)"
-          ondragover="allowDrop(event)"
-          id="done"
-        >
-          <div class="no-tasks">No tasks To do</div>
-        </div>
-      </section>
     </div>
     <div w3-include-html="./assets/templates/navigation.html"></div>
     <script src="./storage.js"></script>

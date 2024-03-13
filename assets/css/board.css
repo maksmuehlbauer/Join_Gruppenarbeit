@@ -294,3 +294,84 @@ input {
     transform: translateX(100%);
   }
 }
+
+@media screen and (min-width: 1440px) {
+  .board {
+    width: 1440px;
+    padding: 75.5px 64px 0 296px;
+  }
+
+  .header-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .board-titel-head {
+    margin: 0;
+    margin-right: 376px;
+  }
+
+  .board-titel {
+    display: flex;
+    align-items: center;
+    height: 72px;
+  }
+
+  .add-task-btn {
+    display: none;
+  }
+
+  .columns-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .task-cards-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-x: unset;
+    -webkit-overflow-scrolling: unset;
+    overflow-y: unset;
+    white-space: nowrap;
+  }
+
+  .column {
+    width: 252px;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-size: 20px;
+    color: #42526e;
+  }
+
+  .btn-head {
+    width: 160px;
+    height: 48px;
+    background-color: var(--color-primary);
+  }
+
+  .add-task-btn-desktop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 160px;
+    font-size: 21px;
+    font-weight: 700;
+    padding: 12px 16px !important;
+    color: var(--color-white);
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+
+    & img {
+      width: 18.67px;
+      height: 18.67px;
+    }
+  }
+}
