@@ -116,6 +116,7 @@ input {
     padding: 4px 16px;
     background-color: var(--color-userstory);
     border-radius: 8px;
+    width: fit-content;
   }
 
   & .card-titel {
