@@ -34,6 +34,9 @@ function renderSignUp() {
 function renderLogIn() {
     document.getElementById('sign-up-box').classList.remove('d-none')
     let logInBox = document.getElementById('login-container');
+
+    
+
     logInBox.innerHTML = '';
     logInBox.innerHTML += renderLogInHtml();
     

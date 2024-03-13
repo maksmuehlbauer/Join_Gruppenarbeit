@@ -55,6 +55,8 @@
     background-color: white;
     padding: 18px 19px;
     border-radius: 20px;
+    text-decoration: none;
+    color: black;
 }
 
 .task-card-width-50 {
@@ -212,8 +214,6 @@
         padding: 47px 19px;
         border-radius: 20px;
         cursor: pointer;
-        text-decoration: none;
-        color: black;
     }
 
     .task-card:hover {

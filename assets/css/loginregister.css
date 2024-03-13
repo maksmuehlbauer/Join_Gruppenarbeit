@@ -25,12 +25,21 @@
 }
 
 .login-logo {
-  height: 79px;
   object-fit: cover;
   position: absolute;
   top: 37px;
-  left: 37px;
+  left: 37px; 
+  height: 79px;
+  animation: logo-scale-mobile 1.0s ease-in-out;
+  z-index: 22;
 }
+
+@keyframes logo-scale-mobile {
+  0% {top: calc(50vh - 61px);
+    left: calc(50vw - 50px); height: 121px;}
+  100% {height: 79px;}
+}
+
 
 #content {
   display: flex;
@@ -191,6 +200,21 @@
   font-size: 14px;
 }
 
+.start-animation {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-primary);
+  z-index: -1;
+  opacity: 0;
+  animation: onload 1.0s ease-in-out;
+}
+
+@keyframes onload {
+  0% { opacity: 1; }
+  100% { opacity: 0}
+}
+
 @media (min-width: 625px) {
   #login-container {
     width: 625px
@@ -208,7 +232,14 @@
     position: absolute;
     top: 80px;
     left: 77px;
+    animation: logo-scale-desktop 1.0s ease-in-out;
   }
+
+  @keyframes logo-scale-desktop {
+  0% {top: calc(50vh - 167px); left: calc(50vw - 137px); height: 334px;}
+  100% {height: 121px;}
+}
+
 
   #sign-up-box {
     top: 67px;
@@ -266,5 +297,16 @@
     text-decoration: none;
     font-weight: 700;
   }
+
+  .start-animation {
+    background-color: white;
+    z-index: -1;
+  }
   
+  @keyframes onload {
+    0% { opacity: 1; z-index: 11;}
+    100% { opacity: 0;}
+  }
 }
+
+
