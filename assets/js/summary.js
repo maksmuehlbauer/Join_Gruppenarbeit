@@ -11,6 +11,8 @@ async function initSummary() {
     noCssAnimationSummary();
     renderFirstLogin();
     noCssAnimationGreetings()
+    changeGreeting();
+    guestLogin()
 }
 
 
@@ -20,6 +22,8 @@ async function initWelcome() {
     navigationHighlight('summary-link');
     renderSummary();
     renderFirstLogin();
+    changeGreeting();
+    guestLogin();
 }
 
 
@@ -48,11 +52,25 @@ function noCssAnimationGreetings() {
 
 
 function displayDate() {
-    let day = currentDate.getDate();
+    let day = currentDate.getDate() +2 ;
     let monthIndex = currentDate.getMonth();
     let year = currentDate.getFullYear();
     let formatedTime = month[monthIndex] + ' ' + day + ', ' + year;
     return formatedTime
+}
+
+
+function changeGreeting() {
+    let currentHour = currentDate.getHours()
+    if (currentHour > 4 && currentHour < 12) {
+        return document.getElementById('greet-user-time').innerHTML = 'Good morning,';
+    }
+    if (currentHour > 12 && currentHour < 19) {
+        return document.getElementById('greet-user-time').innerHTML = 'Good day,';
+    }
+    if (currentHour > 19 && currentHour < 4) {
+        return document.getElementById('greet-user-time').innerHTML = 'Good evening,';
+    }
 }
 
 function getTasksLength(tasks, status) {
@@ -76,7 +94,14 @@ function prioCount(status) {
     return feedbackCount.length
 }
 
-
+function guestLogin() {
+    greet = changeGreeting()
+    guestId = localStorage.getItem('userId');
+    if (guestId === '8') {
+        document.getElementById('greet-user-time').innerHTML = `${greet.slice(0, greet.length - 1)}`;
+        document.getElementById('greet-user').remove()
+    }
+}
 
 
 // HTML Template functionsa
@@ -85,7 +110,7 @@ function firstLoginHtml() {
     return /*html*/`
     <div class="align-center">
         <div id="greetings" class="greetings">
-            <h2 class="h2-desktop">Good morning,</h2>
+            <h2 id="greet-user-time" class="h2-desktop">Good morning,</h2>
             <h1 id="greet-user" class="h1-blue h1-tasks-numbers">${userObject.name}</h1>
         </div>
     </div>
@@ -103,31 +128,34 @@ function renderSummaryHtml() {
         </div>
         <div class="desktop-width">
             <div id="task-row-1">
-                <div class="task-card task-card-width-50">
+                <a href="board.html" class="task-card task-card-width-50">
                     <div class="img-box">
-                        <img src="./assets/img/pencil-new.png" class="img-scale img-hover">
+                        <div class="img-pencil">
+                        </div>
                     </div>
                     <div class="card-info">
                         <h1 class="h1-tasks-numbers">${tasksCount('toDo')}</h1>
                         <h5 class="h5-desktop-20px">To-do</h5>
                     </div>
-                </div>
-                <div class="task-card task-card-width-50 scale-left">
+                </a>
+                <a href="board.html" class="task-card task-card-width-50 scale-left">
                     <div class="img-box">
-                        <img src="./assets/img/check-new.png" class="img-scale img-hover">
+                        <div class="img-check">
+                        </div>
                     </div>
                     <div class="card-info">
                         <h1 class="h1-tasks-numbers">${tasksCount('done')}</h1>
                         <h5 class="h5-desktop-20px">Done</h5>
                     </div>
-                </div>
+                </a>
 
             </div>
             <div id="task-row-2">
-                <div class="task-card task-card-width-100">
+                <a href="board.html" class="task-card task-card-width-100">
                     <div class="task-card-left">
-                        <div class="img-box">
-                            <img src="./assets/img/urgent.png">
+                        <div class="img-box img-urgent">
+
+                            <!-- <img src="./assets/img/urgent.png"> -->
                         </div>
                         <div class="card-info">
                             <h1 class="h1-tasks-numbers">${prioCount('high')}</h1>
@@ -139,29 +167,27 @@ function renderSummaryHtml() {
                         <span class="actual-date">${displayDate()}</span>
                         <h5 class="h5-desktop-16px">Upcoming Deadline</h5> 
                     </div>
-
-                </div>
+                </a>
             </div>
             <div id="task-row-3">
-                <div class="task-card task-card-width-33">
+                <a href="board.html" class="task-card task-card-width-33">
                     <div class="card-info">
                         <h1 class="h1-tasks-numbers">${userObject.tasks.length}</h1>
                         <h5 class="h5-desktop-20px">Tasks in Board</h5>
                     </div>
-                </div>
-                <div class="task-card task-card-width-33 scale-center">
+                </a>
+                <a href="board.html" class="task-card task-card-width-33 scale-center">
                     <div class="card-info">
                         <h1 class="h1-tasks-numbers">${tasksCount('progress')}</h1>
                         <h5 class="h5-desktop-20px">Tasks in Progress</h5>
                     </div>
-                </div>
-                <div class="task-card task-card-width-33 scale-left">
+                </a>
+                <a href="board.html" class="task-card task-card-width-33 scale-left">
                     <div class="card-info">
                         <h1 class="h1-tasks-numbers">${tasksCount('feedback')}</h1>
                         <h5 class="h5-desktop-20px">Awaiting Feedback</h5>
                     </div>
-                </div>
-
+                </a>
             </div>
         </div>
     </div>

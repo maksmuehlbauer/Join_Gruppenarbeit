@@ -98,6 +98,28 @@
     height: 40px;
     border-radius: 999px;
     background-color: var(--color-primary);
+ }
+
+ .img-pencil {
+    height: 40px;
+    width: 40px;
+    background-image: url("../img/pencil-new.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.img-check {
+    height: 40px;
+    width: 40px;
+    background-image: url("../img/check-mobile.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.img-urgent {
+    background-image: url("../img/urgent.png");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .card-info {
@@ -190,6 +212,8 @@
         padding: 47px 19px;
         border-radius: 20px;
         cursor: pointer;
+        text-decoration: none;
+        color: black;
     }
 
     .task-card:hover {
@@ -251,6 +275,31 @@
 
     .h1-blue {
         text-align: left;
+    }
+
+    .img-pencil {
+        background-image: url("../img/edit-summary.png");
+    }
+
+    .task-card:hover .img-pencil {
+        background-image: url("../img/edit-summary-hover.png");
+    }
+    
+    .img-check {
+        background-image: url("../img/check-desktop.png");
+    }
+
+    .task-card:hover .img-check {
+        background-image: url("../img/check-desktop-hover.png");
+    }
+    
+    .img-urgent {
+        background-image: url("../img/urgend-desktop.png");
+        background-color: white;
+    }
+
+    .task-card:hover .img-urgent {
+        background-color: var(--color-primary);
     }
 
 }
