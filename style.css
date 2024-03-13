@@ -221,7 +221,8 @@ header {
   display: flex;
   flex-direction: column;
   margin-top: 50px;
-  max-height: calc(100vh - 240px)
+  height: calc(100vh - 240px);
+  overflow-y: scroll;
 }
 
 .add-task-container h1 {
@@ -279,8 +280,8 @@ select {
 }
 
 .task-input-container {
+  height: 606px;
   margin: 0 16px;
-  overflow-y: scroll;
 }
 
 .task-input-container .title-container {
@@ -363,6 +364,8 @@ select {
   margin-bottom: 16px;
 }
 
+
+
 .task-input-container .subtasks-container {
   height: 75px;
 }
@@ -416,6 +419,7 @@ sup {
   font-size: 16px;
   display: flex;
   align-items: center;
+  color: #a8a8a8;
 }
 
 #category-dropdown-menu {
@@ -528,6 +532,11 @@ sup {
   width: 100%;
 }
 
+#subtasks-list-container {
+  max-height: 201px;
+  overflow-y: scroll;
+}
+
 
 .subtasks-container input {
   flex: 1;
@@ -577,72 +586,126 @@ sup {
 }
 
 @media (min-width: 1440px) {
-  .add-task-container {
-    display: flex;
-    flex-direction: column;
-    margin-top: 206px;
-    margin-left: 328px;
-    width: calc(100% - 328px);
+  .task-input-container .assigned-to-container {
+    height: 100px;
+    margin-bottom: 230px;
   }
 
-  .add-task-footnote-container{
-    width: calc(100% - 328px - 136px);
-  }
-
-  .add-task-container h1 {
-    margin-top: 0;
-    margin-bottom: 48px;
-    padding-left: 0;
-    font-size: 61px;
+  .add-task-container input,
+  select,
+  #assigned-to-btn,
+  #category-btn{
+  height: 48px;
 }
 
-  .task-input-container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    margin: 0;
-  }
 
-  .title-container,
-  .description-container,
-  .assigned-to-container,
-  .due-date-container,
-  .prio-container,
-  .category-container,
-  .subtasks-container {
-    width: 50% !important;
-  }
+.subtasks-container input {
+  height: 46px
+}
 
-  .title-container {
-    order: 1;
-    border-right: 2px solid #D1D1D1;
-  }
+.add-task-container input,
+textarea,
+select,
+#highPrioButtonFont,
+#mediumPrioButtonFont,
+#lowPrioButtonFont,
+#category-dropdown-menu,
+#assigned-to-btn #buttontext,
+#category-btn div,
+#contacts-to-assign-container,
+.input-button-container {
+  font-size: 20px;
+}
 
-  .description-container {
-    order: 2;
-    border-right: 2px solid #D1D1D1;
-  }
+.add-task-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 206px;
+  margin-left: 328px;
+  width: calc(100% - 328px);
+}
 
-  .assigned-to-container {
-    order: 3;
-    border-right: 2px solid #D1D1D1;
-  }
+.add-task-footnote-container {
+  width: calc(100% - 328px - 136px);
+}
 
-  .due-date-container {
-    order: 4;
-  }
+.add-task-container h1 {
+  margin-top: 0;
+  margin-bottom: 48px;
+  padding-left: 0;
+  font-size: 61px;
+}
 
-  .prio-container {
-    order: 5;
-  }
+.task-input-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 0;
+  max-width: 1400px;
+}
 
-  .category-container {
-    order: 6;
-  }
+.title-container,
+.description-container,
+.assigned-to-container {
 
-  .subtasks-container {
-    order: 7;
-  }
+  padding-right: 48.5px;
+}
+
+.due-date-container,
+.prio-container,
+.category-container,
+.subtasks-container {
+
+  margin-left: 48.5px;
+  margin-right: 135.75px;
+}
+
+.listItem:hover{
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.assigned-contacts-button, img{
+  cursor: pointer;
+}
+
+.title-container {
+  order: 1;
+  border-right: 1px solid #D1D1D1;
+  height: 112px !important;
+  margin-bottom: 0 !important;
+}
+
+.description-container {
+  order: 2;
+  border-right: 1px solid #D1D1D1;
+  height: 128px !important;
+  margin-bottom: 0 !important;
+}
+
+.assigned-to-container {
+  order: 3;
+  height: 128px !important;
+  border-right: 1px solid #D1D1D1;
+}
+
+.due-date-container {
+  order: 4;
+}
+
+.prio-container {
+  order: 5;
+}
+
+.category-container {
+  order: 6;
+}
+
+.subtasks-container {
+  order: 7;
+}
 }
 
 

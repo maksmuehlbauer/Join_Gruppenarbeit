@@ -229,6 +229,7 @@ function removeContactInArray(index, id) {
     assignedContactsID.splice(index, 1);
     assignedContactColor.splice(index, 1);
     document.getElementById(id).classList.remove('checked');
+    document.querySelector(`#${id} img`).src = './assets/img/check_button.png';
 }
 
 document.getElementById('subtasks').addEventListener('keypress', function (event) {
