@@ -108,7 +108,7 @@ function closeContactList() {
   contactsList.style.display = "none";
   addContactImg.style.display = "none";
   contact.style.display = "flex";
-  document.getElementById("center-contacts").classList.remove("center");
+  document.getElementById("center-contacts").classList.remove ("center");
   contact.style.backgroundColor = "#F6F7F8";
 }
 let screenSize;
@@ -126,6 +126,9 @@ function openContact(i) {
     addBgrColorContact(i);
     if (screenSize <= 1440) {
       contactStatus = true;
+    }
+    else {
+
     }
   }
 }

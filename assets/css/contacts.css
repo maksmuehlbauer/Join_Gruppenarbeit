@@ -94,7 +94,8 @@
   width: 32px;
 }
 
-.editContactImg, .addContactImg {
+.editContactImg,
+.addContactImg {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -134,7 +135,7 @@
   margin-bottom: 48px;
 }
 
-.back-to-contacts-img{
+.back-to-contacts-img {
   display: flex;
   justify-content: flex-end;
   margin-right: 16px;
@@ -453,10 +454,13 @@
   gap: 10px;
   margin-top: 10px;
   cursor: pointer;
-  
 }
 
-.edit-image-contact:hover, .center-img-text:hover, .cancel-add-contact:hover, #createContactBtn:hover,.close-card-desktop img:hover {
+.edit-image-contact:hover,
+.center-img-text:hover,
+.cancel-add-contact:hover,
+#createContactBtn:hover,
+.close-card-desktop img:hover {
   transform: scale(1.05);
   transition: transform 0.3s ease;
 }
@@ -468,7 +472,8 @@
   gap: 10px;
 }
 
-#footer, #header {
+#footer,
+#header {
   z-index: 10000;
 }
 
@@ -505,7 +510,7 @@
   display: flex;
   gap: 18px;
   background-color: #2a3647;
-  width:350px;
+  width: 350px;
   height: 55px;
   color: white;
   font-weight: 700;
@@ -551,21 +556,35 @@ button {
   gap: 24px;
 }
 
-@media(max-width: 1440px) {
+
+@media (max-width: 1440px) {
   #addContactDesktop {
     display: none !important;
   }
-  #logoDesktopContact, .cancel-add-contact, .close-card-desktop  {
+
+  .center {
+    overflow: visible;
+  }
+  #logoDesktopContact,
+  .cancel-add-contact,
+  .close-card-desktop {
     display: none;
   }
 
   .slogan-container-desktop {
     display: none;
   }
+
+  #contactsList{
+    width: 100% !important;
+  }
+
+  .center {
+    display: block !important;
+  }
 }
 
-@media(min-width:1440px) {
-
+@media (min-width: 1440px) {
   #createContactBtn {
     margin-left: 0;
     margin-right: 0;
@@ -595,7 +614,8 @@ button {
 
   .contact {
     width: 350px !important;
-    height:80px !important;
+    height: 80px !important;
+    margin-bottom: 8px !important;
   }
 
   .contact:hover {
@@ -619,7 +639,9 @@ button {
     height: 100%;
     display: flex !important;
   }
-  #footer, #editContactImg, #addContactImg {
+  #footer,
+  #editContactImg,
+  #addContactImg {
     display: none !important;
   }
   .center {
@@ -636,6 +658,11 @@ button {
     margin-left: 242px;
     background-color: white;
     max-width: 450px;
+    padding-bottom: 180px;
+  }
+
+  .desktop-add-contact-container {
+    width: 100% !important;
   }
   .contacts-container {
     display: flex;
@@ -643,7 +670,7 @@ button {
   #header {
     display: flex !important;
   }
-  #contact{
+  #contact {
     z-index: auto;
   }
   .container-desktop {
@@ -729,3 +756,4 @@ button {
     transform: translateX(100%);
   }
 }
+/* // das problem liegt bei center bei center contacts */
