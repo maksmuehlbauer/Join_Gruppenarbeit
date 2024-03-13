@@ -3,12 +3,13 @@
   flex-direction: column;
   justify-content: flex-start;
   margin: auto;
-  width: 90%;
-  max-width: 450px;
-  max-height: 80%;
+  width: 100%;
+  height: 90vh;
   overflow-y: auto; /* Vertikales scrollen im container */
   margin: 20px 0;
-  padding-top: 30px !important;
+  padding-top: 80px;
+  padding-left: 16px;
+  background-color: white !important;
 }
 
 .underline {
@@ -98,9 +99,8 @@
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 758px;
-  left: 330px;
-  right: 20px;
+  bottom: 150px;
+  right: 36px;
   height: 56px;
   width: 56px;
   border-radius: 100%;
@@ -501,19 +501,24 @@
 }
 
 #addContactDesktop {
-  position: absolute;
-  left: 280px;
-  top: 150px;
+  margin-top: 300px;
   display: flex;
   gap: 18px;
   background-color: #2a3647;
   width:350px;
   height: 55px;
   color: white;
+  font-weight: 700;
+  font-size: 21px;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   cursor: pointer;
+  margin-left: 280px;
+}
+
+.desktop-add-contact-container {
+  background-color: white;
 }
 
 button {
@@ -551,6 +556,10 @@ button {
     display: none !important;
   }
   #logoDesktopContact, .cancel-add-contact, .close-card-desktop  {
+    display: none;
+  }
+
+  .slogan-container-desktop {
     display: none;
   }
 }
@@ -619,13 +628,14 @@ button {
   #contactsList {
     padding-left: 10px;
     max-height: 96% !important;
-    padding-top: 200px !important;
+    padding-top: 0;
     display: flex !important;
     overflow-y: auto !important;
     width: 450px;
     height: 95vh;
     margin-left: 242px;
     background-color: white;
+    max-width: 450px;
   }
   .contacts-container {
     display: flex;
