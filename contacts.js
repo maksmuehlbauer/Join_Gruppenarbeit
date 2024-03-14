@@ -5,6 +5,7 @@ let contactOpenedStatus = false;
 let contactIndex;
 let userDataBase;
 let lastClickedContactId = null;
+let screenSize;
 
 async function initContacts() {
   renderContacts();
@@ -69,12 +70,15 @@ function clearForm() {
   document.getElementById("email").value = "";
   document.getElementById("phone").value = "";
 }
-
+let firstLetterGlobal;
+let secondLetterGlobal;
 function extractInitials(contact) {
   const firstLetter = contact.name[0].toUpperCase();
   const parts = contact.name.split(" ");
   const lastName = parts[parts.length - 1];
   const secondLetter = lastName[0].toUpperCase();
+  secondLetterGlobal = secondLetter;
+  firstLetterGlobal = firstLetter;
   return { firstLetter, secondLetter };
 }
 
@@ -110,12 +114,11 @@ function closeContactList() {
   contact.style.display = "flex";
   contact.style.backgroundColor = "#F6F7F8";
 }
-let screenSize;
+
 window.addEventListener("resize", getScreenSize);
 
 function getScreenSize() {
   screenSize = window.innerWidth;
-  console.log(screenSize);
 }
 
 function openContact(i) {
@@ -211,6 +214,7 @@ function openEditContactCard(contactIndex) {
   document.getElementById("edit-name").value = contacts[contactIndex].name;
   document.getElementById("edit-email").value = contacts[contactIndex].email;
   document.getElementById("edit-phone").value = contacts[contactIndex].phone;
+  generateIconForEditCard();
 }
 
 async function updateContact() {
@@ -224,6 +228,18 @@ async function updateContact() {
   renderContacts();
   closeEditContactCard();
   showContact(contactIndex);
+}
+
+function generateIconForEditCard() {
+  const bgrColor = contacts[contactIndex].bgrColor;
+  const iconContainer = document.getElementById('editCardIcon');
+  if (iconContainer) {
+    iconContainer.innerHTML = `
+      <div class="contact-header" style="background-color: ${bgrColor};">
+        <span>${firstLetterGlobal}${secondLetterGlobal}</span>
+      </div>
+    `;
+  }
 }
 
 async function deleteContact() {
@@ -280,7 +296,7 @@ function generateHeadline(currentLetter) {
 function generateContacts(email, name, secondLetter, firstLetter, i, bgrColor) {
   return /*HTML*/ `
       <div class="contact" id="${i}" onclick="openContact(${i})">
-          <div class="contact-header" style="background-color: ${bgrColor};">
+          <div class="contact-header height-width-42" style="background-color: ${bgrColor};">
               <span>${firstLetter}${secondLetter}</span>
           </div> 
           <div class="contact-info">

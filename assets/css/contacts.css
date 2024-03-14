@@ -7,9 +7,8 @@
   height: 90vh;
   overflow-y: auto; /* Vertikales scrollen im container */
   margin: 20px 0;
-  padding-top: 80px;
-  padding-left: 16px;
   background-color: white !important;
+  padding: 80px 0 20px 16px;
 }
 
 .underline {
@@ -29,7 +28,8 @@
   height: 80px !important;
 }
 
-.contact:hover {
+.contact:hover,
+.addContactImg:hover {
   cursor: pointer;
 }
 
@@ -61,15 +61,22 @@
   margin-bottom: 15px;
 }
 
+.height-width-42 {
+  height: 42px !important;
+  width: 42px !important;
+  font-size: 20px !important;
+}
+
 .contact-header {
-  height: 42px;
-  width: 42px;
   border-radius: 100%;
   font-weight: bold;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 47px;
 }
 
 .contact-info {
@@ -83,10 +90,6 @@
   align-items: center;
   height: 100vh;
   overflow: hidden;
-}
-
-.addContactImg:hover {
-  cursor: pointer;
 }
 
 .addContactImg img {
@@ -142,7 +145,13 @@
   cursor: pointer;
 }
 
-.back-to-contacts-img img:hover {
+.back-to-contacts-img img:hover,
+.closeAddContact img:hover,
+.edit-image-contact:hover,
+.center-img-text:hover,
+.cancel-add-contact:hover,
+#createContactBtn:hover,
+.close-card-desktop img:hover {
   transform: scale(1.05);
   transition: transform 0.2s ease-in-out;
 }
@@ -171,7 +180,7 @@
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   position: fixed;
   right: -115px;
-  top: 740px;
+  top: 710px;
   transition: right 0.5s;
   z-index: 9999;
 }
@@ -298,10 +307,6 @@
   width: 55px;
   height: 66px;
   margin-bottom: 10px;
-}
-.closeAddContact img:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
 }
 
 .vertical-center {
@@ -456,15 +461,6 @@
   cursor: pointer;
 }
 
-.edit-image-contact:hover,
-.center-img-text:hover,
-.cancel-add-contact:hover,
-#createContactBtn:hover,
-.close-card-desktop img:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
-}
-
 .edit-delete-desktop div {
   display: flex;
   align-items: center;
@@ -558,7 +554,6 @@ button {
   gap: 24px;
 }
 
-
 @media (max-width: 1440px) {
   #addContactDesktop {
     display: none !important;
@@ -577,7 +572,7 @@ button {
     display: none;
   }
 
-  #contactsList{
+  #contactsList {
     width: 100% !important;
   }
 
@@ -650,17 +645,15 @@ button {
     justify-content: flex-start;
   }
   #contactsList {
-    padding-left: 10px;
+    padding: 0 0 0 10px;
     max-height: 96% !important;
-    padding-top: 0;
     display: flex !important;
     overflow-y: auto !important;
     width: 450px;
-    height: 95vh;
+    height: 75vh;
     margin-left: 242px;
     background-color: white;
     max-width: 450px;
-    padding-bottom: 0px;
   }
 
   .desktop-add-contact-container {
