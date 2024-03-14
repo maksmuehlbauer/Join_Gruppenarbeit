@@ -107,7 +107,7 @@ async function initTasks() {
       task.category === "Technical Task" ? "background-color: #1FD7C1;" : ""
     }">${task.category}</div>
     <div class="card-titel">${task.title}</div>
-    <div class="card-description">${task.descripton}</div>
+    <div class="card-description">${task.description}</div>
     <div class="card-progress">
       <div class="card-progressbar-container">
         <div class="card-progressbar"></div>
@@ -150,7 +150,7 @@ function openTask(id, assignedHTML) {
     <img src="./assets/img/close_black.png" alt="close icon" class="card-close" onclick="closeTask()" />
   </div>
   <div class="card-titel">${task.title}</div>
-  <div class="card-description">${task.descripton}</div>
+  <div class="card-description">${task.description}</div>
   <div class="card-due-date"><span class="txt-gray">Due date:</span> ${usDate}</div>
   <div class="card-priority">
     <span class="txt-gray">Priority:</span> ${task.prio}

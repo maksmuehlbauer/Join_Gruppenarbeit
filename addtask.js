@@ -338,7 +338,7 @@ function changeSubtask(position) {
     refreshSubtasks();
 }
 
-async function createTask() {
+async function createTask(timeframe) {
     let task = {};
     let title = document.getElementById('title');
     let dueDate = document.getElementById('dueDate');
@@ -360,41 +360,18 @@ async function createTask() {
         task.initialCircles = initialCircles;
         task.subtasksArray = subtasksArray;
 
-
-        userDataBase[userObject.id].tasks.push(task);
+        if(timeframe === 'new'){
+            userDataBase[userObject.id].tasks.push(task);
+        }
+        else if (timeframe === 'edit'){
+            userDataBase[userObject.id].tasks[0] = task;
+        }
+        
         await setItem("userDataBase", JSON.stringify(userDataBase));
         resetEverything(title, dueDate, category, description);
     }
 }
 
-async function editTask() {
-    let task = {};
-    let title = document.getElementById('title');
-    let dueDate = document.getElementById('dueDate');
-
-    checkRequiredFields(title);
-    checkRequiredFields(dueDate);
-    checkCategoryField();
-
-    if (title.value !== '' && dueDate.value !== '' && category !== '') {
-        task.description = document.getElementById('description').value;
-        task.category = category;
-        task.prio = priority;
-        task.subtask = subtasksArray
-        task.title = title.value;
-        task.dueDate = dueDate.value;
-        task.assignto = assignedContacts;
-        task.assigntoID = assignedContactsID;
-        task.assigntoColor = assignedContactColor;
-        task.initialCircles = initialCircles;
-        task.subtasksArray = subtasksArray;
-
-
-        userDataBase[userObject.id].tasks[0] = task;
-        await setItem("userDataBase", JSON.stringify(userDataBase));
-        resetEverything(title, dueDate, category, description);
-    }
-}
 
 async function deleteTask() {
     userDataBase[userObject.id].tasks.shift();
