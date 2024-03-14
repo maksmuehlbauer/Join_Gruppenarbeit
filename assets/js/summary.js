@@ -62,13 +62,13 @@ function displayDate() {
 
 function changeGreeting() {
     let currentHour = currentDate.getHours()
-    if (currentHour > 4 && currentHour < 12) {
+    if (currentHour >= 4 && currentHour < 12) {
         return document.getElementById('greet-user-time').innerHTML = 'Good morning,';
     }
-    if (currentHour > 12 && currentHour < 19) {
+    if (currentHour >= 12 && currentHour < 19) {
         return document.getElementById('greet-user-time').innerHTML = 'Good day,';
     }
-    if (currentHour > 19 && currentHour < 4) {
+    if (currentHour >= 19 && currentHour < 4) {
         return document.getElementById('greet-user-time').innerHTML = 'Good evening,';
     }
 }

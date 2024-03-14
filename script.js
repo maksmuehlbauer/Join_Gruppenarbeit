@@ -154,14 +154,7 @@ function getUrl() {
 }
 
 function linkToPreviousPage() {
-    let localStorageExist = localStorage.getItem('userId')
-    if (!localStorageExist) {
-        window.location.href = 'index.html';
-    } else {
-        url = localStorage.getItem('URL')
-        window.location.href = url;
-        localStorage.removeItem('URL')
-    }
+    history.back()
 }
 
 function linkToPreviousPageLegalNotice() {
