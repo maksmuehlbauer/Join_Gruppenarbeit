@@ -11,6 +11,29 @@ let initialCircles = [];
 let subtasksArray = [];
 let contacts;
 
+
+
+
+function setPage(task) {
+    checkUserloggedIn();
+    loadContacts();
+    console.log(userDataBase[userObject.id].tasks[0]);
+    document.getElementById('title').value = task.title;
+    document.getElementById('dueDate').value = task.dueDate;
+    document.getElementById('description').value = task.description;
+    document.getElementById('category-selected').innerText = task.category;
+    category = task.category;
+    assignedContacts = task.assignto;
+    assignedContactsID = task.assigntoID;
+    assignedContactColor = task.assigntoColor;
+    initialCircles = task.initialCircles;
+    subtasksArray = task.subtasksArray;
+    setPriority(task.prio);
+    refreshSubtasks();
+    changeButtonText();
+}
+
+
 async function initAddTaskPage() {
     checkUserloggedIn();
     loadContacts();
@@ -161,21 +184,14 @@ function renderAddTaskPage() {
                     <img id="checkButtonID${i}" src="./assets/img/check_button.png"> 
                 </li>
             </div>`
+            if (assignedContacts.includes(contacts[i].name)) {
+                document.getElementById('contactID' + i).classList.add('checked');
+                document.getElementById('checkButtonID' + i).src = './assets/img/check_button_checked.png';
+            }
     };
 }
 
-function addCirclesToContainer() {
-    initialCircles = assignedContacts.map((element) => {
-        return splitAndUpperCaseInitials(element);
-    })
-    let circle = document.getElementById("contact-circles-container");
-    circle.innerHTML = '';
 
-    for (let i = 0; i < initialCircles.length; i++) {
-        circle.innerHTML += `<div class="contact-circle" style="background-color: ${assignedContactColor[i]}">${initialCircles[i]}</div>`
-
-    }
-}
 
 function assignContact(contactName, contactID, checkButtonID, color) {
     highlightSelectedContact(contactName, contactID, checkButtonID, color);
@@ -214,6 +230,18 @@ function changeButtonText() {
                                         <img src="assets/img/close.png">
                                     </button>
                                  </div>`;
+    }
+}
+
+function addCirclesToContainer() {
+    initialCircles = assignedContacts.map((element) => {
+        return splitAndUpperCaseInitials(element);
+    })
+    let circle = document.getElementById("contact-circles-container");
+    circle.innerHTML = '';
+
+    for (let i = 0; i < initialCircles.length; i++) {
+        circle.innerHTML += `<div class="contact-circle" style="background-color: ${assignedContactColor[i]}">${initialCircles[i]}</div>`
     }
 }
 
@@ -311,7 +339,6 @@ function changeSubtask(position) {
 
 async function createTask() {
     let task = {};
-    //userDataBase[userObject.id].tasks;
     let title = document.getElementById('title');
     let dueDate = document.getElementById('dueDate');
 
@@ -320,16 +347,21 @@ async function createTask() {
     checkCategoryField();
 
     if (title.value !== '' && dueDate.value !== '' && category !== '') {
-        task.descripton = document.getElementById('description').value;
+        task.description = document.getElementById('description').value;
         task.category = category;
         task.prio = priority;
         task.subtask = subtasksArray
         task.title = title.value;
         task.dueDate = dueDate.value;
         task.assignto = assignedContacts;
+        task.assigntoID = assignedContactsID;
+        task.assigntoColor = assignedContactColor;
+        task.initialCircles = initialCircles;
+        task.subtasksArray = subtasksArray;
+
+
         userDataBase[userObject.id].tasks.push(task);
         await setItem("userDataBase", JSON.stringify(userDataBase));
-        console.log(task);
         resetEverything(title, dueDate, category, description);
     }
 }
@@ -348,6 +380,9 @@ function resetEverything(title, dueDate, category, description) {
     subtasksArray = [];
     assignedContacts = [];
     assignedContactsID = [];
+    assignedContactColor = [];
+    initialCircles = [];
+    subtasksArray = [];
     refreshSubtasks();
     changeButtonText();
     resetButton();
