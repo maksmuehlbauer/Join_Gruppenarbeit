@@ -148,10 +148,6 @@ function deleteDivElement(divId) {
     document.getElementById(divId).remove();
 }
 
-function getUrl() {
-    let x = document.URL
-    localStorage.setItem('URL', x);
-}
 
 function linkToPreviousPage() {
     history.back()

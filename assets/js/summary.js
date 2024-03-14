@@ -126,7 +126,7 @@ function renderSummaryHtml() {
             <h4 class="h4-desktop">Key Metrics at a Glance</h4>
             <div class="divider-line"></div>
         </div>
-        <div class="desktop-width">
+        <div id="summary-box" class="desktop-width">
             <div id="task-row-1">
                 <a href="board.html" class="task-card task-card-width-50">
                     <div class="img-box">

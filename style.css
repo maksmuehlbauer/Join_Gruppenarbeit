@@ -227,6 +227,8 @@ header {
 
 
 
+
+
 /***** styles for addtask.html ****/
 
 .add-task-container {
@@ -834,7 +836,8 @@ select,
   }
 
   .privay-policy {
-    padding-left: 250px;
+    padding-left: 328px;
+    max-width: 1328px;
   }
 
 }
