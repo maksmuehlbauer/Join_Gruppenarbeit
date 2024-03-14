@@ -108,7 +108,6 @@ function closeContactList() {
   contactsList.style.display = "none";
   addContactImg.style.display = "none";
   contact.style.display = "flex";
-  document.getElementById("center-contacts").classList.remove ("center");
   contact.style.backgroundColor = "#F6F7F8";
 }
 let screenSize;
@@ -140,6 +139,7 @@ function addBgrColorContact(i) {
       if (lastContactElement) {
         lastContactElement.classList.remove("contact-background-color-clicked");
       }
+      
     }
     let contactElement = document.getElementById(i.toString());
     if (contactElement) {
@@ -168,7 +168,7 @@ function closeContactStyles() {
   contactsList.style.display = "block";
   addContactImg.style.display = "flex";
   contact.style.display = "none";
-  document.getElementById("center-contacts").classList.add("center");
+  
   contact.style.backgroundColor = "#FFFFFF";
   document.getElementById(contactIndex.toString()).classList.remove('contact-background-color-clicked');
 }

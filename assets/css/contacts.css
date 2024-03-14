@@ -506,7 +506,7 @@
 }
 
 #addContactDesktop {
-  margin-top: 300px;
+  margin-top: 130px;
   display: flex;
   gap: 18px;
   background-color: #2a3647;
@@ -524,6 +524,8 @@
 
 .desktop-add-contact-container {
   background-color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 button {
@@ -658,7 +660,7 @@ button {
     margin-left: 242px;
     background-color: white;
     max-width: 450px;
-    padding-bottom: 180px;
+    padding-bottom: 0px;
   }
 
   .desktop-add-contact-container {
