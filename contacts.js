@@ -126,6 +126,7 @@ function openContact(i) {
     closeContactList();
     showContact(i);
     addBgrColorContact(i);
+    sloganContainerDesktop.style.display = "none !important";
     if (screenSize <= 1440) {
       contactStatus = true;
     }
