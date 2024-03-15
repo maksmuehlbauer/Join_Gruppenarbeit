@@ -6,7 +6,7 @@ let prioButtonsColorFont = document.querySelectorAll('.prio-container button div
 let categoryMenuOpen = false;
 let category = '';
 let assignedToMenuOpen = false;
-let priority = '';
+let priority = 'medium';
 let initialCircles = [];
 let subtasksArray = [];
 let contacts;
@@ -150,6 +150,7 @@ function selectCategory(categorySelected) {
     categoryMenuOpen = false;
     category = categorySelected;
     document.getElementById('category-selected').innerText = categorySelected;
+    document.getElementById('category-selected').classList.add('font-black');
 }
 
 document.addEventListener('click', function (event) {
@@ -161,7 +162,8 @@ document.addEventListener('click', function (event) {
 });
 
 document.addEventListener('click', function (event) {
-    if (event.target.id !== 'assigned-to-btn' && event.target.id !== 'buttontext' && event.target.parentNode.className !== 'listItem' && event.target.className !== 'nameFrame' && event.target.className !== 'contact-circle') {
+    if (event.target.id !== 'assigned-to-btn' && event.target.id !== 'buttontext' && event.target.parentNode.className !== 'listItem' && event.target.className !== 'nameFrame' && 
+        event.target.className !== 'contactAssignCheck' && event.target.className !== 'contact-circle') {
         document.getElementById('contacts-to-assign-container').classList.add('d-none');
         document.getElementById('assigned-to-btn').classList.remove('blue-border');
         assignedToMenuOpen = false;
@@ -182,7 +184,7 @@ function renderAddTaskPage() {
                             ${firstAndLastLetter}
                         </div>${contacts[i].name}
                     </div>
-                    <img id="checkButtonID${i}" src="./assets/img/check_button.png"> 
+                    <img class="contactAssignCheck" id="checkButtonID${i}" src="./assets/img/check_button.png"> 
                 </li>
             </div>`
             if (assignedContacts.includes(contacts[i].name)) {
@@ -224,13 +226,6 @@ function changeButtonText() {
     }
     else {
         buttonText.innerHTML = `An:`;
-    }
-    for (let i = 0; i < assignedContacts.length; i++) {
-        buttonText.innerHTML += `<div class="assigned-contacts-button">${assignedContacts[i]}
-                                    <button onclick="removeContactInList(event, '${assignedContacts[i]}', '${assignedContactsID[i]}')">
-                                        <img src="assets/img/close.png">
-                                    </button>
-                                 </div>`;
     }
 }
 
@@ -368,7 +363,7 @@ async function createTask(timeframe) {
         }
         
         await setItem("userDataBase", JSON.stringify(userDataBase));
-        resetEverything(title, dueDate, category, description);
+        resetEverything();
     }
 }
 
@@ -378,11 +373,10 @@ async function deleteTask() {
     await setItem("userDataBase", JSON.stringify(userDataBase));
 }
 
-function resetEverything(title, dueDate, category, description) {
-    title.value = '';
-    dueDate.value = '';
-    category = '';
-    description.value = '';
+function resetEverything() {
+    document.getElementById('title').value = '';
+    document.getElementById('dueDate').value = ''; 
+    document.getElementById('description').value = '';
     priority = 0;
     subtasksArray = [];
     assignedContacts = [];
@@ -393,7 +387,16 @@ function resetEverything(title, dueDate, category, description) {
     refreshSubtasks();
     changeButtonText();
     resetButton();
+    resetCategoryAndButton();
     renderAddTaskPage();
+
+}
+
+function resetCategoryAndButton(){
+    document.getElementById('category-selected').innerText = 'Select task category';
+    document.getElementById('category-selected').classList.remove('font-black');
+    document.getElementById('mediumPrioButton').classList.add('prioMedium');
+    document.getElementById('mediumPrioButtonFont').classList.add('colored-white', 'font-weight-clicked');
 }
 
 function checkRequiredFields(inputField) {
