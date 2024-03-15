@@ -6,6 +6,8 @@ let contactIndex;
 let userDataBase;
 let lastClickedContactId = null;
 let screenSize;
+let firstLetterGlobal;
+let secondLetterGlobal;
 
 async function initContacts() {
   renderContacts();
@@ -70,8 +72,7 @@ function clearForm() {
   document.getElementById("email").value = "";
   document.getElementById("phone").value = "";
 }
-let firstLetterGlobal;
-let secondLetterGlobal;
+
 function extractInitials(contact) {
   const firstLetter = contact.name[0].toUpperCase();
   const parts = contact.name.split(" ");
@@ -119,6 +120,9 @@ window.addEventListener("resize", getScreenSize);
 
 function getScreenSize() {
   screenSize = window.innerWidth;
+  if (contactStatus && screenSize>=1440) {
+    sloganContainerDesktop.style.display = "none !important";
+  }
 }
 
 function openContact(i) {
@@ -129,9 +133,6 @@ function openContact(i) {
     sloganContainerDesktop.style.display = "none !important";
     if (screenSize <= 1440) {
       contactStatus = true;
-    }
-    else {
-
     }
   }
 }
@@ -235,11 +236,7 @@ function generateIconForEditCard() {
   const bgrColor = contacts[contactIndex].bgrColor;
   const iconContainer = document.getElementById('editCardIcon');
   if (iconContainer) {
-    iconContainer.innerHTML = `
-      <div class="contact-header" style="background-color: ${bgrColor};">
-        <span>${firstLetterGlobal}${secondLetterGlobal}</span>
-      </div>
-    `;
+    iconContainer.innerHTML += generateIconForEditCardTemplate(bgrColor);
   }
 }
 
@@ -284,6 +281,14 @@ document.addEventListener("click", function (event) {
 });
 
 /* Templates*/
+
+function generateIconForEditCardTemplate(bgrColor) {
+  return /*HTML*/ `
+      <div class="contact-header" style="background-color: ${bgrColor};">
+        <span>${firstLetterGlobal}${secondLetterGlobal}</span>
+      </div>
+    `;
+}
 
 function generateHeadline(currentLetter) {
   return /*HTML*/ `
@@ -362,8 +367,8 @@ function generateContact(
    <img src="assets/img/more_vert.png" alt="">
    </div>
    <div class="edit-contacts-options" id="editContactOptions">
-    <div onclick="openEditContactCard(${contactIndex})" class="edit-image-contact"><img src="/assets/img/edit-task.png" alt="">Edit</div>
-    <div onclick="deleteContact()"><img src="/assets/img/delete.png" alt="">Delete</div>
+    <div onclick="openEditContactCard(${contactIndex})" class="edit-image-contact"><img src="assets/img/edit-task.png" alt="">Edit</div>
+    <div onclick="deleteContact()"><img src="assets/img/delete.png" alt="">Delete</div>
    </div>
 </div>
     `;
