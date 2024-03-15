@@ -1,3 +1,7 @@
+body {
+  max-width: 1920px;
+}
+
 #contactsList {
   display: flex;
   flex-direction: column;
@@ -29,7 +33,8 @@
 }
 
 .contact:hover,
-.addContactImg:hover {
+.addContactImg:hover,
+.closeAddContact img {
   cursor: pointer;
 }
 
@@ -162,6 +167,7 @@
   z-index: 1000;
   padding: 128px 0 0 16px;
   width: 100%;
+  padding-left: 26px;
 }
 
 .contact-container {
@@ -297,10 +303,6 @@
   color: white;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-}
-
-.closeAddContact img {
-  cursor: pointer;
 }
 
 #logoDesktopContact img {
@@ -559,16 +561,11 @@ button {
     display: none !important;
   }
 
-  .center {
-    overflow: visible;
-  }
   #logoDesktopContact,
   .cancel-add-contact,
-  .close-card-desktop {
-    display: none;
-  }
-
-  .slogan-container-desktop {
+  .close-card-desktop,
+  .slogan-container-desktop
+   {
     display: none;
   }
 
@@ -659,7 +656,7 @@ button {
   .desktop-add-contact-container {
     width: 100% !important;
   }
-  .contacts-container, #header, .container-desktop {
+  .contacts-container, #header, .container-desktop, #contactUnderline {
     display: flex !important;
   }
   
@@ -691,10 +688,6 @@ button {
   }
   .createContactFormContainer {
     margin-left: 290px;
-  }
-
-  #contactUnderline {
-    display: flex !important;
   }
 
   .vertical-center {
@@ -746,4 +739,4 @@ button {
     transform: translateX(100%);
   }
 }
-/* // das problem liegt bei center bei center contacts */
+

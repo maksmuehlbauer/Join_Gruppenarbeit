@@ -342,10 +342,10 @@ function generateContact(
       </div>
       <div class="edit-delete-desktop">
       <div onclick="openEditContactCard(${contactIndex})" class="edit-image-contact">
-        <img src="/assets/img/edit-task.png" alt="">Edit
+        <img src="assets/img/edit-task.png" alt="">Edit
       </div>
       <div class="center-img-text" onclick="deleteContact()">
-        <img src="/assets/img/delete.png" alt=""> Delete
+        <img src="assets/img/delete.png" alt=""> Delete
       </div>
   </div>
       
@@ -359,7 +359,7 @@ function generateContact(
       <div id="contactOpenedPhone" class="phone-contact">${phone}</div>
   </div>
    <div id="editContactImg" class="editContactImg" onclick="showEditOptions()">
-   <img src="/assets/img/more_vert.png" alt="">
+   <img src="assets/img/more_vert.png" alt="">
    </div>
    <div class="edit-contacts-options" id="editContactOptions">
     <div onclick="openEditContactCard(${contactIndex})" class="edit-image-contact"><img src="/assets/img/edit-task.png" alt="">Edit</div>
