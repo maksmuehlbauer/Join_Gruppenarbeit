@@ -244,15 +244,15 @@ body {
 }
 
 .contact-input-name {
-  background-image: url("/assets/img/person.png");
+  background-image: url("../img/person.png");
 }
 
 .contact-input-email {
-  background-image: url("/assets/img/mail.png");
+  background-image: url("../img/mail.png");
 }
 
 .contact-input-phone {
-  background-image: url("/assets/img/call.png");
+  background-image: url("../img/call.png");
 }
 
 .input-background-image {
@@ -556,6 +556,36 @@ button {
   gap: 24px;
 }
 
+@media(max-width:429px) {
+  .addContactCard {
+    width: 310px !important;
+    height: 630px;
+  }
+
+  .addContactCard h1 {
+    font-size: 32px;
+  }
+  .addContactCard input {
+    width: 280px;
+    height: 30px;
+  }
+
+  .addContactUpperCard {
+    height: 275px;
+  }
+
+  .createContactFormContainer {
+    margin-top: 76px;
+
+  }
+  .vertical-center {
+    margin-top: 50px;
+  }
+  .display-flex-margin {
+    margin-top: 0px;
+  }
+}
+
 @media (max-width: 1440px) {
   #addContactDesktop {
     display: none !important;
@@ -684,7 +714,7 @@ button {
   }
   .personImgaAddContact {
     margin-left: 550px;
-    margin-top: -315px;
+    margin-top: -315px !important;
   }
   .createContactFormContainer {
     margin-left: 290px;

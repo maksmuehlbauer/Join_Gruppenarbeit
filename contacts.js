@@ -236,6 +236,7 @@ function generateIconForEditCard() {
   const bgrColor = contacts[contactIndex].bgrColor;
   const iconContainer = document.getElementById('editCardIcon');
   if (iconContainer) {
+    iconContainer.innerHTML = '';
     iconContainer.innerHTML += generateIconForEditCardTemplate(bgrColor);
   }
 }
