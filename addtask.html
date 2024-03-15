@@ -11,9 +11,8 @@
 
 <body onload="initAddTaskPage()">
     <div w3-include-html="./assets/templates/header.html"></div>
-    <div id="task-created-container">
-        
-
+    <div id="task-created-container" class="d-none">
+        <span>TASK CREATED <img src="assets/img/check-desktop-hover.png" alt="close"></span>
     </div>
     <div class="add-task-container">
         <h1>Add Task</h1>
@@ -104,8 +103,10 @@
             </div>
 
             <div class="clear-create-button-container">
-                <button onclick="resetEverything()" class="button">Clear <img src="assets/img/close.png" alt="close"> </button>
-                <button onclick="createTask('new')" class="button">Create Task <img src="assets/img/check-new.png" alt="check"></button>
+                <button onclick="resetEverything()" class="button">Clear <img src="assets/img/close.png" alt="close">
+                </button>
+                <button onclick="createTask('new')" class="button">Create Task <img src="assets/img/check-new.png"
+                        alt="check"></button>
             </div>
         </div>
 

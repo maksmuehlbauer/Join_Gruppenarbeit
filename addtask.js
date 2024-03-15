@@ -162,7 +162,7 @@ document.addEventListener('click', function (event) {
 });
 
 document.addEventListener('click', function (event) {
-    if (event.target.id !== 'assigned-to-btn' && event.target.id !== 'buttontext' && event.target.parentNode.className !== 'listItem' && event.target.className !== 'nameFrame' && 
+    if (event.target.id !== 'assigned-to-btn' && event.target.id !== 'buttontext' && event.target.parentNode.className !== 'listItem' && event.target.className !== 'nameFrame' &&
         event.target.className !== 'contactAssignCheck' && event.target.className !== 'contact-circle') {
         document.getElementById('contacts-to-assign-container').classList.add('d-none');
         document.getElementById('assigned-to-btn').classList.remove('blue-border');
@@ -187,10 +187,10 @@ function renderAddTaskPage() {
                     <img class="contactAssignCheck" id="checkButtonID${i}" src="./assets/img/check_button.png"> 
                 </li>
             </div>`
-            if (assignedContacts.includes(contacts[i].name)) {
-                document.getElementById('contactID' + i).classList.add('checked');
-                document.getElementById('checkButtonID' + i).src = './assets/img/check_button_checked.png';
-            }
+        if (assignedContacts.includes(contacts[i].name)) {
+            document.getElementById('contactID' + i).classList.add('checked');
+            document.getElementById('checkButtonID' + i).src = './assets/img/check_button_checked.png';
+        }
     };
 }
 
@@ -355,13 +355,15 @@ async function createTask(timeframe) {
         task.initialCircles = initialCircles;
         task.subtasksArray = subtasksArray;
 
-        if(timeframe === 'new'){
+        if (timeframe === 'new') {
             userDataBase[userObject.id].tasks.push(task);
+            document.getElementById('task-created-container').classList.remove('d-none')
+            redirectToBoard();
         }
-        else if (timeframe === 'edit'){
+        else if (timeframe === 'edit') {
             userDataBase[userObject.id].tasks[0] = task;
         }
-        
+
         await setItem("userDataBase", JSON.stringify(userDataBase));
         resetEverything();
     }
@@ -375,7 +377,7 @@ async function deleteTask() {
 
 function resetEverything() {
     document.getElementById('title').value = '';
-    document.getElementById('dueDate').value = ''; 
+    document.getElementById('dueDate').value = '';
     document.getElementById('description').value = '';
     priority = 0;
     subtasksArray = [];
@@ -389,10 +391,16 @@ function resetEverything() {
     resetButton();
     resetCategoryAndButton();
     renderAddTaskPage();
-
 }
 
-function resetCategoryAndButton(){
+function redirectToBoard(){
+    setTimeout(() => {
+        document.getElementById('task-created-container').classList.add('d-none')
+        window.location.href = "./board.html"
+    }, 1500);
+}
+
+function resetCategoryAndButton() {
     document.getElementById('category-selected').innerText = 'Select task category';
     document.getElementById('category-selected').classList.remove('font-black');
     document.getElementById('mediumPrioButton').classList.add('prioMedium');
