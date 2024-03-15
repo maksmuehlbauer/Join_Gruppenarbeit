@@ -6,6 +6,7 @@
     <title>Kontakte</title>
     <link rel="stylesheet" href="./assets/css/contacts.css" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./assets/css/contactMediaQuery.css">
   </head>
   <body onload="initContacts()">
     <div w3-include-html="./assets/templates/header.html"></div>
@@ -84,6 +85,7 @@
             <input
               required
               class="input-background-image contact-input-phone"
+              pattern="[0-9]+"
               type="tel"
               id="phone"
               placeholder="Phone"
