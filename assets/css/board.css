@@ -156,6 +156,7 @@ input {
   }
 
   & .card-footer {
+    margin-top: 24px;
     display: flex;
     justify-content: space-between;
   }
@@ -208,6 +209,7 @@ input {
 
   & .txt-gray {
     color: #42526e;
+    margin-bottom: 8px;
   }
 
   & .card-category-wrapper {
@@ -324,8 +326,10 @@ input {
     height: 72px;
   }
 
-  .add-task-btn {
-    display: none;
+  .board-titel-head {
+    & .add-task-btn {
+      display: none;
+    }
   }
 
   .columns-wrapper {
@@ -379,4 +383,28 @@ input {
       height: 18.67px;
     }
   }
+}
+
+#checkbox-container {
+  display: flex;
+  height: 32px;
+  align-items: center;
+  margin-left: 16px;
+}
+
+#checkbox-container input {
+  opacity: 0;
+}
+
+.checkbox-label {
+  height: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+#checkbox-img {
+  margin-left: -16px;
+  height: 16px;
+  object-fit: cover;
 }

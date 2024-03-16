@@ -80,14 +80,25 @@ async function initTasks() {
     task.id = index;
     let assignedHTML = "";
     let assignedHTMLforOpenCard = "";
-    const colorPalette = ["#ff7a00", "#1fd7c1", "#462f8a"];
+    let subtasksHTMLforOpenCard = "";
+    const colorPalette = task.assigntoColor;
+
+    task.subtask.forEach((subtask, index) => {
+      if (!task.subtaskStatus) {
+        task.subtaskStatus = [];
+      }
+      const isChecked =
+        task.subtaskStatus[index] === true ? "checked" : "unchecked";
+      subtasksHTMLforOpenCard += `<div id="checkbox-container"><label for="checkbox${index}" class="checkbox-label"><img src="./assets/img/${isChecked}.png" id="checkbox-img${index}"><input type="checkbox" id="checkbox${index}" class="checkbox" onclick="setSubtaskStatus(${index}, ${task.id})"></label>${subtask}</div>`;
+    });
+
     task.assignto.forEach((fullName, index) => {
       const initials = fullName
         .split(" ")
         .filter((n) => n)
         .map((n) => n[0].toUpperCase())
         .join("");
-      const color = colorPalette[index % colorPalette.length];
+      const color = colorPalette[index];
       assignedHTML += `<div class="card-contacts" style="background-color: ${color}">${initials}</div>`;
       assignedHTMLforOpenCard += `<div class="card-contacts-wrapper"><div class="card-contacts" style="background-color: ${color}">${initials}</div><div>${fullName}</div></div>`;
     });
@@ -99,20 +110,27 @@ async function initTasks() {
     card.setAttribute("ondragstart", "drag(event)");
     card.setAttribute(
       "onclick",
-      `openTask(this.id, '${assignedHTMLforOpenCard}')`
+      `openTask(this.id, '${assignedHTMLforOpenCard}', '${subtasksHTMLforOpenCard}')`
     );
-
+    const trueCount = task.subtaskStatus
+      ? task.subtaskStatus.filter((status) => status === true).length
+      : 0;
+    const completedPercentage = (trueCount / task.subtask.length) * 100;
     card.innerHTML = `
     <div class="card-category" style="${
       task.category === "Technical Task" ? "background-color: #1FD7C1;" : ""
     }">${task.category}</div>
     <div class="card-titel">${task.title}</div>
     <div class="card-description">${task.description}</div>
-    <div class="card-progress">
+    <div class="card-progress" style="display: ${
+      task.subtask.length < 1 ? "none" : ""
+    };">
       <div class="card-progressbar-container">
-        <div class="card-progressbar"></div>
+        <div class="card-progressbar" style="width: ${completedPercentage}%;"></div>
       </div>
-      <div class="card-subtasks">${task.subtask.length} Subtasks</div>
+      <div class="card-subtasks"> ${trueCount} / ${
+      task.subtask.length
+    } Subtasks</div>
     </div>
     <div class="card-footer">
       <div class="card-assigned">
@@ -131,7 +149,7 @@ async function initTasks() {
   });
 }
 
-function openTask(id, assignedHTML) {
+function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
   const overlayTask = document.querySelector(".overlay-task");
   const task = userObject.tasks[id];
   const dateString = task.dueDate;
@@ -156,10 +174,15 @@ function openTask(id, assignedHTML) {
     <span class="txt-gray">Priority:</span> ${task.prio}
     <img src="./assets/img/${task.prio}.png" alt="priority icon" />
   </div>
-  <div class="card-assigned"><span class="txt-gray">Assigned To:</span><div class="card-assigned">
+  <div class="card-assigned" style="display: ${
+    task.assignto.length === 0 ? "none" : ""
+  }";><div class="txt-gray">Assigned To:</div><div class="card-assigned">
   ${assignedHTML}
   </div></div>
-  <div class="card-subtasks"><span class="txt-gray">Subtasks</span></div>
+  <div class="card-subtasks" style="display: ${
+    task.subtask.length === 0 ? "none" : ""
+  };"><div class="txt-gray">Subtasks</div>
+  ${subtasksHTMLforOpenCard}</div>
   <div class="card-edit">
     <div onclick="deleteTask(${id})">
       <img src="./assets/img/delete.png" alt="delete icon" /><span>Delete</span>
@@ -181,6 +204,7 @@ function closeTask() {
     overlayTask.style.display = "none";
     taskCardOpen.style.animation = "";
   });
+  location.reload();
 }
 
 async function deleteTask(id) {
@@ -201,6 +225,36 @@ async function deleteTask(id) {
   location.reload();
 }
 
+async function setSubtaskStatus(subtaskIndex, taskId) {
+  let checkboxImg = document.getElementById(`checkbox-img${subtaskIndex}`);
+  try {
+    const userDataBase = JSON.parse(await getItem("userDataBase"));
+    const userIndex = userDataBase.findIndex(
+      (user) => user.id.toString() === userObject.id.toString()
+    );
+    if (userIndex !== -1) {
+      const isChecked =
+        userObject.tasks[taskId].subtaskStatus[subtaskIndex] === true
+          ? "checked"
+          : "unchecked";
+      if (isChecked === "unchecked") {
+        userObject.tasks[taskId].subtaskStatus[subtaskIndex] = true;
+        checkboxImg.src = "./assets/img/checked.png";
+        userDataBase[userIndex] = userObject;
+      } else {
+        userObject.tasks[taskId].subtaskStatus[subtaskIndex] = false;
+        checkboxImg.src = "./assets/img/unchecked.png";
+        userDataBase[userIndex] = userObject;
+      }
+    }
+
+    await setItem("userDataBase", userDataBase);
+    console.log("Subtask-Status wurde erfolgreich geändert");
+  } catch (error) {
+    console.error("Fehler beim Updaten des Subtasks:", error);
+  }
+}
+
 function searchTask() {
   const input = document.getElementById("searchbar");
   const filter = input.value.toUpperCase();
@@ -208,7 +262,7 @@ function searchTask() {
   const columns = document.getElementsByClassName("column");
 
   for (let i = 0; i < taskCards.length; i++) {
-    const title = taskCards[i].getElementsByClassName("card-title")[0];
+    const title = taskCards[i].getElementsByClassName("card-titel")[0];
     const description =
       taskCards[i].getElementsByClassName("card-description")[0];
     let titleText = title ? title.innerText : "";
@@ -242,4 +296,8 @@ function searchTask() {
       noTasks.style.display = "none";
     }
   }
+}
+
+function goToAddTask() {
+  window.location.href = "addtask.html";
 }
