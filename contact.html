@@ -6,35 +6,38 @@
     <title>Kontakte</title>
     <link rel="stylesheet" href="./assets/css/contacts.css" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="./assets/css/contactMediaQuery.css">
+    <link rel="stylesheet" href="./assets/css/contactMediaQuery.css" />
   </head>
   <body onload="initContacts()">
     <div w3-include-html="./assets/templates/header.html"></div>
     <div class="overlay-contacts" id="overlayContacts"></div>
-    
+
     <div class="container-desktop">
       <div id="center-contacts">
-        
         <div class="desktop-add-contact-container">
-          <div id="addContactDesktop" onclick="openAddContact()" style="display: flex;">
-          <span>Add new contact</span>
-          <div>
-            <img src="assets/img/person_add.png" alt="">
+          <div class="height-vh">
+            <div
+              id="addContactDesktop"
+              onclick="openAddContact()"
+              style="display: flex"
+            >
+              <span>Add new contact</span>
+              <div>
+                <img src="assets/img/person_add.png" alt="" />
+              </div>
+            </div>
           </div>
-        </div>
+
           <div id="contactsList"></div>
         </div>
-        
-          
-        </div>
-      
-     
+      </div>
+
       <div id="contact" style="display: none"></div>
-       <div class="slogan-container-desktop" id="sloganContainerDesktop">
+      <div class="slogan-container-desktop" id="sloganContainerDesktop">
         <div>
           <h1>Contacts</h1>
-        <div class="contact-line-desktop"></div>
-        <span class="slogan-contact">Better with a Team</span>
+          <div class="contact-line-desktop"></div>
+          <span class="slogan-contact">Better with a Team</span>
         </div>
       </div>
     </div>
@@ -49,9 +52,11 @@
           <div onclick="closeAddContactCard()" class="closeAddContact">
             <img src="assets/img/close.png" alt="" />
           </div>
-          
+
           <div class="vertical-center">
-            <div id="logoDesktopContact"><img src="assets/img/logo-desktop.png" alt=""></div>
+            <div id="logoDesktopContact">
+              <img src="assets/img/logo-desktop.png" alt="" />
+            </div>
             <h1>Add Contact</h1>
             <span class="slogan-contact">Tasks are better with a team!</span>
             <div id="contactUnderlinie" class="contact-underline"></div>
@@ -61,9 +66,15 @@
             <img src="assets/img/add-contact-person.png" alt="" />
           </div>
         </div>
-        
+
         <div class="createContactFormContainer">
-          <div class="close-card-desktop"><img onclick="closeAddContactCard()" src="assets/img/close_black.png" alt=""></div>
+          <div class="close-card-desktop">
+            <img
+              onclick="closeAddContactCard()"
+              src="assets/img/close_black.png"
+              alt=""
+            />
+          </div>
           <form
             class="createContactForm"
             onsubmit="createContact(); return false;"
@@ -85,19 +96,20 @@
             <input
               required
               class="input-background-image contact-input-phone"
-              pattern="[0-9]+"
+              pattern="\+?[0-9]+"
               type="tel"
               id="phone"
               placeholder="Phone"
             />
             <div class="display-flex">
-              <div onclick="closeAddContactCard()" class="cancel-add-contact">Cancel <img src="assets/img/close_black.png" alt=""></div>
-            <div id="createContactBtn">
-              <button>Create Contact</button>
-              <img src="assets/img/check-new.png" alt="" />
+              <div onclick="closeAddContactCard()" class="cancel-add-contact">
+                Cancel <img src="assets/img/close_black.png" alt="" />
+              </div>
+              <div id="createContactBtn">
+                <button>Create Contact</button>
+                <img src="assets/img/check-new.png" alt="" />
+              </div>
             </div>
-            </div>
-            
           </form>
         </div>
       </div>
@@ -110,16 +122,25 @@
             <img src="assets/img/close.png" alt="" />
           </div>
           <div class="vertical-center edit-vertical">
-            <div id="logoDesktopContact"><img src="assets/img/logo-desktop.png" alt=""></div>
+            <div id="logoDesktopContact">
+              <img src="assets/img/logo-desktop.png" alt="" />
+            </div>
             <h1>Edit Contact</h1>
             <div id="contactUnderline" class="contact-underline"></div>
           </div>
-          <div class="personImgaAddContact margin-top-32  edit-person-add" id="editCardIcon">
-            
-          </div>
+          <div
+            class="personImgaAddContact margin-top-32 edit-person-add"
+            id="editCardIcon"
+          ></div>
         </div>
         <div class="createContactFormContainer">
-          <div class="close-card-desktop"><img onclick="closeEditContactCard()" src="assets/img/close_black.png" alt=""></div>
+          <div class="close-card-desktop">
+            <img
+              onclick="closeEditContactCard()"
+              src="assets/img/close_black.png"
+              alt=""
+            />
+          </div>
           <form
             class="createContactForm"
             onsubmit="updateContact(); return false;"

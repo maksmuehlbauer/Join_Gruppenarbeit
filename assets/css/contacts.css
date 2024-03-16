@@ -1,5 +1,7 @@
 body {
   max-width: 1920px;
+  height: 100%;
+  width: 100%;
 }
 
 #contactsList {
@@ -167,7 +169,7 @@ body {
   z-index: 1000;
   padding: 128px 0 0 16px;
   width: 100%;
-  padding-left: 26px;
+ 
 }
 
 .contact-container {
@@ -556,3 +558,6 @@ button {
   gap: 24px;
 }
 
+.height-vh {
+  height: 20vh;
+}

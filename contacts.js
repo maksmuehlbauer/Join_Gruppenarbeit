@@ -120,9 +120,6 @@ window.addEventListener("resize", getScreenSize);
 
 function getScreenSize() {
   screenSize = window.innerWidth;
-  if (contactStatus && screenSize>=1440) {
-    sloganContainerDesktop.style.display = "none !important";
-  }
 }
 
 function openContact(i) {
@@ -130,11 +127,13 @@ function openContact(i) {
     closeContactList();
     showContact(i);
     addBgrColorContact(i);
-    sloganContainerDesktop.style.display = "none !important";
-    if (screenSize <= 1440) {
-      contactStatus = true;
-    }
+    sloganContainerDesktop.style.display = "none";
+    
   }
+  if(screenSize<=1440) {
+    contactStatus = true;
+  }
+  
 }
 function addBgrColorContact(i) {
   if (screenSize > 1440) {
@@ -173,9 +172,9 @@ function closeContactStyles() {
   contactsList.style.display = "block";
   addContactImg.style.display = "flex";
   contact.style.display = "none";
-  
   contact.style.backgroundColor = "#FFFFFF";
   document.getElementById(contactIndex.toString()).classList.remove('contact-background-color-clicked');
+  sloganContainerDesktop.style.display = "flex";
 }
 
 function closeContact() {
@@ -346,7 +345,7 @@ function generateContact(
 <div id="contactOpenedName" class="name">
         <h2>${name}</h2>
       </div>
-      <div class="edit-delete-desktop">
+      <div class="edit-delete-desktop" id="editDeleteDesktop">
       <div onclick="openEditContactCard(${contactIndex})" class="edit-image-contact">
         <img src="assets/img/edit-task.png" alt="">Edit
       </div>
