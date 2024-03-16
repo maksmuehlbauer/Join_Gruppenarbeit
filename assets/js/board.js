@@ -101,7 +101,7 @@ function setTaskDefaults(task, index) {
 function createAssignedHTML(task) {
     let assignedHTML = "";
     task.assignto.forEach((fullName, index) => {
-        const initials = getInitials(fullName);
+        const initials = getInitialss(fullName);
         const color = task.assigntoColor[index];
         assignedHTML += `<div class="card-contacts" style="background-color: ${color}">${initials}</div>`;
     });
@@ -111,7 +111,7 @@ function createAssignedHTML(task) {
 function createAssignedHTMLforOpenCard(task) {
     let assignedHTMLforOpenCard = "";
     task.assignto.forEach((fullName, index) => {
-        const initials = getInitials(fullName);
+        const initials = getInitialss(fullName);
         const color = task.assigntoColor[index];
         assignedHTMLforOpenCard += `<div class="card-contacts-wrapper"><div class="card-contacts" style="background-color: ${color}">${initials}</div><div>${fullName}</div></div>`;
     });
@@ -123,17 +123,19 @@ function createSubtasksHTMLforOpenCard(task) {
     task.subtask.forEach((subtask, index) => {
         const isChecked =
             task.subtaskStatus[index] === true ? "checked" : "unchecked";
-        subtasksHTMLforOpenCard += `<div id="checkbox-container"><label for="checkbox${index}" class="checkbox-label"><img src="./assets/img/${isChecked}.png" id="checkbox-img${index}"><input type="checkbox" id="checkbox${index}" class="checkbox" onclick="setSubtaskStatus(${index}, ${task.id})"></label>${subtask}</div>`;
+        subtasksHTMLforOpenCard += `<div id="checkbox-container"><label for="checkbox${index}" class="checkbox-label"><img src="./assets/img/${isChecked}.png" id="checkbox-img${index}"><input type="checkbox" id="checkbox${index}" class="checkbox" onclick="toggleSubtaskStatus(${index}, ${task.id})"></label>${subtask}</div>`;
     });
     return subtasksHTMLforOpenCard;
 }
 
-function getInitials(fullName) {
-    return fullName
-        .split(" ")
-        .filter((n) => n)
-        .map((n) => n[0].toUpperCase())
-        .join("");
+function getInitialss(fullName) {
+    if (fullName) {
+        return fullName
+            .split(" ")
+            .filter((n) => n)
+            .map((n) => n[0].toUpperCase())
+            .join("");
+    }
 }
 
 function createTaskCard(
@@ -267,6 +269,14 @@ function closeTask() {
     });
     location.reload();
 }
+
+const overlayTask = document.querySelector(".overlay-task");
+overlayTask.addEventListener("click", (event) => {
+    const taskCardOpen = document.querySelector(".task-card-open");
+    if (!taskCardOpen.contains(event.target)) {
+        closeTask();
+    }
+});
 
 async function deleteTask(id) {
     try {
