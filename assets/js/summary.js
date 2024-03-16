@@ -2,6 +2,9 @@ const month = ["January","February","March","April","May","June","July","August"
 const currentDate = new Date;
 
 
+/**
+ * Initializes the summary page by onload
+ */
 async function initSummary() {
     await includeHTML();
     await checkUserloggedIn();
@@ -15,6 +18,9 @@ async function initSummary() {
 }
 
 
+/**
+ * Initializes the summary page by succesful login
+ */
 async function initWelcome() {
     await includeHTML();
     await checkUserloggedIn();
@@ -26,30 +32,46 @@ async function initWelcome() {
 }
 
 
+/**
+ * Renders the greeting Code for the first login in the summary page.
+ */
 function renderFirstLogin() {
     let summaryContainer = document.getElementById('summary-content');
     summaryContainer.innerHTML += firstLoginHtml();
 }
 
 
+/**
+ * Renders the summary content in the summary page.
+ */
 function renderSummary() {
     let summaryContainer = document.getElementById('summary-content');
     summaryContainer.innerHTML += renderSummaryHtml();
 }
 
 
+/**
+ * deactivates the greeting animation after the login
+ */
 function noCssAnimationSummary() {
     document.getElementById('summary-overview').style.opacity = "1"
     document.getElementById('summary-overview').style.animation = "none"
 }
 
 
+/**
+ * deactivates the greeting animation in the mobile version
+ */
 function noCssAnimationGreetings() {
     document.getElementById('greetings').classList.add('hide-greetings')
     document.getElementById('greetings').style.animation = "none"
 }
 
 
+/**
+ * Displays the date in a specific format. 
+ * @returns the time for urgent todos
+ */
 function displayDate() {
     let day = currentDate.getDate() +2 ;
     let monthIndex = currentDate.getMonth();
@@ -59,6 +81,10 @@ function displayDate() {
 }
 
 
+/**
+ * manage the greeting by local time based on the current hour
+ * @returns the changed content by time
+ */
 function changeGreeting() {
     let currentHour = currentDate.getHours()
     if (currentHour >= 4 && currentHour < 12) {
@@ -73,6 +99,11 @@ function changeGreeting() {
 }
 
 
+/**
+ * Filters tasks based on their status and returns the number of tasks with the specified status.
+ * @param {Array} tasks - An array of all tasks from a specific user Account
+ * @param {string} status - The status of tasks to filter by.
+ */
 function getTasksLength(tasks, status) {
     return tasks.filter( task => task.status === status)
 }
