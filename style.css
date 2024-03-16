@@ -9,6 +9,7 @@
   --color-input-placeholder: #D1D1D1;
   --color-hover: #29ABE2;
   --color-second-hover: #2A3E59;
+  --color-body-background: #f6f7f8
 }
 
 * {
@@ -18,7 +19,7 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #f6f7f8;
+  background-color: var(--color-body-background);
 }
 
 h1 {
@@ -46,7 +47,6 @@ h5 {
   font-weight: 400;
 }
 
-
 .button {
   border-radius: 8px;
   padding: 16px 0;
@@ -56,19 +56,15 @@ h5 {
   cursor: pointer;
 }
 
-
 .divider-line {
-  border-bottom: 3px solid #29abe2;
+  border-bottom: 3px solid var(--color-hover);
   width: 88px;
   margin: 16px 0 32px 0;
 }
 
-
-
 .d-none {
   display: none !important;
 }
-
 
 header {
   position: fixed;
@@ -89,16 +85,15 @@ header {
   object-fit: cover;
 }
 
-
 .user-circle {
   border-radius: 999px;
-  border: 2px solid black;
+  border: 2px solid var(--color-black);
   width: 40px;
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #29ABE2;
+  color: var(--color-hover);
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -116,12 +111,11 @@ header {
 }
 
 .navbox {
-  color: white;
+  color: var(--color-white);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background-color: #091931; */
   border-radius: 16px;
   gap: 4px;
   width: 80px;
@@ -131,8 +125,6 @@ header {
 .navbox-bg-color {
   background-color: #091931;
 }
-
-
 
 .hidden-box {
   width: 200px;
@@ -201,15 +193,7 @@ header {
   height: 40px;
 }
 
-.img-cnt {
-  display: none;
-}
-
-.desktop-user-notices-box {
-  display: none;
-}
-
-.h4-header {
+.img-cnt, .desktop-user-notices-box, .h4-header {
   display: none;
 }
 
@@ -223,8 +207,6 @@ header {
 .color-blue {
   color: var(--color-hover);
 }
-
-
 
 /***** Media Querys ****/
 
@@ -242,7 +224,7 @@ header {
   }
 
   .navbox {
-    color: white;
+    color: var(--color-white);
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -310,12 +292,12 @@ header {
     width: 56px;
     height: 56px;
     font-size: 20px;
-    border: 3px solid black;
+    border: 3px solid var(--color-black);
     cursor: pointer;
   }
 
   .user-circle:hover {
-    background-color: #f6f7f8;
+    background-color: var(--color-body-background);
   }
 
   .help-button {

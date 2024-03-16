@@ -2,7 +2,6 @@ const month = ["January","February","March","April","May","June","July","August"
 const currentDate = new Date;
 
 
-
 async function initSummary() {
     await includeHTML();
     await checkUserloggedIn();
@@ -35,9 +34,9 @@ function renderFirstLogin() {
 
 function renderSummary() {
     let summaryContainer = document.getElementById('summary-content');
-    // summaryContainer.style.height = '0px';
     summaryContainer.innerHTML += renderSummaryHtml();
 }
+
 
 function noCssAnimationSummary() {
     document.getElementById('summary-overview').style.opacity = "1"
@@ -68,10 +67,11 @@ function changeGreeting() {
     if (currentHour >= 12 && currentHour < 19) {
         return document.getElementById('greet-user-time').innerHTML = 'Good day,';
     }
-    if (currentHour >= 19 && currentHour < 4) {
+    if (currentHour >= 19 || currentHour < 4) {
         return document.getElementById('greet-user-time').innerHTML = 'Good evening,';
     }
 }
+
 
 function getTasksLength(tasks, status) {
     return tasks.filter( task => task.status === status)
@@ -94,6 +94,7 @@ function prioCount(status) {
     return feedbackCount.length
 }
 
+
 function guestLogin() {
     greet = changeGreeting()
     guestId = localStorage.getItem('userId');
@@ -103,8 +104,6 @@ function guestLogin() {
     }
 }
 
-
-// HTML Template functionsa
 
 function firstLoginHtml() {
     return /*html*/`
@@ -148,7 +147,6 @@ function renderSummaryHtml() {
                         <h5 class="h5-desktop-20px">Done</h5>
                     </div>
                 </a>
-
             </div>
             <div id="task-row-2">
                 <a href="board.html" class="task-card task-card-width-100">
