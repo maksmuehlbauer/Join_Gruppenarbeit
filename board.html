@@ -6,10 +6,12 @@
     <title>Document</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./assets/css/board.css" />
+    <link rel="stylesheet" href="./assets/css/addtask.css">
   </head>
   <body onload="init()">
     <div w3-include-html="./assets/templates/header.html"></div>
     <div class="overlay-task"></div>
+    <div class="overlay-task-edit d-none"><div w3-include-html="./assets/templates/addTaskOverlay.html"></div></div>
     <div class="board">
       <div class="header-wrapper">
         <div class="board-titel board-titel-head">
@@ -113,5 +115,6 @@
     <script src="./storage.js"></script>
     <script src="./script.js"></script>
     <script src="./assets/js/board.js"></script>
+    <script src="./addtask.js"></script>
   </body>
 </html>

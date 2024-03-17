@@ -1,8 +1,8 @@
 let assignedContacts = [];
 let assignedContactsID = [];
 let assignedContactColor = [];
-let prioButtonsColor = document.querySelectorAll('.prio-container button');
-let prioButtonsColorFont = document.querySelectorAll('.prio-container button div');
+let prioButtonsColor;
+let prioButtonsColorFont;
 let categoryMenuOpen = false;
 let category = '';
 let assignedToMenuOpen = false;
@@ -13,10 +13,13 @@ let contacts;
 let taskEditNr = 0;
 
 
-
+async function sendTask(task){
+    console.log(task)
+    await initAddTaskPage();
+    editTaskpage(task)
+}
 
 function editTaskpage(task) {
-    //taskEditNr mit reingeben
     checkUserloggedIn();
     loadContacts();
     document.getElementById('title').value = task.title;
@@ -40,6 +43,7 @@ async function initAddTaskPage() {
     loadContacts();
     await includeHTML();
     navigationHighlight('addtask-link');
+    subtaskEvents();
 }
 
 async function loadContacts() {
@@ -70,6 +74,9 @@ function splitAndUpperCaseInitials(fullname) {
 }
 
 function setPriority(pressedButton) {
+    prioButtonsColor = document.querySelectorAll('.prio-container button');
+    prioButtonsColorFont = document.querySelectorAll('.prio-container button div');
+
     resetButton();
     if (pressedButton == 'high') {
         if (priority == 'high') {
@@ -256,32 +263,10 @@ function removeContactInArray(index, id) {
     document.querySelector(`#${id} img`).src = './assets/img/check_button.png';
 }
 
-document.getElementById('subtasks').addEventListener('keypress', function (event) {
-    if (event.key === 'Enter') {
-        addSubtasks();
-    }
-})
-
-document.getElementById('subtasks').addEventListener('focus', function (event) {
-    document.getElementById('subtasks-input-button-container').classList.add('blue-border');
-    document.getElementById('erase-subtask').classList.remove('d-none');
-    document.getElementById('separator').classList.remove('d-none');
-
-})
-
-document.getElementById('subtasks').addEventListener('blur', function (event) {
-    document.getElementById('subtasks-input-button-container').classList.remove('blue-border');
-    document.getElementById('erase-subtask').classList.add('d-none');
-    document.getElementById('separator').classList.add('d-none');
-})
-
-
-
 
 function addSubtasks() {
     let subtask = document.getElementById('subtasks');
     if (subtask.value == '') {
-
         return;
     }
     subtasksArray.push(subtask.value);
@@ -332,6 +317,31 @@ function changeSubtask(position) {
     subtasksArray[position] = changedText.value;
     refreshSubtasks();
 }
+
+function subtaskEvents() {
+    document.querySelector('.input-button-container #subtasks').addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            addSubtasks();
+        }
+    })
+
+    document.getElementById('subtasks').addEventListener('focus', function (event) {
+        document.getElementById('subtasks-input-button-container').classList.add('blue-border');
+        document.getElementById('erase-subtask').classList.remove('d-none');
+        document.getElementById('separator').classList.remove('d-none');
+
+    })
+
+    document.getElementById('subtasks').addEventListener('blur', function (event) {
+        document.getElementById('subtasks-input-button-container').classList.remove('blue-border');
+        document.getElementById('erase-subtask').classList.add('d-none');
+        document.getElementById('separator').classList.add('d-none');
+    })
+}
+
+
+
+
 
 async function createTask(timeframe) {
     let task = {};
@@ -393,7 +403,7 @@ function resetEverything() {
     renderAddTaskPage();
 }
 
-function redirectToBoard(){
+function redirectToBoard() {
     setTimeout(() => {
         document.getElementById('task-created-container').classList.add('d-none')
         window.location.href = "./board.html"

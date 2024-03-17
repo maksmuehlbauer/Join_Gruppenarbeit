@@ -216,6 +216,7 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
         day: "2-digit",
     });
 
+    sendTask(task)
     const taskCardOpenHTML = `
     <div class="task-card-open">
       <div class="card-category-wrapper">
@@ -249,7 +250,7 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
           <img src="./assets/img/delete.png" alt="delete icon" /><span>Delete</span>
         </div>
         <div class="card-line"></div>
-        <div>
+        <div onclick="openEditMenu()">
           <img src="./assets/img/edit-task.png" alt="edit icon" /><span>Edit</span>
         </div>
       </div>
@@ -257,6 +258,11 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
 
     overlayTask.innerHTML = taskCardOpenHTML;
     overlayTask.style.display = "flex";
+}
+
+function openEditMenu(){
+document.querySelector('.overlay-task-edit').classList.remove('d-none');
+document.querySelector('.overlay-task').classList.add('d-none');
 }
 
 function closeTask() {
