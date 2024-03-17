@@ -215,8 +215,7 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
         month: "2-digit",
         day: "2-digit",
     });
-
-    sendTask(task)
+    sendTaskToEdit(task, id)
     const taskCardOpenHTML = `
     <div class="task-card-open">
       <div class="card-category-wrapper">

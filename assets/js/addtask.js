@@ -13,8 +13,8 @@ let contacts;
 let taskEditNr = 0;
 
 
-async function sendTask(task){
-    console.log(task)
+async function sendTaskToEdit(task, id){
+    taskEditNr = id;
     await initAddTaskPage();
     editTaskpage(task)
 }
@@ -371,7 +371,7 @@ async function createTask(timeframe) {
             redirectToBoard();
         }
         else if (timeframe === 'edit') {
-            userDataBase[userObject.id].tasks[0] = task;
+            userDataBase[userObject.id].tasks[taskEditNr] = task;
         }
 
         await setItem("userDataBase", JSON.stringify(userDataBase));
