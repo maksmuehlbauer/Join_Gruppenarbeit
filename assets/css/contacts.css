@@ -5,10 +5,8 @@ body {
 }
 
 #contactsList {
-  display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin: auto;
   width: 100%;
   height: 90vh;
   overflow-y: auto; /* Vertikales scrollen im container */
@@ -36,7 +34,9 @@ body {
 
 .contact:hover,
 .addContactImg:hover,
-.closeAddContact img {
+.closeAddContact img,
+.deleteBtn,
+.back-to-contacts-img img {
   cursor: pointer;
 }
 
@@ -64,8 +64,7 @@ body {
   color: black;
   font-weight: bold !important;
   font-size: 16px !important;
-  margin-top: 21px;
-  margin-bottom: 15px;
+  margin: 21px 0 15px 0;
 }
 
 .height-width-42 {
@@ -89,14 +88,6 @@ body {
 .contact-info {
   display: flex;
   flex-direction: column;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
 }
 
 .addContactImg img {
@@ -149,7 +140,6 @@ body {
   display: flex;
   justify-content: flex-end;
   margin-right: 16px;
-  cursor: pointer;
 }
 
 .back-to-contacts-img img:hover,
@@ -169,7 +159,6 @@ body {
   z-index: 1000;
   padding: 128px 0 0 16px;
   width: 100%;
- 
 }
 
 .contact-container {
@@ -317,22 +306,19 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 100px;
-  margin-left: 22px;
+  margin: 100px 0 0 22px;
 }
 
 .closeAddContact {
   display: flex;
   justify-content: end;
-  padding-right: 25px;
-  padding-top: 25px;
+  padding: 25px 25px 0 0;
 }
 
 .personImgaAddContact {
   display: flex;
   justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto 0 auto;
   width: 120px;
   height: 120px;
   background-color: #d1d1d1;
@@ -506,7 +492,6 @@ body {
 }
 
 #addContactDesktop {
-  margin-top: 130px;
   display: flex;
   gap: 18px;
   background-color: #2a3647;
@@ -519,7 +504,7 @@ body {
   align-items: center;
   border-radius: 10px;
   cursor: pointer;
-  margin-left: 280px;
+  margin: 130px 0 0 280px;
 }
 
 .desktop-add-contact-container {
@@ -532,10 +517,6 @@ button {
   cursor: pointer;
   transform: scale(1.05);
   transition: transform 0.3s ease;
-}
-
-.deleteBtn {
-  cursor: pointer;
 }
 
 .cancel-add-contact {
@@ -560,4 +541,5 @@ button {
 
 .height-vh {
   height: 20vh;
+  min-height: 180px;
 }

@@ -128,12 +128,10 @@ function openContact(i) {
     showContact(i);
     addBgrColorContact(i);
     sloganContainerDesktop.style.display = "none";
-    
   }
   if(screenSize<=1440) {
     contactStatus = true;
   }
-  
 }
 function addBgrColorContact(i) {
   if (screenSize > 1440) {
@@ -143,7 +141,6 @@ function addBgrColorContact(i) {
       if (lastContactElement) {
         lastContactElement.classList.remove("contact-background-color-clicked");
       }
-      
     }
     let contactElement = document.getElementById(i.toString());
     if (contactElement) {
