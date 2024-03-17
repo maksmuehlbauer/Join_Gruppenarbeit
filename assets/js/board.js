@@ -258,6 +258,11 @@ function openEditMenu() {
     document.querySelector('.overlay-task').classList.add('d-none');
 }
 
+function closeEditMenu() {
+    document.querySelector('.overlay-task-edit').classList.add('d-none');
+    document.querySelector('.overlay-task').classList.remove('d-none');
+}
+
 function closeTask() {
     const overlayTask = document.querySelector(".overlay-task");
     const taskCardOpen = document.querySelector(".task-card-open");

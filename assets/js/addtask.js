@@ -35,17 +35,11 @@ async function loadContacts() {
 async function sendTaskToEdit(task) {
     taskEditNr = task.id;
     await initAddTaskPage();
-    await editTaskpage(task)
-    //  document.getElementById('edit-task-container').addEventListener('keypress', function (event) {
-    //      if (event.key === 'Enter') {
-    //          createTask('edit');
-    //      }
-    //   })
+    await editTaskpage(task);
+    console.log(task)
 }
 
 function editTaskpage(task) {
-    checkUserloggedIn();
-    loadContacts();
     document.getElementById('title').value = task.title;
     document.getElementById('dueDate').value = task.dueDate;
     document.getElementById('description').value = task.description;

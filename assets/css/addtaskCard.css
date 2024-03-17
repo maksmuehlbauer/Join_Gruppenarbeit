@@ -297,6 +297,8 @@ select {
 }
 
 .task-input-container .description-container textarea {
+  font-family: 'Inter', sans-serif;
+  padding: 8px 16px;
   height: 88px;
 }
 
@@ -341,7 +343,7 @@ select {
   font-weight: 700 !important;
 }
 
-.font-black{
+.font-black {
   color: black !important;
 }
 
@@ -376,7 +378,7 @@ select {
   height: 75px;
 }
 
-.clear-create-button-container{
+.clear-create-button-container {
   display: flex;
   gap: 10px;
 }
@@ -593,13 +595,30 @@ sup {
   border: solid 1px #D1D1D1;
 }
 
-#task-created-container{
+.close-edit-menu-button {
+  display: flex;
+  background: transparent;
+  position: relative;
+  top: -20px;
+  right: -321px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-edit-menu-button:hover {
+  background-color: var(--color-input-placeholder);
+}
+
+#task-created-container {
   position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 300px; 
-  width: 600px; 
+  height: 300px;
+  width: 600px;
   z-index: 10;
   background-color: rgba(255, 255, 255, 0.747);
   left: 50%;
@@ -609,7 +628,8 @@ sup {
   border: 1px solid black;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.308);
 }
-#task-created-container span{
+
+#task-created-container span {
   font-weight: 900;
   font-size: 32px;
   color: var(--color-primary);
@@ -627,6 +647,7 @@ sup {
   justify-content: center;
   align-items: center;
 }
+
 #edit-task-container {
   display: flex;
   flex-direction: column;
@@ -642,16 +663,16 @@ sup {
 .edit-footnote-button {
   position: relative;
   scale: 0.55;
-  bottom:auto;
+  bottom: auto;
   background-color: white;
 }
 
-.no-margin-and-height{
+.no-margin-and-height {
   margin-top: 0;
   height: auto;
 }
 
-.margin-bottom-no-height{
+.margin-bottom-no-height {
   margin-bottom: 20px;
   height: auto !important;
 }
@@ -660,35 +681,15 @@ sup {
   .task-input-container .assigned-to-container {
     margin-bottom: 20px;
   }
-  .task-input-container{
+
+  .task-input-container {
     margin-bottom: 70px !important;
-  }
-  
-  .add-task-container input,
-  textarea,
-  select,
-  #highPrioButtonFont,
-  #mediumPrioButtonFont,
-  #lowPrioButtonFont,
-  #category-dropdown-menu,
-  #assigned-to-btn #buttontext,
-  #category-btn div,
-  #contacts-to-assign-container,
-  .input-button-container {
-    font-size: 20px;
   }
 
   .add-task-container {
     display: flex;
     flex-direction: column;
   }
-
-  .add-task-container h1 {
-    margin-top: 0;
-    padding-left: 0;
-    font-size: 61px;
-  }
-
 
   .listItem:hover {
     background-color: var(--color-primary);
