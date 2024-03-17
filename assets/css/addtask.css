@@ -397,7 +397,6 @@ select {
   width: 20px;
 }
 
-
 sup {
   color: #FF8190;
 }
@@ -639,9 +638,22 @@ sup {
   animation: slideInFromRight 0.2s ease-out;
 }
 
+
+.edit-footnote-button {
+  position: relative;
+  scale: 0.55;
+  bottom:auto;
+  background-color: white;
+}
+
 .no-margin-and-height{
   margin-top: 0;
   height: auto;
+}
+
+.margin-bottom-no-height{
+  margin-bottom: 20px;
+  height: auto !important;
 }
 
 @media (min-width: 1440px) {

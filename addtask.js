@@ -380,10 +380,7 @@ async function createTask(timeframe) {
 }
 
 
-async function deleteTask() {
-    userDataBase[userObject.id].tasks.shift();
-    await setItem("userDataBase", JSON.stringify(userDataBase));
-}
+
 
 function resetEverything() {
     document.getElementById('title').value = '';

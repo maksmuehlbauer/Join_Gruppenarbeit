@@ -60,7 +60,7 @@
 
                 </div>
             </div>
-            <div class="subtasks-container">
+            <div class="subtasks-container margin-bottom-no-height">
                 <label for="subtasks">Subtasks</label>
                 <div id="subtasks-input-button-container" class="input-button-container">
                     <input id="subtasks" type="text" placeholder="Add new subtask"></input>
@@ -79,16 +79,11 @@
                 </div>
 
             </div>
-            <div>
-                <div class="footnote">
-                    <sup>*</sup>
-                    <span>This field is required</span>
-                </div>
-    
+            <div class="add-task-footnote-container edit-footnote-button">  
                 <div class="clear-create-button-container">
                     <button onclick="resetEverything()" class="button">Clear <img src="assets/img/close.png" alt="close">
                     </button>
-                    <button onclick="createTask('edit')" class="button">Create Task <img src="assets/img/check-new.png"
+                    <button onclick="createTask('edit')" class="button">Edit Task <img src="assets/img/check-new.png"
                             alt="check"></button>
                 </div>
             </div>
