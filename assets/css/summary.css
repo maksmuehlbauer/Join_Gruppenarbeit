@@ -310,3 +310,9 @@
         width: 600px;
     }
 }
+
+@media (max-height: 720px) {
+    #summary-content {
+        margin-bottom: 128px;
+    }
+}

@@ -96,8 +96,18 @@ async function login() {
  * @param {string} guestId - the guest ID (guest account) from user datebase.
  */
 function guestLogin(guestId) {
+    resetLogInForm()
     localStorage.setItem('userId', guestId);
     window.location.href = 'welcome.html';
+}
+
+
+/**
+ * reset Log in Form to avoid the form onsubmit (only for guest login)
+ */
+function resetLogInForm() {
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
 }
 
 
@@ -305,12 +315,13 @@ function renderLogInHtml() {
         <div class="divider-line"></div>
         <form class="form-width" onsubmit="login(); return false">
             <div class="input-container" >
-                <input required type="email" id="email" placeholder="Email" class="login-input">
+                <input required type="email" id="email" placeholder="Email" class="login-input" value=''>
                 <img src="./assets/img/mail.png" alt="mail">
             </div>
             <div class="input-container">
                 <input 
-                required 
+                required
+                value = ''
                 type="password" 
                 id="password" 
                 placeholder="Password" 
