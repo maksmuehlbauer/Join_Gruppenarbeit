@@ -26,11 +26,12 @@ async function includeHTML() {
 async function init() {
     loadUserDataBase()
     renderLogIn();
+    loadLogInInfo();
 }
 
 
 /**
- * Hide the signup html code and rendering the signup interface
+ * Hide the signup html code on login interface and rendering the signup interface
  */
 function renderSignUp() {
     document.getElementById('sign-up-box').classList.add('d-none')
@@ -78,7 +79,7 @@ function getHtmlElementById(id) {
 async function login() {
     let email = getValueFromId('email');
     let password = getValueFromId('password');
-  
+    rememberLogInInformation();
     let searchedUser = userDataBase.find((user) => user['email'] === email && user['password'] === password);
     if (searchedUser) {
         localStorage.setItem('userId', searchedUser.id);
@@ -248,6 +249,53 @@ function changeCheckboxStatus() {
 
 
 /**
+ * If Remember me checkbox is checked, the data is saved to local storage
+ */
+function rememberLogInInformation() {
+    let checkState = document.getElementById('checkbox').checked;
+    let email = getValueFromId('email');
+    let password = encryptPassword(getValueFromId('password'))
+    if (checkState) {
+        localStorage.setItem('userMail', email)
+        localStorage.setItem('password', password)
+    } 
+}
+
+
+/**
+ * loads login information from local storage if exists
+ */
+function loadLogInInfo() {
+    let email = localStorage.getItem('userMail')
+    let password = decryptPassword(localStorage.getItem('password'))
+    if (email && password) {
+        document.getElementById('email').value = email
+        document.getElementById('password').value = password
+    }
+}
+
+
+/**
+ * encrypts user password
+ * @param {string} password - user password information
+ * @returns enrypted password information
+ */
+function encryptPassword(password) {
+    return btoa(password);
+}
+
+
+/**
+ * decrypt user password
+ * @param {string} encryptedPassword - enrypted userpassword
+ * @returns decrypted password information
+ */
+function decryptPassword(encryptedPassword) {
+    return atob(encryptedPassword);
+}
+
+
+/**
  * rendering the login HTML code in the index.html file
  * @returns HTML Code
  */
@@ -323,15 +371,8 @@ function renderSignUpHtml() {
         </div>
         <div class="input-container">
             <input  
-            id="password-signup"
-            type="password" 
-            placeholder="Password" 
-            class="login-input" 
-            autocomplete="off"
-            minlength="8"
-            pattern="^(?=.*[A-Z]).{8,}$"
-            title="At least 8 chracters and 1 capital letter are required"
-            required
+            id="password-signup" type="password" placeholder="Password" class="login-input" autocomplete="off"
+            minlength="8" pattern="^(?=.*[A-Z]).{8,}$" title="At least 8 chracters and 1 capital letter are required" required
             onkeyup="changePasswordIcon('password-signup', 'pw-signup-img')"
             onclick="hideDontMatchBox('password-signup', 'password-proof')"
             >
@@ -339,14 +380,8 @@ function renderSignUpHtml() {
         </div>
         <div class="input-container">
             <input 
-            required 
-            id="password-proof" 
-            type="password" 
-            placeholder="Confirm Password" 
-            class="login-input" 
-            autocomplete="off" 
-            minlength="8" 
-            required 
+            required id="password-proof" type="password" placeholder="Confirm Password" class="login-input" autocomplete="off" 
+            minlength="8" required 
             onkeyup="changePasswordIcon('password-proof', 'pw-proof-lock-img')"
             onclick="hideDontMatchBox('password-proof', 'password-proof')"
             >

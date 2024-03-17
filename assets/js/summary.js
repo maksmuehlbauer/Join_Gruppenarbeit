@@ -109,23 +109,41 @@ function getTasksLength(tasks, status) {
 }
 
 
+/**
+ * Counts the number of tasks with the specified status for the current user.
+ * @param {string} status - The status of tasks to count.
+ * @returns {number} The number of tasks with the specified status.
+ */
 function tasksCount(status) {
     const feedbackCount = getTasksLength(userObject.tasks, status)
     return feedbackCount.length
 }
 
 
+/**
+ * Filters tasks based on their status and returns the number of tasks with the specified status.
+ * @param {Array} tasks - An array of all tasks from a specific user Account
+ * @param {string} status - The status of tasks to filter by.
+ */
 function getPrioLength(tasks, status) {
     return tasks.filter( task => task.prio === status)
 }
 
 
+/**
+ * Counts the number of tasks with the specified status for the current user.
+ * @param {string} status - The status of tasks to count.
+ * @returns {number} The number of tasks with the specified status.
+ */
 function prioCount(status) {
     const feedbackCount = getPrioLength(userObject.tasks, status)
     return feedbackCount.length
 }
 
 
+/**
+ * special display for guestlogin interface, remove gust name and comma
+ */
 function guestLogin() {
     greet = changeGreeting()
     guestId = localStorage.getItem('userId');
@@ -136,6 +154,10 @@ function guestLogin() {
 }
 
 
+/**
+ * rendering the greeting content in HTML Code (mobile: only after log in)
+ * @returns HTML code
+ */
 function firstLoginHtml() {
     return /*html*/`
     <div class="align-center">
@@ -148,6 +170,10 @@ function firstLoginHtml() {
 }
 
 
+/**
+ * rendering the whole summary content box HTML Code
+ * @returns HTML code
+ */
 function renderSummaryHtml() {
     return /*html*/`
     <div id="summary-overview">
