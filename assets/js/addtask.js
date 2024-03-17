@@ -6,17 +6,22 @@ let prioButtonsColorFont;
 let categoryMenuOpen = false;
 let category = '';
 let assignedToMenuOpen = false;
-let priority = 'medium';
+let priority = '';
 let initialCircles = [];
 let subtasksArray = [];
 let contacts;
 let taskEditNr = 0;
 
 
-async function sendTaskToEdit(task, id){
-    taskEditNr = id;
+async function sendTaskToEdit(task) {
+    taskEditNr = task.id;
     await initAddTaskPage();
-    editTaskpage(task)
+    await editTaskpage(task)
+    //  document.getElementById('edit-task-container').addEventListener('keypress', function (event) {
+    //      if (event.key === 'Enter') {
+    //          createTask('edit');
+    //      }
+    //   })
 }
 
 function editTaskpage(task) {
@@ -35,6 +40,7 @@ function editTaskpage(task) {
     setPriority(task.prio);
     refreshSubtasks();
     changeButtonText();
+    console.log(task.prio)
 }
 
 
@@ -341,8 +347,6 @@ function subtaskEvents() {
 
 
 
-
-
 async function createTask(timeframe) {
     let task = {};
     let title = document.getElementById('title');
@@ -372,9 +376,13 @@ async function createTask(timeframe) {
         }
         else if (timeframe === 'edit') {
             userDataBase[userObject.id].tasks[taskEditNr] = task;
+            document.querySelector('.overlay-task-edit').classList.add('d-none');
         }
 
         await setItem("userDataBase", JSON.stringify(userDataBase));
+        if (timeframe === 'edit') {
+            location.reload();
+        }
         resetEverything();
     }
 }

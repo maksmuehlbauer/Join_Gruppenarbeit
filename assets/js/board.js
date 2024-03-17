@@ -168,22 +168,19 @@ function createTaskCard(
 
 function getCardHTML(task, assignedHTML, trueCount, completedPercentage) {
     return `
-        <div class="card-category" style="${
-            task.category === "Technical Task"
-                ? "background-color: #1FD7C1;"
-                : ""
+        <div class="card-category" style="${task.category === "Technical Task"
+            ? "background-color: #1FD7C1;"
+            : ""
         }">${task.category}</div>
         <div class="card-titel">${task.title}</div>
         <div class="card-description">${task.description}</div>
-        <div class="card-progress" style="display: ${
-            task.subtask.length < 1 ? "none" : ""
+        <div class="card-progress" style="display: ${task.subtask.length < 1 ? "none" : ""
         };">
             <div class="card-progressbar-container">
                 <div class="card-progressbar" style="width: ${completedPercentage}%;"></div>
             </div>
-            <div class="card-subtasks"> ${trueCount} / ${
-        task.subtask.length
-    } Subtasks</div>
+            <div class="card-subtasks"> ${trueCount} / ${task.subtask.length
+        } Subtasks</div>
         </div>
         <div class="card-footer">
             <div class="card-assigned">
@@ -219,10 +216,9 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
     const taskCardOpenHTML = `
     <div class="task-card-open">
       <div class="card-category-wrapper">
-        <div class="card-category" style="${
-            task.category === "Technical Task"
-                ? "background-color: #1FD7C1;"
-                : ""
+        <div class="card-category" style="${task.category === "Technical Task"
+            ? "background-color: #1FD7C1;"
+            : ""
         }">${task.category}</div>
         <img src="./assets/img/close_black.png" alt="close icon" class="card-close" onclick="closeTask()" />
       </div>
@@ -233,15 +229,13 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
         <span class="txt-gray">Priority:</span> ${task.prio}
         <img src="./assets/img/${task.prio}.png" alt="priority icon" />
       </div>
-      <div class="card-assigned" style="display: ${
-          task.assignto.length === 0 ? "none" : ""
-      };">
+      <div class="card-assigned" style="display: ${task.assignto.length === 0 ? "none" : ""
+        };">
         <div class="txt-gray">Assigned To:</div>
         <div class="card-assigned">${assignedHTML}</div>
       </div>
-      <div class="card-subtasks" style="display: ${
-          task.subtask.length === 0 ? "none" : ""
-      };">
+      <div class="card-subtasks" style="display: ${task.subtask.length === 0 ? "none" : ""
+        };">
         <div class="txt-gray">Subtasks</div>${subtasksHTMLforOpenCard}
       </div>
       <div class="card-edit">
@@ -259,9 +253,9 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
     overlayTask.style.display = "flex";
 }
 
-function openEditMenu(){
-document.querySelector('.overlay-task-edit').classList.remove('d-none');
-document.querySelector('.overlay-task').classList.add('d-none');
+function openEditMenu() {
+    document.querySelector('.overlay-task-edit').classList.remove('d-none');
+    document.querySelector('.overlay-task').classList.add('d-none');
 }
 
 function closeTask() {
@@ -342,7 +336,7 @@ function searchTask() {
 
         taskCard.style.display =
             titleText.toUpperCase().includes(filter) ||
-            descriptionText.toUpperCase().includes(filter)
+                descriptionText.toUpperCase().includes(filter)
                 ? ""
                 : "none";
     });
