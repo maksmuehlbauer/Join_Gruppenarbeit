@@ -12,6 +12,25 @@ let subtasksArray = [];
 let contacts;
 let taskEditNr = 0;
 
+async function initAddTaskPage() {
+    checkUserloggedIn();
+    loadContacts();
+    await includeHTML();
+    navigationHighlight('addtask-link');
+    subtaskEvents();
+}
+
+async function loadContacts() {
+    try {
+        const result = await getItem("userDataBase");
+        userDataBase = JSON.parse(result);
+        contacts = userDataBase[userObject.id].contacts;
+        renderAddTaskPage();
+    } catch (e) {
+        console.error("Loading error:", e);
+        contacts = [];
+    }
+}
 
 async function sendTaskToEdit(task) {
     taskEditNr = task.id;
@@ -40,29 +59,10 @@ function editTaskpage(task) {
     setPriority(task.prio);
     refreshSubtasks();
     changeButtonText();
-    console.log(task.prio)
 }
 
 
-async function initAddTaskPage() {
-    checkUserloggedIn();
-    loadContacts();
-    await includeHTML();
-    navigationHighlight('addtask-link');
-    subtaskEvents();
-}
 
-async function loadContacts() {
-    try {
-        const result = await getItem("userDataBase");
-        userDataBase = JSON.parse(result);
-        contacts = userDataBase[userObject.id].contacts;
-        renderAddTaskPage();
-    } catch (e) {
-        console.error("Loading error:", e);
-        contacts = [];
-    }
-}
 
 function generateInitials(contactNr) {
     let fullname = contacts[contactNr].name;
@@ -394,7 +394,7 @@ function resetEverything() {
     document.getElementById('title').value = '';
     document.getElementById('dueDate').value = '';
     document.getElementById('description').value = '';
-    priority = 0;
+    priority = '';
     subtasksArray = [];
     assignedContacts = [];
     assignedContactsID = [];
