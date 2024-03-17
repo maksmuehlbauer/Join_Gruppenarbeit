@@ -354,6 +354,7 @@ async function createTask(timeframe) {
         task.description = document.getElementById('description').value;
         task.category = category;
         task.prio = priority;
+        task.status = 'toDo'
         task.subtask = subtasksArray
         task.title = title.value;
         task.dueDate = dueDate.value;
