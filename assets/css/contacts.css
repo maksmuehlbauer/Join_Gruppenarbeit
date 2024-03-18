@@ -30,6 +30,13 @@ body {
   padding: 15px 0 15px 20px;
   border-radius: 10px;
   height: 80px !important;
+  margin-bottom: 8px !important;
+  width: 99%;
+}
+
+.contact:hover {
+  color: black;
+  background-color: #eee;
 }
 
 .contact:hover,
@@ -148,9 +155,13 @@ body {
 .center-img-text:hover,
 .cancel-add-contact:hover,
 #createContactBtn:hover,
-.close-card-desktop img:hover {
+.close-card-desktop img:hover,
+.addContactImg:hover,
+.editContactImg:hover,
+.edit-contacts-options div:hover {
   transform: scale(1.05);
   transition: transform 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 #contact {
@@ -224,7 +235,7 @@ body {
   padding: 16px 16px;
   line-height: 24px;
   font-size: 20px;
-  color: #d1d1d1;
+  color: black;
   font-weight: 400;
 }
 

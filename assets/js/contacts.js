@@ -133,6 +133,7 @@ function openContact(i) {
     contactStatus = true;
   }
 }
+
 function addBgrColorContact(i) {
   if (screenSize > 1440) {
     document.getElementById("sloganContainerDesktop").classList.add("d-none");

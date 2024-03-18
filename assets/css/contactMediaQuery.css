@@ -112,10 +112,6 @@
     margin-bottom: 8px !important;
   }
 
-  .contact:hover {
-    color: black;
-    background-color: #eee;
-  }
   .contact-line-desktop {
     height: 60px;
     width: 3px;
