@@ -223,9 +223,10 @@ async function updateContact() {
   contacts[contactIndex] = { name, email, phone, bgrColor };
   userDataBase[userObject["id"]].contacts = contacts;
   await setItem("userDataBase", JSON.stringify(userDataBase));
+  let newIndex = contactIndex;
   renderContacts();
   closeEditContactCard();
-  showContact(contactIndex);
+  showContact(newIndex);
 }
 
 function generateIconForEditCard() {
