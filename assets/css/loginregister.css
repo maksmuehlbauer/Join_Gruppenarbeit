@@ -115,7 +115,6 @@
 
 #checkbox-container input {
   margin-right: -15px;
-  cursor: pointer;
   opacity: 0;
 }
 
@@ -128,6 +127,7 @@
 #checkbox-img {
   height: 16px;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .j-center {
@@ -208,6 +208,23 @@
   animation: onload 1.0s ease-in-out;
 }
 
+.btn-login:hover {
+  background-color: var(--color-hover);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.btn-gust-login:hover {
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  color: var(--color-hover);
+  border: 1px solid var(--color-hover);
+}
+
+.notices-link:hover {
+  color: var(--color-hover);
+  text-decoration: none;
+  font-weight: 700;
+}
+
 @keyframes onload {
   0% { opacity: 1; }
   100% { opacity: 0}
@@ -277,23 +294,6 @@
 
   .show-reg-box {
     transform: translateY(-34vh);
-  }
-
-  .btn-login:hover {
-    background-color: var(--color-hover);
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  }
-
-  .btn-gust-login:hover {
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    color: var(--color-hover);
-    border: 1px solid var(--color-hover);
-  }
-
-  .notices-link:hover {
-    color: var(--color-hover);
-    text-decoration: none;
-    font-weight: 700;
   }
 
   .start-animation {

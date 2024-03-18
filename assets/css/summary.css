@@ -149,6 +149,50 @@
     display: none;
 }
 
+/* ########### */
+.task-card:hover {
+    transform-origin: 0 50%;
+    transform: scale(1.01);
+    background-color: var(--color-primary);
+    color: white;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.scale-left:hover {
+    transform-origin: 100% 50%;
+}
+
+.scale-center:hover {
+    transform-origin: 50% 50%;
+}
+
+.task-card:hover > .img-box {
+    height: 49px;
+    width: 49px;
+    background-color: white;
+}
+
+.task-card:hover .img-hover {
+    filter: invert();
+}
+
+.task-card:hover .actual-date {
+    color: white;
+}
+
+.task-card:hover .img-pencil {
+    height: 49px;
+    width: 49px;
+    background-image: url("../img/mobile-pencil-hover.png");
+}
+
+.task-card:hover .img-check {
+    height: 49px;
+    width: 49px;
+    background-image: url("../img/mobile-check-hover.png");
+}
+
+
 @media (min-width: 1440px) {
     .hide-greetings {
         display: flex;
@@ -215,33 +259,6 @@
         cursor: pointer;
     }
 
-    .task-card:hover {
-        transform-origin: 0 50%;
-        transform: scale(1.02);
-        background-color: var(--color-primary);
-        color: white;
-        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    }
-
-    .scale-left:hover {
-        transform-origin: 100% 50%;
-    }
-
-    .scale-center:hover {
-        transform-origin: 50% 50%;
-    }
-
-    .task-card:hover > .img-box {
-        background-color: white;
-    }
-
-    .task-card:hover .img-hover {
-        filter: invert();
-    }
-
-    .task-card:hover .actual-date {
-        color: white;
-    }
 
     .img-box {
         width: 69px;
@@ -276,6 +293,16 @@
 
     .h1-blue {
         text-align: left;
+    }
+
+    .task-card:hover {
+        transform: scale(1.02);
+    }
+
+    .task-card:hover > .img-box {
+        height: 69px;
+        width: 69px;
+        background-color: white;
     }
 
     .img-pencil {
