@@ -354,11 +354,6 @@ input:focus {
         align-items: center;
     }
 
-    .board-titel-head {
-        margin: 0;
-        margin-right: 376px;
-    }
-
     .board-titel {
         display: flex;
         align-items: center;
@@ -367,6 +362,7 @@ input:focus {
     }
 
     .board-titel-head {
+        flex-grow: 1;
         & .add-task-btn {
             display: none;
         }
