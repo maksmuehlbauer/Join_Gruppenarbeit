@@ -20,23 +20,43 @@ const allowDrop = (ev) => {
 
 const drag = (ev) => {
     ev.dataTransfer.setData("text", ev.target.id);
-    ev.target.style.transform = "rotate(5deg)";
 };
 
 const drop = async (ev) => {
     ev.preventDefault();
     const data = ev.dataTransfer.getData("text");
-    let dropTarget = getDropTarget(ev.target);
+    let dropTarget = ev.target;
 
-    if (dropTarget) {
+    while (
+        !dropTarget.classList.contains("task-cards-container") &&
+        dropTarget.parentNode
+    ) {
+        dropTarget = dropTarget.parentNode;
+    }
+
+    if (dropTarget.classList.contains("task-cards-container")) {
         const element = document.getElementById(data);
         dropTarget.appendChild(element);
-        element.style.transform = "";
 
         const task = userObject.tasks.find((t) => t.id.toString() === data);
         if (task) {
             task.status = dropTarget.id;
-            await updateTaskStatus(task);
+            try {
+                const userDataBase = JSON.parse(await getItem("userDataBase"));
+                const userIndex = userDataBase.findIndex(
+                    (user) => user.id.toString() === userObject.id.toString()
+                );
+                if (userIndex !== -1) {
+                    userDataBase[userIndex] = userObject;
+                }
+
+                await setItem("userDataBase", userDataBase);
+            } catch (error) {
+                console.error(
+                    "Fehler beim Speichern des aktualisierten Tasks:",
+                    error
+                );
+            }
         }
 
         document
@@ -44,35 +64,6 @@ const drop = async (ev) => {
             .forEach(updateNoTasksMessage);
     }
 };
-
-document.querySelectorAll(".task-cards-container").forEach((card) => {
-    card.addEventListener("dragend", (event) => {
-        event.target.style.transform = "rotate(0deg)";
-    });
-});
-
-function getDropTarget(target) {
-    while (target && !target.classList.contains("task-cards-container")) {
-        target = target.parentNode;
-    }
-    return target;
-}
-
-async function updateTaskStatus(task) {
-    try {
-        const userDataBase = JSON.parse(await getItem("userDataBase"));
-        const userIndex = userDataBase.findIndex(
-            (user) => user.id.toString() === userObject.id.toString()
-        );
-        if (userIndex !== -1) {
-            userDataBase[userIndex] = userObject;
-        }
-
-        await setItem("userDataBase", userDataBase);
-    } catch (error) {
-        console.error("Fehler beim Speichern des aktualisierten Tasks:", error);
-    }
-}
 
 const updateNoTasksMessage = (taskCardsContainer) => {
     const noTasksElement = taskCardsContainer.querySelector(".no-tasks");
@@ -177,34 +168,32 @@ function createTaskCard(
 
 function getCardHTML(task, assignedHTML, trueCount, completedPercentage) {
     return `
-        <div class="card-category-wrapper">
-        <div class="card-category" style="${
-            task.category === "Technical Task"
-                ? "background-color: #1FD7C1;"
-                : ""
-        }">${task.category}</div>
-        <img src="./assets/img/drag.png" alt="drag icon" class="drag-icon" />
-      </div>
-        <div class="card-titel">${task.title}</div>
-        <div class="card-description">${task.description}</div>
-        <div class="card-progress" style="display: ${
-            task.subtask.length < 1 ? "none" : ""
-        };">
-            <div class="card-progressbar-container">
-                <div class="card-progressbar" style="width: ${completedPercentage}%;"></div>
-            </div>
-            <div class="card-subtasks"> ${trueCount} / ${
+    <div class="card-category-wrapper">
+    <div class="card-category" style="${
+        task.category === "Technical Task" ? "background-color: #1FD7C1;" : ""
+    }">${task.category}</div>
+    <img src="./assets/img/drag.png" alt="drag icon" class="drag-icon" />
+  </div>
+    <div class="card-titel">${task.title}</div>
+    <div class="card-description">${task.description}</div>
+    <div class="card-progress" style="display: ${
+        task.subtask.length < 1 ? "none" : ""
+    };">
+        <div class="card-progressbar-container">
+            <div class="card-progressbar" style="width: ${completedPercentage}%;"></div>
+        </div>
+        <div class="card-subtasks"> ${trueCount} / ${
         task.subtask.length
     } Subtasks</div>
+    </div>
+    <div class="card-footer">
+        <div class="card-assigned">
+        ${assignedHTML}
         </div>
-        <div class="card-footer">
-            <div class="card-assigned">
-            ${assignedHTML}
-            </div>
-            <div class="card-priority">
-                <img src="./assets/img/${task.prio}.png" alt="priority icon" />
-            </div>
+        <div class="card-priority">
+            <img src="./assets/img/${task.prio}.png" alt="priority icon" />
         </div>
+    </div>
     `;
 }
 
@@ -227,7 +216,7 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
         month: "2-digit",
         day: "2-digit",
     });
-    sendTaskToEdit(task);
+
     const taskCardOpenHTML = `
     <div class="task-card-open">
       <div class="card-category-wrapper">
@@ -273,16 +262,6 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
     overlayTask.style.display = "flex";
 }
 
-function openEditMenu() {
-    document.querySelector(".overlay-task-edit").classList.remove("d-none");
-    document.querySelector(".overlay-task").classList.add("d-none");
-}
-
-function closeEditMenu() {
-    document.querySelector(".overlay-task-edit").classList.add("d-none");
-    document.querySelector(".overlay-task").classList.remove("d-none");
-}
-
 function closeTask() {
     const overlayTask = document.querySelector(".overlay-task");
     const taskCardOpen = document.querySelector(".task-card-open");
@@ -301,15 +280,7 @@ overlayTask.addEventListener("click", (event) => {
         closeTask();
     }
 });
-async function renderCards() {
-    const taskContainers = document.querySelectorAll(".task-cards-container");
-    taskContainers.forEach((container) => {
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
-    });
-    await initTasks();
-}
+
 async function deleteTask(id) {
     try {
         const userDataBase = JSON.parse(await getItem("userDataBase"));
@@ -327,21 +298,26 @@ async function deleteTask(id) {
     } catch (error) {
         console.error("Error while deleting the task:", error);
     }
-    await renderCards(); // Rendern Sie die Karten neu
+    location.reload();
 }
 
 async function toggleSubtaskStatus(subtaskIndex, taskId) {
+    let checkboxImg = document.getElementById(`checkbox-img${subtaskIndex}`);
     try {
-        const userDataBase = await getUserDataBase();
-        const userIndex = getUserIndex(userDataBase);
+        const userDataBase = JSON.parse(await getItem("userDataBase"));
+        const userIndex = userDataBase.findIndex(
+            (user) => user.id.toString() === userObject.id.toString()
+        );
         if (userIndex !== -1) {
-            updateTaskSubtaskStatus(
-                subtaskIndex,
-                taskId,
-                userDataBase,
-                userIndex
-            );
+            const task = userObject.tasks[taskId];
+            const isSubtaskChecked = task.subtaskStatus[subtaskIndex];
+            task.subtaskStatus[subtaskIndex] = !isSubtaskChecked;
+            checkboxImg.src = isSubtaskChecked
+                ? "./assets/img/unchecked.png"
+                : "./assets/img/checked.png";
+            userDataBase[userIndex] = userObject;
         }
+
         await setItem("userDataBase", userDataBase);
         console.log("Subtask status successfully updated");
     } catch (error) {
@@ -349,76 +325,26 @@ async function toggleSubtaskStatus(subtaskIndex, taskId) {
     }
 }
 
-async function getUserDataBase() {
-    return JSON.parse(await getItem("userDataBase"));
-}
-
-function getUserIndex(userDataBase) {
-    return userDataBase.findIndex(
-        (user) => user.id.toString() === userObject.id.toString()
-    );
-}
-
-function updateTaskSubtaskStatus(
-    subtaskIndex,
-    taskId,
-    userDataBase,
-    userIndex
-) {
-    const task = userObject.tasks[taskId];
-    const isSubtaskChecked = task.subtaskStatus[subtaskIndex];
-    task.subtaskStatus[subtaskIndex] = !isSubtaskChecked;
-    updateCheckboxImage(subtaskIndex, isSubtaskChecked);
-    userDataBase[userIndex] = userObject;
-}
-
-function updateCheckboxImage(subtaskIndex, isSubtaskChecked) {
-    let checkboxImg = document.getElementById(`checkbox-img${subtaskIndex}`);
-    checkboxImg.src = isSubtaskChecked
-        ? "./assets/img/unchecked.png"
-        : "./assets/img/checked.png";
-}
-
 function searchTask() {
-    const filter = getSearchFilter();
-    const taskCards = getTaskCards();
-    const columns = getColumns();
-
-    filterTaskCards(taskCards, filter);
-    handleNoTasksMessage(columns);
-}
-
-function getSearchFilter() {
     const input = document.getElementById("searchbar");
-    return input.value.toUpperCase();
-}
+    const filter = input.value.toUpperCase();
+    const taskCards = Array.from(document.getElementsByClassName("task-card"));
+    const columns = Array.from(document.getElementsByClassName("column"));
 
-function getTaskCards() {
-    return Array.from(document.getElementsByClassName("task-card"));
-}
-
-function getColumns() {
-    return Array.from(document.getElementsByClassName("column"));
-}
-
-function filterTaskCards(taskCards, filter) {
     taskCards.forEach((taskCard) => {
-        const titleText = getInnerText(taskCard, "card-titel");
-        const descriptionText = getInnerText(taskCard, "card-description");
+        const title = taskCard.getElementsByClassName("card-titel")[0];
+        const description =
+            taskCard.getElementsByClassName("card-description")[0];
+        let titleText = title ? title.innerText : "";
+        let descriptionText = description ? description.innerText : "";
 
         taskCard.style.display =
-            titleText.includes(filter) || descriptionText.includes(filter)
+            titleText.toUpperCase().includes(filter) ||
+            descriptionText.toUpperCase().includes(filter)
                 ? ""
                 : "none";
     });
-}
 
-function getInnerText(element, className) {
-    const childElement = element.getElementsByClassName(className)[0];
-    return childElement ? childElement.innerText.toUpperCase() : "";
-}
-
-function handleNoTasksMessage(columns) {
     columns.forEach((column) => {
         const columnCards = Array.from(
             column.getElementsByClassName("task-card")
