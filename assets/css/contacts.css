@@ -147,6 +147,7 @@ body {
   display: flex;
   justify-content: flex-end;
   margin-right: 16px;
+  padding-top: 12px;
 }
 
 .back-to-contacts-img img:hover,
