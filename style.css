@@ -320,4 +320,8 @@ header {
     max-width: 1328px;
   }
 
+  .user-menu a:hover {
+    background-color: var(--color-second-hover);
+  }
+
 }

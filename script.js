@@ -176,6 +176,20 @@ function showMenu() {
     }
 }
 
+/**
+ * function, reacts on clickevent. Closes Menu (top-right) if clicking outside the open menu container
+ * @param {MouseEvent} event - Das Klickereignis.
+ */
+document.addEventListener("click", function(event) {
+    let bodyBackground = event.target;
+    let menuContainer = document.getElementById("user-menu");
+    let userContainer = document.getElementById("user-circle");
+    if (!menuContainer.contains(bodyBackground) && !userContainer.contains(bodyBackground)) {
+        if (!menuEnabled)
+            showMenu();
+    }
+});
+
 
 /**
  * Toggles the visibility of the hidden box element.
