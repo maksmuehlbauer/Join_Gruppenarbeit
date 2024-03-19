@@ -20,6 +20,7 @@ const allowDrop = (ev) => {
 
 const drag = (ev) => {
     ev.dataTransfer.setData("text", ev.target.id);
+    ev.target.style.transform = "rotate(5deg)";
 };
 
 const drop = async (ev) => {
@@ -37,6 +38,7 @@ const drop = async (ev) => {
     if (dropTarget.classList.contains("task-cards-container")) {
         const element = document.getElementById(data);
         dropTarget.appendChild(element);
+        element.style.transform = "";
 
         const task = userObject.tasks.find((t) => t.id.toString() === data);
         if (task) {
@@ -64,6 +66,12 @@ const drop = async (ev) => {
             .forEach(updateNoTasksMessage);
     }
 };
+
+document.querySelectorAll(".task-cards-container").forEach((card) => {
+    card.addEventListener("dragend", (event) => {
+        event.target.style.transform = "rotate(0deg)";
+    });
+});
 
 const updateNoTasksMessage = (taskCardsContainer) => {
     const noTasksElement = taskCardsContainer.querySelector(".no-tasks");
