@@ -25,8 +25,7 @@ async function initContacts() {
 }
 
 /**
- * Fetches and loads contacts from the user database. Attempts to retrieve the
- * user's contact list from either local storage or a server, parsing the
+ * Fetches and loads contacts from the user database. parsing the
  * data into the contacts array. If the fetch fails, logs an error and sets
  * the contacts array to empty.
  */
@@ -43,9 +42,9 @@ async function loadContacts() {
 }
 
 /**
- * Adds a new contact to the list and updates the database. Gathers user input,
- * creates a new contact object with a unique background color, and persists
- * the updated contacts list to the local or remote database.
+ * Adds a new contact to the list and updates the database. user input,
+ * creates a new contact object with a unique background color, and saves
+ * the updated contacts list to the remote database.
  */
  async function addValueToContact() {
   let name = document.getElementById("name").value;
@@ -63,8 +62,28 @@ async function loadContacts() {
 }
 
 /**
+ * adds my own contact to the contacts array
+ */
+async function addMyContactToContactsArray() {
+  const myDetails = {
+    id: userObject["id"],
+    name: userDataBase[userObject["id"]].name, 
+    email: userDataBase[userObject["id"]].email, 
+    phone: "",
+    bgrColor: "#FFD700", 
+  };
+  const index = contacts.findIndex(contact => contact.id === myDetails.id);
+  if (index === -1) {
+    userDataBase[userObject["id"]].contacts.push(contact);
+  await setItem("userDataBase", JSON.stringify(userDataBase));
+  } else {
+    contacts[index] = myDetails;
+  }
+}
+
+/**
  * Manages the creation of a new contact. Disables the create button to prevent
- * double submissions, invokes `addValueToContact` to add the contact, refreshes
+ * double submissions, calls `addValueToContact` to add the contact, refreshes
  * the contact list display, closes the add contact form, clears the form fields,
  * and triggers a creation animation.
  */
@@ -80,7 +99,6 @@ async function createContact() {
 
 /**
  * Activates a visual animation to indicate the successful addition of a contact.
- * Activates animation elements for a brief period before deactivating them.
  */
 function createContactAnimation() {
   document.getElementById("centerAddContactAnimation").classList.add("active");
@@ -121,7 +139,7 @@ function extractInitials(contact) {
 
 
 /**
- * Sorts and displays the contacts list in the DOM. Contacts are sorted alphabetically
+ * Sorts and displays the contacts list. Contacts are sorted alphabetically
  * by name, with each contact's details formatted and added to the display.
  */
 function renderContacts() {
@@ -217,7 +235,7 @@ function addBgrColorContact(i) {
 }
 
 /**
- * Fills the UI with details of the selected contact, including name, phone, and email,
+ * Generates the UI with details of the selected contact, including name, phone, and email,
  * and adjusts the display to focus on this contact.
  * @param {number} i - Index of the contact to display.
  */
@@ -250,7 +268,7 @@ function closeContactStyles() {
 }
 
 /**
- * Closes the detail view of a contact and returns to the contact list view.
+ * Closes the single contact view and returns to the contact list view.
  */
 function closeContact() {
   if (contactStatus || screenSize <= 1440 || screenSize >= 1440) {
@@ -264,8 +282,7 @@ function closeContact() {
 }
 
 /**
- * Toggles the visibility of options for editing a selected contact, managing
- * UI elements to provide a clear interface for edit actions.
+ * Toggles the visibility of options for editing a selected contact
  */
 function showEditOptions() {
   let editOptions = document.getElementById("editContactOptions");
@@ -313,6 +330,7 @@ function openEditContactCard(contactIndex) {
  * rerenders the contacts list, and displays the updated contact's details.
  */
 async function updateContact() {
+  
   let newName = document.getElementById("edit-name").value;
   let newEmail = document.getElementById("edit-email").value;
   let newPhone = document.getElementById("edit-phone").value;
@@ -363,8 +381,7 @@ function openAddContact() {
 }
 
 /**
- * Closes the add contact UI and resets to the default state, ready for future
- * additions.
+ * Closes the add contact card and resets to the default state
  */
 function closeAddContactCard() {
   const addContactCard = document.getElementById("addContactCard");
@@ -379,7 +396,7 @@ function closeAddContactCard() {
 
 /**
  * Closes the edit contact options if the user clicks outside of the edit contact
- * options area, maintaining a clean and intuitive UI experience.
+ * options area
  */
 document.addEventListener("click", function (event) {
   if (contactOpenedStatus) {
