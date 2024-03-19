@@ -1,8 +1,8 @@
 let assignedContacts = [];
 let assignedContactsID = [];
 let assignedContactColor = [];
-let prioButtonsColor;
-let prioButtonsColorFont;
+let prioButtonsColor = document.querySelectorAll('.prio-container button');
+let prioButtonsColorFont = document.querySelectorAll('.prio-container button div');
 let categoryMenuOpen = false;
 let category = '';
 let assignedToMenuOpen = false;
@@ -13,6 +13,7 @@ let contacts;
 let taskEditNr = 0;
 let taskEditStatus = 'toDo';
 let subtaskStatus = [];
+
 
 /**
  * function to initialize the addtask-page
@@ -69,7 +70,8 @@ function editTaskpage(task) {
     initialCircles = task.initialCircles;
     subtasksArray = task.subtasksArray;
     taskEditStatus = task.status;
-    setPriority(task.prio);
+    priority = task.prio
+    setPriority('medium');
     refreshSubtasks();
     changeButtonText();
 }
@@ -113,7 +115,6 @@ function splitAndUpperCaseInitials(fullname) {
 function setPriority(pressedButton) {
     prioButtonsColor = document.querySelectorAll('.prio-container button');
     prioButtonsColorFont = document.querySelectorAll('.prio-container button div');
-
     resetButton();
     if (pressedButton == 'high') {
         setHighPriority()
@@ -558,7 +559,7 @@ function resetEverything() {
     document.getElementById('title').value = '';
     document.getElementById('dueDate').value = '';
     document.getElementById('description').value = '';
-    priority = '';
+    priority = 'medium';
     taskEditStatus = 'toDo'
     subtasksArray = [];
     assignedContacts = [];
