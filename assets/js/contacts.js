@@ -9,7 +9,6 @@ let screenSize;
 let firstLetterGlobal;
 let secondLetterGlobal;
 
-
 /**
  * Initializes the contacts page. It renders contacts, includes additional HTML,
  * highlights the current page in the navigation, checks the user login status,
@@ -38,7 +37,34 @@ async function loadContacts() {
     console.error("Loading error:", e);
     contacts = [];
   }
+  addMyContactToContacts();
   renderContacts();
+}
+
+/**
+ * Adds user's contact to the list if not already present.
+ * 
+ * Checks for an existing contact with the same email and name. If not found, creates a new contact
+ * with these details and a unique color, then adds to the contacts list and updates the database.
+ * 
+ * Should be used during contact page initialization to include the user's own contact.
+ */
+async function addMyContactToContacts() {
+  const index = contacts.findIndex(contact => 
+    contact.email === userDataBase[userObject["id"]].email && 
+    contact.name === userDataBase[userObject["id"]].name
+  );
+  if (index === -1) {
+    const myDetails = {
+      id: userObject["id"],
+      name: userDataBase[userObject["id"]].name, 
+      email: userDataBase[userObject["id"]].email, 
+      phone: "",
+      bgrColor: "#2A3E59", 
+    };
+    userDataBase[userObject["id"]].contacts.push(myDetails);
+    await setItem("userDataBase", JSON.stringify(userDataBase));
+  }
 }
 
 /**
@@ -59,26 +85,6 @@ async function loadContacts() {
   };
   userDataBase[userObject["id"]].contacts.push(contact);
   await setItem("userDataBase", JSON.stringify(userDataBase));
-}
-
-/**
- * adds my own contact to the contacts array
- */
-async function addMyContactToContactsArray() {
-  const myDetails = {
-    id: userObject["id"],
-    name: userDataBase[userObject["id"]].name, 
-    email: userDataBase[userObject["id"]].email, 
-    phone: "",
-    bgrColor: "#FFD700", 
-  };
-  const index = contacts.findIndex(contact => contact.id === myDetails.id);
-  if (index === -1) {
-    userDataBase[userObject["id"]].contacts.push(contact);
-  await setItem("userDataBase", JSON.stringify(userDataBase));
-  } else {
-    contacts[index] = myDetails;
-  }
 }
 
 /**
@@ -143,18 +149,25 @@ function extractInitials(contact) {
  * by name, with each contact's details formatted and added to the display.
  */
 function renderContacts() {
-  const sortedContacts = contacts.sort((a, b) => a.name.localeCompare(b.name));
+  const sortedContacts = contacts.sort((a, b) => {
+    if (!a.name || !b.name) {
+      return 0;
+    }
+    return a.name.localeCompare(b.name);
+  });
   const contactsContainer = document.getElementById("contactsList");
   let content = "";
   let currentLetter = "";
   for (let i = 0; i < sortedContacts.length; i++) {
     const contact = sortedContacts[i];
-    const { firstLetter, secondLetter } = extractInitials(contact);
-    if (currentLetter !== firstLetter) {
-      currentLetter = firstLetter;
-      content += generateHeadline(currentLetter);
-    }
-    content += generateContacts(contact.email,contact.name,secondLetter,firstLetter,i,contact.bgrColor);
+    if (contact.name) {
+      const { firstLetter, secondLetter } = extractInitials(contact);
+      if (currentLetter !== firstLetter) {
+        currentLetter = firstLetter;
+        content += generateHeadline(currentLetter);
+      }
+      content += generateContacts(contact.email, contact.name, secondLetter, firstLetter, i, contact.bgrColor);
+    } 
   }
   contactsContainer.innerHTML = content;
 }
@@ -330,7 +343,6 @@ function openEditContactCard(contactIndex) {
  * rerenders the contacts list, and displays the updated contact's details.
  */
 async function updateContact() {
-  
   let newName = document.getElementById("edit-name").value;
   let newEmail = document.getElementById("edit-email").value;
   let newPhone = document.getElementById("edit-phone").value;
