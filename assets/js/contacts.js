@@ -50,9 +50,11 @@ async function loadContacts() {
  * Should be used during contact page initialization to include the user's own contact.
  */
 async function addMyContactToContacts() {
-  const index = contacts.findIndex(contact => 
+  if(userDataBase[userObject["id"]].name !== "Guest"){
+    const index = contacts.findIndex(contact => 
     contact.email === userDataBase[userObject["id"]].email ||
-    contact.name === userDataBase[userObject["id"]].name
+    contact.name === userDataBase[userObject["id"]].name ||
+    contact.phone === userDataBase[userObject["id"]].phone 
   );
   if (index === -1) {
     const myDetails = {
@@ -64,6 +66,7 @@ async function addMyContactToContacts() {
     };
     userDataBase[userObject["id"]].contacts.push(myDetails);
     await setItem("userDataBase", JSON.stringify(userDataBase));
+  }
   }
 }
 
@@ -136,12 +139,16 @@ function clearForm() {
 function extractInitials(contact) {
   const firstLetter = contact.name[0].toUpperCase();
   const parts = contact.name.split(" ");
-  const lastName = parts[parts.length - 1];
-  const secondLetter = lastName[0].toUpperCase();
-  secondLetterGlobal = secondLetter;
+  let secondLetter = "";
+  if (parts.length > 1) {
+    const lastName = parts[parts.length - 1];
+    secondLetter = lastName[0].toUpperCase();
+  }
   firstLetterGlobal = firstLetter;
+  secondLetterGlobal = secondLetter;
   return { firstLetter, secondLetter };
 }
+
 
 
 /**
@@ -150,9 +157,7 @@ function extractInitials(contact) {
  */
 function renderContacts() {
   const sortedContacts = contacts.sort((a, b) => {
-    if (!a.name || !b.name) {
-      return 0;
-    }
+    if (!a.name || !b.name) {return 0;}
     return a.name.localeCompare(b.name);
   });
   const contactsContainer = document.getElementById("contactsList");
