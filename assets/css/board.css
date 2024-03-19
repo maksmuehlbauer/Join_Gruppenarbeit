@@ -231,6 +231,8 @@ input:focus {
     border-radius: 30px;
     background-color: var(--color-white);
     animation: slideInFromRight 0.2s ease-out;
+    overflow-y: auto;
+    max-height: 90%;
 
     & .txt-gray {
         color: #42526e;
