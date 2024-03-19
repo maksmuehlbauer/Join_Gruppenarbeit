@@ -217,17 +217,16 @@ function openEditContactCard(contactIndex) {
 }
 
 async function updateContact() {
-  let name = document.getElementById("edit-name").value;
-  let email = document.getElementById("edit-email").value;
-  let phone = document.getElementById("edit-phone").value;
-  bgrColor = contacts[contactIndex].bgrColor;
-  contacts[contactIndex] = { name, email, phone, bgrColor };
-  userDataBase[userObject["id"]].contacts = contacts;
+  let newName = document.getElementById("edit-name").value;
+  let newEmail = document.getElementById("edit-email").value;
+  let newPhone = document.getElementById("edit-phone").value;
+  contacts[contactIndex] = { ...contacts[contactIndex], name: newName, email: newEmail, phone: newPhone };
   await setItem("userDataBase", JSON.stringify(userDataBase));
-  let newIndex = contactIndex;
   renderContacts();
-  closeEditContactCard();
+  let newIndex = contacts.findIndex(contact => contact.name === newName && contact.email === newEmail);
+  contactIndex = newIndex;
   showContact(newIndex);
+  closeEditContactCard();
 }
 
 function generateIconForEditCard() {
