@@ -216,7 +216,7 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
         month: "2-digit",
         day: "2-digit",
     });
-
+    sendTaskToEdit(task);
     const taskCardOpenHTML = `
     <div class="task-card-open">
       <div class="card-category-wrapper">
@@ -260,6 +260,16 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
 
     overlayTask.innerHTML = taskCardOpenHTML;
     overlayTask.style.display = "flex";
+}
+
+function openEditMenu() {
+    document.querySelector(".overlay-task-edit").classList.remove("d-none");
+    document.querySelector(".overlay-task").classList.add("d-none");
+}
+
+function closeEditMenu() {
+    document.querySelector(".overlay-task-edit").classList.add("d-none");
+    document.querySelector(".overlay-task").classList.remove("d-none");
 }
 
 function closeTask() {
