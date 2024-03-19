@@ -46,6 +46,11 @@ input {
     border-radius: 10px;
 }
 
+input:focus {
+    outline: none;
+    border-color: var(--color-hover);
+}
+
 .search-icon {
     position: absolute;
     right: 0;
@@ -60,7 +65,7 @@ input {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 24px 0 16px 0;
+    margin: 24px 0 0 0;
 }
 
 .board-titel-head {
@@ -79,6 +84,10 @@ input {
     background-color: var(--color-primary);
 }
 
+.btn-head:hover {
+    background-color: var(--color-hover);
+}
+
 .task-cards-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -92,23 +101,38 @@ input {
     justify-content: center;
     align-items: center;
     height: 48px;
+    margin-top: 16px;
     background-color: #e7e7e7;
     border: 1px dashed #a8a8a8;
     border-radius: 10px;
+}
+
+.plus-button:hover {
+    content: url(../img/plus-button-hover.png);
+}
+
+.drag-icon {
+    width: 20px;
+    height: 20px;
 }
 
 .task-card {
     cursor: grab;
     display: inline-flex;
     flex-direction: column;
-    margin-right: 16px;
-    margin-bottom: 16px;
+    margin: 16px 16px 16px 0;
     width: 252px;
     padding: 16px;
     background-color: var(--color-white);
     border-radius: 24px;
     box-shadow: 0 0 10px 3px rgba(0, 0, 0, 8%);
     white-space: wrap;
+
+    & .card-category-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
     & .card-category {
         color: var(--color-white);
@@ -202,6 +226,7 @@ input {
     flex-direction: column;
     gap: 16px;
     width: 396px;
+    margin: 0 8px;
     padding: 32px 24px;
     border-radius: 30px;
     background-color: var(--color-white);
@@ -219,7 +244,8 @@ input {
 
     & .card-category {
         color: var(--color-white);
-        display: inline-block;
+        display: flex;
+        align-items: center;
         padding: 4px 16px;
         background-color: var(--color-userstory);
         border-radius: 8px;
@@ -263,9 +289,18 @@ input {
     }
 
     .card-close {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
         cursor: pointer;
-        width: 13.15px;
-        height: 13.15px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .card-close:hover {
+        background-color: #d1d1d1;
+        border-radius: 50%;
     }
 
     & .card-edit {
@@ -286,6 +321,10 @@ input {
             height: 24px;
             border-left: solid #d1d1d1 1px;
         }
+    }
+
+    & .card-edit div:hover {
+        color: var(--color-hover);
     }
 }
 
@@ -324,6 +363,7 @@ input {
         display: flex;
         align-items: center;
         height: 72px;
+        margin: 24px 0 16px 0;
     }
 
     .board-titel-head {
@@ -347,6 +387,14 @@ input {
         -webkit-overflow-scrolling: unset;
         overflow-y: unset;
         white-space: nowrap;
+    }
+
+    .task-card {
+        margin: 0 16px 16px 0;
+    }
+
+    .no-tasks {
+        margin-top: 0;
     }
 
     .column {
@@ -381,6 +429,19 @@ input {
         & img {
             width: 18.67px;
             height: 18.67px;
+        }
+    }
+
+    .task-card-open {
+        font-size: 20px;
+        & .card-titel {
+            font-size: 61px;
+        }
+        & .card-priority {
+            gap: 10px;
+            & span {
+                margin-right: 40px;
+            }
         }
     }
 }
