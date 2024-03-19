@@ -6,7 +6,7 @@ let prioButtonsColorFont;
 let categoryMenuOpen = false;
 let category = '';
 let assignedToMenuOpen = false;
-let priority = '';
+let priority = 'medium';
 let initialCircles = [];
 let subtasksArray = [];
 let contacts;
