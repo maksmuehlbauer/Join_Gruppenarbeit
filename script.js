@@ -178,7 +178,7 @@ function showMenu() {
 
 /**
  * function, reacts on clickevent. Closes Menu (top-right) if clicking outside the open menu container
- * @param {MouseEvent} event - Das Klickereignis.
+ * @param {MouseEvent} event - click event
  */
 document.addEventListener("click", function(event) {
     let bodyBackground = event.target;

@@ -12,6 +12,7 @@ let subtasksArray = [];
 let contacts;
 let taskEditNr = 0;
 let taskEditStatus = 'toDo';
+let subtaskStatus = [];
 
 /**
  * function to initialize the addtask-page
@@ -527,6 +528,7 @@ function createTheTaskObject(task, title, dueDate){
     task.assigntoColor = assignedContactColor;
     task.initialCircles = initialCircles;
     task.subtasksArray = subtasksArray;
+    task.subtaskStatus = subtaskStatus;
 }
 
 /**
