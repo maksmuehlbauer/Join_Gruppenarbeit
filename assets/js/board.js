@@ -174,26 +174,26 @@ function getCardHTML(task, assignedHTML, trueCount, completedPercentage) {
     }">${task.category}</div>
     <img src="./assets/img/drag.png" alt="drag icon" class="drag-icon" />
   </div>
-    <div class="card-titel">${task.title}</div>
-    <div class="card-description">${task.description}</div>
-    <div class="card-progress" style="display: ${
-        task.subtask.length < 1 ? "none" : ""
-    };">
-        <div class="card-progressbar-container">
-            <div class="card-progressbar" style="width: ${completedPercentage}%;"></div>
-        </div>
-        <div class="card-subtasks"> ${trueCount} / ${
+        <div class="card-titel">${task.title}</div>
+        <div class="card-description">${task.description}</div>
+        <div class="card-progress" style="display: ${
+            task.subtask.length < 1 ? "none" : ""
+        };">
+            <div class="card-progressbar-container">
+                <div class="card-progressbar" style="width: ${completedPercentage}%;"></div>
+            </div>
+            <div class="card-subtasks"> ${trueCount} / ${
         task.subtask.length
     } Subtasks</div>
-    </div>
-    <div class="card-footer">
-        <div class="card-assigned">
-        ${assignedHTML}
         </div>
-        <div class="card-priority">
-            <img src="./assets/img/${task.prio}.png" alt="priority icon" />
+        <div class="card-footer">
+            <div class="card-assigned">
+            ${assignedHTML}
+            </div>
+            <div class="card-priority">
+                <img src="./assets/img/${task.prio}.png" alt="priority icon" />
+            </div>
         </div>
-    </div>
     `;
 }
 
