@@ -70,8 +70,8 @@ function editTaskpage(task) {
     initialCircles = task.initialCircles;
     subtasksArray = task.subtasksArray;
     taskEditStatus = task.status;
-    priority = task.prio
-    setPriority('medium');
+    priority = '';
+    setPriority(task.prio);
     refreshSubtasks();
     changeButtonText();
 }
