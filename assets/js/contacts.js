@@ -9,6 +9,12 @@ let screenSize;
 let firstLetterGlobal;
 let secondLetterGlobal;
 
+
+/**
+ * Initializes the contacts page. It renders contacts, includes additional HTML,
+ * highlights the current page in the navigation, checks the user login status,
+ * and determines the current screen size.
+ */
 async function initContacts() {
   renderContacts();
   await includeHTML();
@@ -18,6 +24,12 @@ async function initContacts() {
   getScreenSize();
 }
 
+/**
+ * Fetches and loads contacts from the user database. Attempts to retrieve the
+ * user's contact list from either local storage or a server, parsing the
+ * data into the contacts array. If the fetch fails, logs an error and sets
+ * the contacts array to empty.
+ */
 async function loadContacts() {
   try {
     const result = await getItem("userDataBase");
@@ -30,6 +42,11 @@ async function loadContacts() {
   renderContacts();
 }
 
+/**
+ * Adds a new contact to the list and updates the database. Gathers user input,
+ * creates a new contact object with a unique background color, and persists
+ * the updated contacts list to the local or remote database.
+ */
  async function addValueToContact() {
   let name = document.getElementById("name").value;
   let email = document.getElementById("email").value;
@@ -45,6 +62,12 @@ async function loadContacts() {
   await setItem("userDataBase", JSON.stringify(userDataBase));
 }
 
+/**
+ * Manages the creation of a new contact. Disables the create button to prevent
+ * double submissions, invokes `addValueToContact` to add the contact, refreshes
+ * the contact list display, closes the add contact form, clears the form fields,
+ * and triggers a creation animation.
+ */
 async function createContact() {
   createContactBtn.disabled = true;
   addValueToContact();
@@ -54,6 +77,11 @@ async function createContact() {
   createContactAnimation();
 }
 
+
+/**
+ * Activates a visual animation to indicate the successful addition of a contact.
+ * Activates animation elements for a brief period before deactivating them.
+ */
 function createContactAnimation() {
   document.getElementById("centerAddContactAnimation").classList.add("active");
   document.getElementById("createContactAnimation").classList.add("active");
@@ -67,12 +95,20 @@ function createContactAnimation() {
   }, 2500);
 }
 
+/**
+ * Clears the input fields in the contact form. Used after successfully adding a new contact.
+ */
 function clearForm() {
   document.getElementById("name").value = "";
   document.getElementById("email").value = "";
   document.getElementById("phone").value = "";
 }
 
+/**
+ * Extracts the first letter of the first and last name from a given contact's name.
+ * @param {Object} contact - The contact object, expected to contain a 'name' property.
+ * @returns {Object} An object containing the first letters of the first and last name.
+ */
 function extractInitials(contact) {
   const firstLetter = contact.name[0].toUpperCase();
   const parts = contact.name.split(" ");
@@ -83,6 +119,11 @@ function extractInitials(contact) {
   return { firstLetter, secondLetter };
 }
 
+
+/**
+ * Sorts and displays the contacts list in the DOM. Contacts are sorted alphabetically
+ * by name, with each contact's details formatted and added to the display.
+ */
 function renderContacts() {
   const sortedContacts = contacts.sort((a, b) => a.name.localeCompare(b.name));
   const contactsContainer = document.getElementById("contactsList");
@@ -100,6 +141,11 @@ function renderContacts() {
   contactsContainer.innerHTML = content;
 }
 
+/**
+ * Generates a random hexadecimal color string. Used to assign unique colors to
+ * contact icons.
+ * @returns {string} Hexadecimal color string.
+ */
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
   let color = "#";
@@ -109,6 +155,10 @@ function getRandomColor() {
   return color;
 }
 
+
+/**
+ * Closes the contact list view and prepares the UI for displaying a single contact's details.
+ */
 function closeContactList() {
   contactsList.style.display = "none";
   addContactImg.style.display = "none";
@@ -118,10 +168,20 @@ function closeContactList() {
 
 window.addEventListener("resize", getScreenSize);
 
+/**
+ * Dynamically updates the `screenSize` variable to reflect the current window width.
+ * This supports responsive design decisions within the application.
+ */
+
 function getScreenSize() {
   screenSize = window.innerWidth;
 }
 
+/**
+ * Applies a unique background color to the UI representation of the selected contact
+ * and adjusts UI elements for detailed view, based on screen size.
+ * @param {number} i - Index of the selected contact.
+ */
 function openContact(i) {
   if (!contactStatus) {
     closeContactList();
@@ -134,6 +194,11 @@ function openContact(i) {
   }
 }
 
+/**
+ * Applies a unique background color to the UI representation of the selected contact
+ * and adjusts UI elements for detailed view, based on screen size.
+ * @param {number} i - Index of the selected contact.
+ */
 function addBgrColorContact(i) {
   if (screenSize > 1440) {
     document.getElementById("sloganContainerDesktop").classList.add("d-none");
@@ -151,6 +216,11 @@ function addBgrColorContact(i) {
   }
 }
 
+/**
+ * Fills the UI with details of the selected contact, including name, phone, and email,
+ * and adjusts the display to focus on this contact.
+ * @param {number} i - Index of the contact to display.
+ */
 function showContact(i) {
   contactIndex = i;
   contactOpenedStatus = true;
@@ -166,6 +236,10 @@ function showContact(i) {
   );
 }
 
+
+/**
+ * Resets the contact view UI to its default state, showing the contacts list.
+ */
 function closeContactStyles() {
   contactsList.style.display = "block";
   addContactImg.style.display = "flex";
@@ -175,6 +249,9 @@ function closeContactStyles() {
   sloganContainerDesktop.style.display = "flex";
 }
 
+/**
+ * Closes the detail view of a contact and returns to the contact list view.
+ */
 function closeContact() {
   if (contactStatus || screenSize <= 1440 || screenSize >= 1440) {
    closeContactStyles();
@@ -186,6 +263,10 @@ function closeContact() {
   contactOpenedStatus = false;
 }
 
+/**
+ * Toggles the visibility of options for editing a selected contact, managing
+ * UI elements to provide a clear interface for edit actions.
+ */
 function showEditOptions() {
   let editOptions = document.getElementById("editContactOptions");
   editOptions.classList.add("edit-contacts-options-active");
@@ -193,6 +274,11 @@ function showEditOptions() {
   showEditOptionsStatus = false;
 }
 
+
+/**
+ * Closes the edit contact form and resets the UI to its default editing state,
+ * hiding the edit options and overlay.
+ */
 function closeEditContactCard() {
   document.getElementById("editContactCard").classList.remove("active");
   editContactCard.classList.remove("active");
@@ -204,6 +290,12 @@ function closeEditContactCard() {
   }, 500);
 }
 
+/**
+ * Opens the edit contact form for a specified contact, allowing the user to
+ * modify contact details. Prepares and displays the form with current contact
+ * information pre-filled.
+ * @param {number} contactIndex - Index of the contact being edited.
+ */
 function openEditContactCard(contactIndex) {
   document.getElementById("centerEditCard").classList.add("active");
   document.getElementById("editContactCard").classList.add("active");
@@ -216,6 +308,10 @@ function openEditContactCard(contactIndex) {
   generateIconForEditCard();
 }
 
+/**
+ * Saves the updated contact information to the contacts list and database,
+ * rerenders the contacts list, and displays the updated contact's details.
+ */
 async function updateContact() {
   let newName = document.getElementById("edit-name").value;
   let newEmail = document.getElementById("edit-email").value;
@@ -229,6 +325,10 @@ async function updateContact() {
   closeEditContactCard();
 }
 
+/**
+ * Generates the HTML content for the edit contact card icon, reflecting the
+ * contact's assigned background color.
+ */
 function generateIconForEditCard() {
   const bgrColor = contacts[contactIndex].bgrColor;
   const iconContainer = document.getElementById('editCardIcon');
@@ -238,6 +338,10 @@ function generateIconForEditCard() {
   }
 }
 
+/**
+ * Removes the currently selected contact from the contacts list and updates
+ * the database, then closes the contact and edit views.
+ */
 async function deleteContact() {
   contacts.splice(contactIndex, 1);
   await setItem("userDataBase", JSON.stringify(userDataBase));
@@ -246,6 +350,11 @@ async function deleteContact() {
   closeEditContactCard();
 }
 
+
+/**
+ * Opens the UI for adding a new contact, preparing and displaying a blank
+ * form for contact information entry.
+ */
 function openAddContact() {
   document.getElementById("center-add-card").classList.add("active");
   document.getElementById("addContactCard").classList.add("active");
@@ -253,6 +362,10 @@ function openAddContact() {
   overlayContacts.style.display = "block";
 }
 
+/**
+ * Closes the add contact UI and resets to the default state, ready for future
+ * additions.
+ */
 function closeAddContactCard() {
   const addContactCard = document.getElementById("addContactCard");
   const centerAddCard = document.getElementById("center-add-card");
@@ -264,6 +377,10 @@ function closeAddContactCard() {
   }, 500);
 }
 
+/**
+ * Closes the edit contact options if the user clicks outside of the edit contact
+ * options area, maintaining a clean and intuitive UI experience.
+ */
 document.addEventListener("click", function (event) {
   if (contactOpenedStatus) {
     let isClickInsideOptions = document.getElementById("editContactOptions").contains(event.target);
@@ -278,96 +395,3 @@ document.addEventListener("click", function (event) {
   }
 });
 
-/* Templates*/
-
-function generateIconForEditCardTemplate(bgrColor) {
-  return /*HTML*/ `
-      <div class="contact-header" style="background-color: ${bgrColor};">
-        <span>${firstLetterGlobal}${secondLetterGlobal}</span>
-      </div>
-    `;
-}
-
-function generateHeadline(currentLetter) {
-  return /*HTML*/ `
-    <div>
-      <h4 class="contact-headline-letter">${currentLetter}</h4>
-      <div class="underline"></div>
-    </div>
-  `;
-}
-
-function generateContacts(email, name, secondLetter, firstLetter, i, bgrColor) {
-  return /*HTML*/ `
-      <div class="contact" id="${i}" onclick="openContact(${i})">
-          <div class="contact-header height-width-42" style="background-color: ${bgrColor};">
-              <span>${firstLetter}${secondLetter}</span>
-          </div> 
-          <div class="contact-info">
-              <div class="name">${name}</div>
-              <div class="email-contact">${email}</div>
-          </div>
-      </div>
-      `;
-}
-
-function generateContact(
-  firstLetter,
-  secondLetter,
-  name,
-  phone,
-  email,
-  i,
-  bgrColor
-) {
-  return /*HTML*/ `
-  <div class="contact-container" id=${i}>
-    <div class="back-to-contacts-img">
-    <img onclick="closeContact()" src="assets/img/back.png" alt="">
-    </div>
-    <div>
-      
-    </div>
-    <div class="slogan-show-contact">
-      <h1>Contacts</h1>
-      <div class="contact-line-desktop"  style="display: none"></div>
-      <span class="slogan-contact">Better with a Team</span>
-      <div class="contact-underline"></div>
-    </div>
-  
-  <div class="name-container">
-    <div class="contact-header contact-opened" style="background-color: ${bgrColor};">
-      <span><h3>${firstLetter}${secondLetter}</h3></span>
-  </div>
-  <div>
-<div id="contactOpenedName" class="name">
-        <h2>${name}</h2>
-      </div>
-      <div class="edit-delete-desktop" id="editDeleteDesktop">
-      <div onclick="openEditContactCard(${contactIndex})" class="edit-image-contact">
-        <img src="assets/img/edit-task.png" alt="">Edit
-      </div>
-      <div class="center-img-text" onclick="deleteContact()">
-        <img src="assets/img/delete.png" alt=""> Delete
-      </div>
-  </div>
-      
-    </div>
-  </div> 
-  <div>
-  <h4>Contact Information</h4>
-  <p class="email-contact-opened">Email</p>
-      <div id="contactOpenedEmail" class="email-contact">${email}</div>
-      <p class="email-contact-opened">Phone</p>
-      <div id="contactOpenedPhone" class="phone-contact">${phone}</div>
-  </div>
-   <div id="editContactImg" class="editContactImg" onclick="showEditOptions()">
-   <img src="assets/img/more_vert.png" alt="">
-   </div>
-   <div class="edit-contacts-options" id="editContactOptions">
-    <div onclick="openEditContactCard(${contactIndex})" class="edit-image-contact"><img src="assets/img/edit-task.png" alt="">Edit</div>
-    <div onclick="deleteContact()"><img src="assets/img/delete.png" alt="">Delete</div>
-   </div>
-</div>
-    `;
-}
