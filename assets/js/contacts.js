@@ -51,7 +51,7 @@ async function loadContacts() {
  */
 async function addMyContactToContacts() {
   const index = contacts.findIndex(contact => 
-    contact.email === userDataBase[userObject["id"]].email && 
+    contact.email === userDataBase[userObject["id"]].email ||
     contact.name === userDataBase[userObject["id"]].name
   );
   if (index === -1) {
