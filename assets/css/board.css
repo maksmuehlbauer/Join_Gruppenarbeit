@@ -444,6 +444,10 @@ input:focus {
             }
         }
     }
+
+    .drag-icon {
+        display: none;
+    }
 }
 
 #checkbox-container {
