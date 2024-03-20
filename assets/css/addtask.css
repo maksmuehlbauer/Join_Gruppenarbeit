@@ -389,6 +389,7 @@ select {
   padding: 16px;
   font-size: 21px;
   display: flex;
+  align-items: center;
   gap: 4px;
 }
 
@@ -664,6 +665,10 @@ sup {
   .task-input-container{
     margin-bottom: 70px !important;
   }
+
+  .title-container, .description-container, .prio-container, .due-date-container, .category-container, .assigned-to-container, .subtasks-container {
+    width: 45%;
+  }
   
 
   .add-task-container input,
@@ -925,3 +930,17 @@ sup {
   }
 
 }
+
+@media (max-width: 460px) {
+  .add-task-footnote-container .clear-create-button-container{
+    transform: scale(0.7);
+  }
+  .add-task-footnote-container{
+    display: block;
+  }
+
+  .add-task-footnote-container button{
+    font-size: 18px;
+    padding: 10px;
+  }
+  }
