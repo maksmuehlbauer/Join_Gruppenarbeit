@@ -106,13 +106,34 @@ function setTaskDefaults(task, index) {
     task.subtaskStatus = task.subtaskStatus || [];
 }
 
+// function createAssignedHTML(task) {
+//     let assignedHTML = "";
+//     task.assignto.forEach((fullName, index) => {
+//         const initials = getInitialss(fullName);
+//         const color = task.assigntoColor[index];
+//         assignedHTML += `<div class="card-contacts" style="background-color: ${color}">${initials}</div>`;
+//     });
+//     return assignedHTML;
+// }
+
 function createAssignedHTML(task) {
     let assignedHTML = "";
+    const maxInitials = 5;
+    const assignedCount = task.assignto.length;
+
     task.assignto.forEach((fullName, index) => {
-        const initials = getInitialss(fullName);
-        const color = task.assigntoColor[index];
-        assignedHTML += `<div class="card-contacts" style="background-color: ${color}">${initials}</div>`;
+        if (index < maxInitials) {
+            const initials = getInitialss(fullName);
+            const color = task.assigntoColor[index];
+            assignedHTML += `<div class="card-contacts" style="background-color: ${color}">${initials}</div>`;
+        }
     });
+
+    if (assignedCount > maxInitials) {
+        const remainingCount = assignedCount - maxInitials;
+        assignedHTML += `<div class="card-contacts-more">+${remainingCount}</div>`;
+    }
+
     return assignedHTML;
 }
 
