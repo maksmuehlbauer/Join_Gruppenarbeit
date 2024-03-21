@@ -16,7 +16,51 @@ async function useUserObject() {
 
 const allowDrop = (ev) => {
     ev.preventDefault();
+    const taskCardsContainer = ev.target.closest(".task-cards-container");
+
+    if (taskCardsContainer) {
+        const existingPlaceholderCard =
+            taskCardsContainer.querySelector(".placeholder-card");
+
+        if (!existingPlaceholderCard) {
+            const placeholderCard = createPlaceholderCard();
+            const taskCard = ev.target.closest(".task-card");
+
+            if (taskCard) {
+                taskCard.parentNode.insertBefore(
+                    placeholderCard,
+                    taskCard.nextSibling
+                );
+            } else {
+                taskCardsContainer.appendChild(placeholderCard);
+            }
+        }
+    }
 };
+
+const removeDragHighlight = (ev) => {
+    const taskCardsContainer = ev.target.closest(".task-cards-container");
+
+    if (taskCardsContainer) {
+        const placeholderCard =
+            taskCardsContainer.querySelector(".placeholder-card");
+        if (placeholderCard && !taskCardsContainer.contains(ev.relatedTarget)) {
+            placeholderCard.remove();
+        }
+    }
+};
+
+document.querySelectorAll(".task-cards-container").forEach((column) => {
+    column.addEventListener("dragover", allowDrop);
+    column.addEventListener("dragleave", removeDragHighlight);
+    column.addEventListener("drop", removeDragHighlight);
+});
+
+function createPlaceholderCard() {
+    const placeholderCard = document.createElement("div");
+    placeholderCard.className = "placeholder-card";
+    return placeholderCard;
+}
 
 const drag = (ev) => {
     ev.dataTransfer.setData("text", ev.target.id);
@@ -105,16 +149,6 @@ function setTaskDefaults(task, index) {
     task.id = index;
     task.subtaskStatus = task.subtaskStatus || [];
 }
-
-// function createAssignedHTML(task) {
-//     let assignedHTML = "";
-//     task.assignto.forEach((fullName, index) => {
-//         const initials = getInitialss(fullName);
-//         const color = task.assigntoColor[index];
-//         assignedHTML += `<div class="card-contacts" style="background-color: ${color}">${initials}</div>`;
-//     });
-//     return assignedHTML;
-// }
 
 function createAssignedHTML(task) {
     let assignedHTML = "";
