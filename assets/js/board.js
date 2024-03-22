@@ -335,6 +335,40 @@ function closeEditMenu() {
     document.querySelector(".overlay-task").classList.remove("d-none");
 }
 
+function clearTaskContainer() {
+    const containers = document.querySelectorAll(".task-cards-container");
+    containers.forEach((container) => {
+        container.innerHTML = `<div class="no-tasks" style="display: flex;">No tasks To do</div>`;
+    });
+}
+
+function hideTaskCards() {
+    const taskCards = document.getElementsByClassName("task-card");
+    Array.from(taskCards).forEach((card) => {
+        card.classList.add("hidden");
+    });
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 0);
+    });
+}
+
+function showTaskCards() {
+    const taskCards = document.getElementsByClassName("task-card");
+    Array.from(taskCards).forEach((card) => {
+        card.classList.remove("hidden");
+    });
+}
+
+async function reloadTasks() {
+    clearTaskContainer();
+    await hideTaskCards();
+    await initTasks();
+    searchTask();
+    showTaskCards();
+}
+
 function closeTask() {
     const overlayTask = document.querySelector(".overlay-task");
     const taskCardOpen = document.querySelector(".task-card-open");
@@ -343,7 +377,7 @@ function closeTask() {
         overlayTask.style.display = "none";
         taskCardOpen.style.animation = "";
     });
-    location.reload();
+    reloadTasks();
 }
 
 const overlayTask = document.querySelector(".overlay-task");
@@ -397,10 +431,11 @@ async function toggleSubtaskStatus(subtaskIndex, taskId) {
         console.error("Error updating subtask status:", error);
     }
 }
-
 function searchTask() {
+    console.log("searchTask() wurde aufgerufen");
     const input = document.getElementById("searchbar");
     const filter = input.value.toUpperCase();
+    console.log("Suchbegriff in searchTask():", filter);
     const taskCards = Array.from(document.getElementsByClassName("task-card"));
     const columns = Array.from(document.getElementsByClassName("column"));
 
