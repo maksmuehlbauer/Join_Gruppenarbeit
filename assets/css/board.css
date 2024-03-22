@@ -145,6 +145,7 @@ input:focus {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 392px;
     height: 48px;
     margin: 16px 0;
     background-color: #e7e7e7;
@@ -437,6 +438,7 @@ input:focus {
     }
 
     .no-tasks {
+        width: 252px;
         margin-top: 0;
     }
 
