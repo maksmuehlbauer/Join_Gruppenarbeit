@@ -342,10 +342,8 @@ async function toggleSubtaskStatus(subtaskIndex, taskId) {
     }
 }
 function searchTask() {
-    console.log("searchTask() wurde aufgerufen");
     const input = document.getElementById("searchbar");
     const filter = input.value.toUpperCase();
-    console.log("Suchbegriff in searchTask():", filter);
     const taskCards = Array.from(document.getElementsByClassName("task-card"));
     const columns = Array.from(document.getElementsByClassName("column"));
 

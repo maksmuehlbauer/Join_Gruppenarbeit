@@ -2,7 +2,6 @@ let draggedCard = null;
 let touchOffsetX = 0;
 let touchOffsetY = 0;
 
-// Drag and Drop functions
 function dragStart(event) {
     draggedCard = event.target;
     event.dataTransfer.setData("text", event.target.id);
@@ -16,7 +15,6 @@ function removePlaceholderCard() {
     }
 }
 
-// Touch functions
 let dragTimer;
 
 function handleTouchStart(event) {
@@ -25,13 +23,13 @@ function handleTouchStart(event) {
     dragTimer = setTimeout(() => {
         event.preventDefault();
         setupDraggedCard(touchedCard, event.touches[0]);
-        document.body.style.overflow = "hidden"; // Deaktivieren Sie das Scrollen
+        document.body.style.overflow = "hidden";
     }, 200);
 }
+
 function handleTouchMove(event) {
     if (!draggedCard) return;
     if (event.cancelable) {
-        // Nur verhindern, wenn das Ereignis abgebrochen werden kann
         event.preventDefault();
     }
     const touch = event.touches[0];
@@ -49,14 +47,12 @@ function handleTouchMove(event) {
 
 window.addEventListener("touchmove", function (event) {
     const touch = event.touches[0];
-    const threshold = 50; // Die Entfernung vom Rand, bei der das Scrollen beginnt
-    const scrollAmount = 10; // Die Menge, um die gescrollt wird
+    const threshold = 50;
+    const scrollAmount = 10;
 
     if (touch.clientY < threshold) {
-        // Wenn die Maus nahe am oberen Rand ist, scrollen Sie nach oben
         window.scrollBy(0, -scrollAmount);
     } else if (window.innerHeight - touch.clientY < threshold) {
-        // Wenn die Maus nahe am unteren Rand ist, scrollen Sie nach unten
         window.scrollBy(0, scrollAmount);
     }
 });
@@ -68,17 +64,16 @@ async function handleTouchEnd(event) {
     );
     resetOriginalCard(originalCard);
     removePlaceholderCard();
-    document.body.style.overflow = "auto"; // Aktivieren Sie das Scrollen wieder
+    document.body.style.overflow = "auto";
     await handleDrop(event.changedTouches[0], originalCard);
     draggedCard.remove();
     draggedCard = null;
 }
 
-// Helper functions
 function setupDraggedCard(touchedCard, touch) {
     draggedCard = touchedCard.cloneNode(true);
     Object.assign(draggedCard.style, {
-        position: "fixed", // Ändern Sie dies zu 'fixed'
+        position: "fixed",
         zIndex: 0,
         opacity: 0.8,
     });
@@ -86,7 +81,6 @@ function setupDraggedCard(touchedCard, touch) {
     touchOffsetX = touch.clientX - touchedCard.getBoundingClientRect().left;
     touchOffsetY = touch.clientY - touchedCard.getBoundingClientRect().top;
 
-    // Setzen Sie die Position der Kopie auf die Position der Originalkarte
     draggedCard.style.left = `${
         touchedCard.getBoundingClientRect().left + window.scrollX
     }px`;
@@ -167,7 +161,6 @@ async function updateTaskStatus(originalCardId, containerId) {
     }
 }
 
-// Helper functions
 function moveAt(pageX, pageY, clientX, clientY) {
     draggedCard.style.left = `${clientX - touchOffsetX}px`;
     draggedCard.style.top = `${clientY - touchOffsetY}px`;
@@ -202,7 +195,6 @@ function updatePlaceholderCard() {
     });
 }
 
-// Drag and Drop functions
 const allowDrop = (ev) => {
     ev.preventDefault();
     const taskCardsContainer = ev.target.closest(".task-cards-container");
@@ -268,7 +260,6 @@ const drop = async (ev) => {
     }
 };
 
-// Event listeners
 document.querySelectorAll(".task-cards-container").forEach((column) => {
     column.addEventListener("dragover", allowDrop);
     column.addEventListener("dragleave", removeDragHighlight);
