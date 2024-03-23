@@ -18,6 +18,11 @@ input[type="search"]::-webkit-search-results-decoration {
     display: none;
 }
 
+body {
+    max-width: 100vw;
+    max-height: 100vh;
+}
+
 .overlay-task {
     position: fixed;
     top: 0;
@@ -36,12 +41,16 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .placeholder-card {
+    display: flex;
+    flex-shrink: 0;
     border: 1px dashed #888;
     background-color: #f0f0f0;
     height: 240px;
     margin-top: 16px;
     margin-bottom: 10px;
     border-radius: 24px;
+    display: inline-flex;
+    width: 252px;
 }
 
 .board {
@@ -122,9 +131,11 @@ input:focus {
 }
 
 .task-cards-container {
+    display: flex;
+    flex-wrap: nowrap;
     overflow-x: auto;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    overflow-y: hidden;
     white-space: nowrap;
 }
 
@@ -165,7 +176,8 @@ input:focus {
 
 .task-card {
     cursor: grab;
-    display: inline-flex;
+    display: flex;
+    flex-shrink: 0;
     flex-direction: column;
     margin: 16px 16px 16px 0;
     width: 252px;
@@ -520,21 +532,4 @@ input:focus {
     margin-left: -16px;
     height: 16px;
     object-fit: cover;
-}
-
-@media screen and (max-width: 1439px) {
-    .task-cards-container {
-        display: flex;
-        min-width: 100vw;
-        width: fit-content;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        white-space: nowrap;
-    }
-
-    .placeholder-card {
-        display: inline-flex;
-        width: 252px;
-    }
 }

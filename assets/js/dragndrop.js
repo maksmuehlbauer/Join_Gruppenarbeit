@@ -66,12 +66,21 @@ function setupDraggedCard(touchedCard, touch) {
     draggedCard = touchedCard.cloneNode(true);
     Object.assign(draggedCard.style, {
         position: "absolute",
-        zIndex: 10,
+        zIndex: 0,
         opacity: 0.8,
     });
     document.body.appendChild(draggedCard);
-    touchOffsetX = touch.clientX - touchedCard.offsetLeft;
-    touchOffsetY = touch.clientY - touchedCard.offsetTop;
+    touchOffsetX = touch.clientX - touchedCard.getBoundingClientRect().left;
+    touchOffsetY = touch.clientY - touchedCard.getBoundingClientRect().top;
+
+    // Setzen Sie die Position der Kopie auf die Position der Originalkarte
+    draggedCard.style.left = `${
+        touchedCard.getBoundingClientRect().left + window.scrollX
+    }px`;
+    draggedCard.style.top = `${
+        touchedCard.getBoundingClientRect().top + window.scrollY
+    }px`;
+
     moveAt(touch.pageX, touch.pageY);
     Object.assign(touchedCard.style, { transform: "rotate(5deg)", opacity: 1 });
     draggedCard.dataset.originalCard = touchedCard.id;
