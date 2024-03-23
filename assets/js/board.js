@@ -5,131 +5,12 @@ async function init() {
     await checkUserloggedIn();
     await initTasks();
     navigationHighlight("board-link");
+    addEventListenersToCards();
 }
-
-async function useUserObject() {
-    if (userObject !== null) {
-    } else {
-        setTimeout(useUserObject, 3000);
-    }
-}
-
-const allowDrop = (ev) => {
-    ev.preventDefault();
-    const taskCardsContainer = ev.target.closest(".task-cards-container");
-
-    if (taskCardsContainer) {
-        const existingPlaceholderCard =
-            taskCardsContainer.querySelector(".placeholder-card");
-
-        if (!existingPlaceholderCard) {
-            const placeholderCard = createPlaceholderCard();
-            const taskCard = ev.target.closest(".task-card");
-
-            if (taskCard) {
-                taskCard.parentNode.insertBefore(
-                    placeholderCard,
-                    taskCard.nextSibling
-                );
-            } else {
-                taskCardsContainer.appendChild(placeholderCard);
-            }
-        }
-    }
-};
-
-const removeDragHighlight = (ev) => {
-    const taskCardsContainer = ev.target.closest(".task-cards-container");
-
-    if (taskCardsContainer) {
-        const placeholderCard =
-            taskCardsContainer.querySelector(".placeholder-card");
-        if (placeholderCard && !taskCardsContainer.contains(ev.relatedTarget)) {
-            placeholderCard.remove();
-        }
-    }
-};
-
-document.querySelectorAll(".task-cards-container").forEach((column) => {
-    column.addEventListener("dragover", allowDrop);
-    column.addEventListener("dragleave", removeDragHighlight);
-    column.addEventListener("drop", removeDragHighlight);
-});
-
-function createPlaceholderCard() {
-    const placeholderCard = document.createElement("div");
-    placeholderCard.className = "placeholder-card";
-    return placeholderCard;
-}
-
-const drag = (ev) => {
-    ev.dataTransfer.setData("text", ev.target.id);
-    ev.target.style.transform = "rotate(5deg)";
-};
-
-const drop = async (ev) => {
-    ev.preventDefault();
-    const data = ev.dataTransfer.getData("text");
-    let dropTarget = ev.target;
-
-    while (
-        !dropTarget.classList.contains("task-cards-container") &&
-        dropTarget.parentNode
-    ) {
-        dropTarget = dropTarget.parentNode;
-    }
-
-    if (dropTarget.classList.contains("task-cards-container")) {
-        const element = document.getElementById(data);
-        dropTarget.appendChild(element);
-        element.style.transform = "";
-
-        const task = userObject.tasks.find((t) => t.id.toString() === data);
-        if (task) {
-            task.status = dropTarget.id;
-            try {
-                const userDataBase = JSON.parse(await getItem("userDataBase"));
-                const userIndex = userDataBase.findIndex(
-                    (user) => user.id.toString() === userObject.id.toString()
-                );
-                if (userIndex !== -1) {
-                    userDataBase[userIndex] = userObject;
-                }
-
-                await setItem("userDataBase", userDataBase);
-            } catch (error) {
-                console.error(
-                    "Fehler beim Speichern des aktualisierten Tasks:",
-                    error
-                );
-            }
-        }
-
-        document
-            .querySelectorAll(".task-cards-container")
-            .forEach(updateNoTasksMessage);
-    }
-};
-
-document.querySelectorAll(".task-cards-container").forEach((card) => {
-    card.addEventListener("dragend", (event) => {
-        event.target.style.transform = "rotate(0deg)";
-    });
-});
-
-const updateNoTasksMessage = (taskCardsContainer) => {
-    const noTasksElement = taskCardsContainer.querySelector(".no-tasks");
-    const hasTasks =
-        taskCardsContainer.querySelectorAll(".task-card").length > 0;
-
-    noTasksElement.style.display = hasTasks ? "none" : "flex";
-};
 
 async function initTasks() {
     await useUserObject();
-    const tasks = userObject.tasks;
-
-    tasks.forEach((task, index) => {
+    userObject.tasks.forEach((task, index) => {
         setTaskDefaults(task, index);
         const assignedHTML = createAssignedHTML(task);
         const assignedHTMLforOpenCard = createAssignedHTMLforOpenCard(task);
@@ -142,6 +23,10 @@ async function initTasks() {
         );
         appendCardToParent(task, card);
     });
+}
+
+async function useUserObject() {
+    if (!userObject) setTimeout(useUserObject, 3000);
 }
 
 function setTaskDefaults(task, index) {
@@ -172,33 +57,40 @@ function createAssignedHTML(task) {
 }
 
 function createAssignedHTMLforOpenCard(task) {
-    let assignedHTMLforOpenCard = "";
-    task.assignto.forEach((fullName, index) => {
-        const initials = getInitialss(fullName);
-        const color = task.assigntoColor[index];
-        assignedHTMLforOpenCard += `<div class="card-contacts-wrapper"><div class="card-contacts" style="background-color: ${color}">${initials}</div><div>${fullName}</div></div>`;
-    });
-    return assignedHTMLforOpenCard;
+    return task.assignto
+        .map((fullName, index) => {
+            const initials = getInitialss(fullName);
+            const color = task.assigntoColor[index];
+            return `<div class="card-contacts-wrapper"><div class="card-contacts" style="background-color: ${color}">${initials}</div><div>${fullName}</div></div>`;
+        })
+        .join("");
 }
 
 function createSubtasksHTMLforOpenCard(task) {
-    let subtasksHTMLforOpenCard = "";
-    task.subtask.forEach((subtask, index) => {
-        const isChecked =
-            task.subtaskStatus[index] === true ? "checked" : "unchecked";
-        subtasksHTMLforOpenCard += `<div id="checkbox-container"><label for="checkbox${index}" class="checkbox-label"><img src="./assets/img/${isChecked}.png" id="checkbox-img${index}"><input type="checkbox" id="checkbox${index}" class="checkbox" onclick="toggleSubtaskStatus(${index}, ${task.id})"></label>${subtask}</div>`;
-    });
-    return subtasksHTMLforOpenCard;
+    return task.subtask
+        .map((subtask, index) => {
+            const isChecked =
+                task.subtaskStatus[index] === true ? "checked" : "unchecked";
+            return `<div id="checkbox-container"><label for="checkbox${index}" class="checkbox-label"><img src="./assets/img/${isChecked}.png" id="checkbox-img${index}"><input type="checkbox" id="checkbox${index}" class="checkbox" onclick="toggleSubtaskStatus(${index}, ${task.id})"></label>${subtask}</div>`;
+        })
+        .join("");
 }
 
 function getInitialss(fullName) {
-    if (fullName) {
-        return fullName
-            .split(" ")
-            .filter((n) => n)
-            .map((n) => n[0].toUpperCase())
-            .join("");
-    }
+    return fullName
+        ?.split(" ")
+        .filter(Boolean)
+        .map((n) => n[0].toUpperCase())
+        .join("");
+}
+
+function addEventListenersToCards() {
+    document.querySelectorAll(".task-card").forEach((card) => {
+        card.addEventListener("dragstart", dragStart);
+        card.addEventListener("touchstart", handleTouchStart, false);
+        card.addEventListener("touchmove", handleTouchMove, false);
+        card.addEventListener("touchend", handleTouchEnd, false);
+    });
 }
 
 function createTaskCard(
@@ -211,7 +103,7 @@ function createTaskCard(
     card.className = "task-card";
     card.id = task.id;
     card.setAttribute("draggable", true);
-    card.setAttribute("ondragstart", "drag(event)");
+    card.setAttribute("ondragstart", "dragStart(event)");
     card.setAttribute(
         "onclick",
         `openTask(this.id, '${assignedHTMLforOpenCard}', '${subtasksHTMLforOpenCard}')`
@@ -231,12 +123,14 @@ function createTaskCard(
 
 function getCardHTML(task, assignedHTML, trueCount, completedPercentage) {
     return `
-    <div class="card-category-wrapper">
-    <div class="card-category" style="${
-        task.category === "Technical Task" ? "background-color: #1FD7C1;" : ""
-    }">${task.category}</div>
-    <img src="./assets/img/drag.png" alt="drag icon" class="drag-icon" />
-  </div>
+        <div class="card-category-wrapper">
+            <div class="card-category" style="${
+                task.category === "Technical Task"
+                    ? "background-color: #1FD7C1;"
+                    : ""
+            }">${task.category}</div>
+            <img src="./assets/img/drag.png" alt="drag icon" class="drag-icon" />
+        </div>
         <div class="card-titel">${task.title}</div>
         <div class="card-description">${task.description}</div>
         <div class="card-progress" style="display: ${
@@ -251,7 +145,7 @@ function getCardHTML(task, assignedHTML, trueCount, completedPercentage) {
         </div>
         <div class="card-footer">
             <div class="card-assigned">
-            ${assignedHTML}
+                ${assignedHTML}
             </div>
             <div class="card-priority">
                 <img src="./assets/img/${task.prio}.png" alt="priority icon" />
@@ -367,6 +261,12 @@ async function reloadTasks() {
     await initTasks();
     searchTask();
     showTaskCards();
+    const taskCards = document.getElementsByClassName("task-card");
+    Array.from(taskCards).forEach((card) => {
+        card.addEventListener("touchstart", handleTouchStart);
+        card.addEventListener("touchend", handleTouchEnd);
+        card.addEventListener("touchmove", handleTouchMove);
+    });
 }
 
 function closeTask() {
@@ -377,6 +277,16 @@ function closeTask() {
         overlayTask.style.display = "none";
         taskCardOpen.style.animation = "";
     });
+    const taskCards = document.getElementsByClassName("task-card");
+    Array.from(taskCards).forEach((card) => {
+        card.removeEventListener("touchstart", handleTouchStart);
+        card.removeEventListener("touchend", handleTouchEnd);
+        card.removeEventListener("touchmove", handleTouchMove);
+    });
+    if (draggedCard) {
+        draggedCard.remove();
+        draggedCard = null;
+    }
     reloadTasks();
 }
 
