@@ -22,22 +22,20 @@ let dragTimer;
 function handleTouchStart(event) {
     const touchedCard = event.target.closest(".task-card");
     if (!touchedCard) return;
-
     dragTimer = setTimeout(() => {
         event.preventDefault();
         setupDraggedCard(touchedCard, event.touches[0]);
+        document.body.style.overflow = "hidden"; // Deaktivieren Sie das Scrollen
     }, 200);
 }
-
-function handleTouchEnd(event) {
-    clearTimeout(dragTimer);
-}
-
 function handleTouchMove(event) {
-    event.preventDefault();
     if (!draggedCard) return;
+    if (event.cancelable) {
+        // Nur verhindern, wenn das Ereignis abgebrochen werden kann
+        event.preventDefault();
+    }
     const touch = event.touches[0];
-    moveAt(touch.pageX, touch.pageY);
+    moveAt(touch.pageX, touch.pageY, touch.clientX, touch.clientY);
     const elementUnderTouch = document.elementFromPoint(
         touch.clientX,
         touch.clientY
@@ -49,6 +47,20 @@ function handleTouchMove(event) {
     }
 }
 
+window.addEventListener("touchmove", function (event) {
+    const touch = event.touches[0];
+    const threshold = 50; // Die Entfernung vom Rand, bei der das Scrollen beginnt
+    const scrollAmount = 10; // Die Menge, um die gescrollt wird
+
+    if (touch.clientY < threshold) {
+        // Wenn die Maus nahe am oberen Rand ist, scrollen Sie nach oben
+        window.scrollBy(0, -scrollAmount);
+    } else if (window.innerHeight - touch.clientY < threshold) {
+        // Wenn die Maus nahe am unteren Rand ist, scrollen Sie nach unten
+        window.scrollBy(0, scrollAmount);
+    }
+});
+
 async function handleTouchEnd(event) {
     if (!draggedCard) return;
     const originalCard = document.getElementById(
@@ -56,6 +68,7 @@ async function handleTouchEnd(event) {
     );
     resetOriginalCard(originalCard);
     removePlaceholderCard();
+    document.body.style.overflow = "auto"; // Aktivieren Sie das Scrollen wieder
     await handleDrop(event.changedTouches[0], originalCard);
     draggedCard.remove();
     draggedCard = null;
@@ -65,7 +78,7 @@ async function handleTouchEnd(event) {
 function setupDraggedCard(touchedCard, touch) {
     draggedCard = touchedCard.cloneNode(true);
     Object.assign(draggedCard.style, {
-        position: "absolute",
+        position: "fixed", // Ändern Sie dies zu 'fixed'
         zIndex: 0,
         opacity: 0.8,
     });
@@ -155,9 +168,9 @@ async function updateTaskStatus(originalCardId, containerId) {
 }
 
 // Helper functions
-function moveAt(pageX, pageY) {
-    draggedCard.style.left = `${pageX - touchOffsetX}px`;
-    draggedCard.style.top = `${pageY - touchOffsetY}px`;
+function moveAt(pageX, pageY, clientX, clientY) {
+    draggedCard.style.left = `${clientX - touchOffsetX}px`;
+    draggedCard.style.top = `${clientY - touchOffsetY}px`;
 }
 
 function createPlaceholderCard() {
