@@ -16,6 +16,7 @@ function removePlaceholderCard() {
 }
 
 let dragTimer;
+let touchMoved = false;
 
 function handleTouchStart(event) {
     const touchedCard = event.target.closest(".task-card");
@@ -25,9 +26,11 @@ function handleTouchStart(event) {
         setupDraggedCard(touchedCard, event.touches[0]);
         document.body.style.overflow = "hidden";
     }, 200);
+    touchMoved = false;
 }
 
 function handleTouchMove(event) {
+    touchMoved = true;
     if (!draggedCard) return;
     if (event.cancelable) {
         event.preventDefault();
@@ -45,6 +48,16 @@ function handleTouchMove(event) {
     }
 }
 
+function handleTouchCancel(event) {
+    if (!draggedCard) return;
+    removePlaceholderCard();
+    document.body.style.overflow = "auto";
+    draggedCard.remove();
+    draggedCard = null;
+}
+
+document.addEventListener("touchcancel", handleTouchCancel);
+
 window.addEventListener("touchmove", function (event) {
     const touch = event.touches[0];
     const threshold = 50;
@@ -58,7 +71,8 @@ window.addEventListener("touchmove", function (event) {
 });
 
 async function handleTouchEnd(event) {
-    if (!draggedCard) return;
+    clearTimeout(dragTimer);
+    if (!draggedCard || !touchMoved) return;
     const originalCard = document.getElementById(
         draggedCard.dataset.originalCard
     );
