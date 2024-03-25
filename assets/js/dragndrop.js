@@ -1,19 +1,5 @@
-/**
- * Represents the currently dragged card element.
- * @type {HTMLElement|null}
- */
 let draggedCard = null;
-
-/**
- * The X-coordinate offset of the touch event.
- * @type {number}
- */
 let touchOffsetX = 0;
-
-/**
- * The Y-coordinate offset of the touch event.
- * @type {number}
- */
 let touchOffsetY = 0;
 
 /**
