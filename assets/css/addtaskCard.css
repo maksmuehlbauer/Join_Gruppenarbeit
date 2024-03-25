@@ -21,6 +21,12 @@ body {
   background-color: #f6f7f8;
 }
 
+input,
+textarea {
+  font-family: 'Inter', sans-serif;
+  padding-left: 5px;
+}
+
 h1 {
   font-size: 47px;
   font-weight: 700;
@@ -222,7 +228,7 @@ header {
 .add-task-container {
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 0px;
   height: calc(100vh - 240px);
   overflow-y: scroll;
 }
@@ -298,7 +304,8 @@ select {
 
 .task-input-container .description-container textarea {
   font-family: 'Inter', sans-serif;
-  padding: 8px 16px;
+  padding-left: 5px;
+  padding-top: 5px;
   height: 88px;
 }
 
@@ -524,6 +531,7 @@ sup {
 #contact-circles-container,
 .subtask-button-container {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .input-button-container {
@@ -600,7 +608,7 @@ sup {
   background: transparent;
   position: relative;
   top: -20px;
-  right: -321px;
+  right: -85%;
   height: 40px;
   width: 40px;
   border-radius: 50%;
@@ -681,10 +689,12 @@ sup {
   width: 13px;
   height: 13px;
 }
+
 ::-webkit-scrollbar-button {
   width: 28px;
   height: 28px;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #e1e1e1;
   border: 70px solid #A8A8A8;
@@ -694,6 +704,7 @@ sup {
 ::-webkit-scrollbar-thumb:active {
   background: #000000;
 }
+
 ::-webkit-scrollbar-track {
   background: #ffffff;
   border: 0px solid #ffffff;
@@ -726,6 +737,20 @@ sup {
     cursor: pointer;
   }
 }
+
+@media (max-height: 780px){
+  .add-task-container {
+    height: calc(100vh - 240px);
+   }
+}
+@media (max-width: 400px){
+  #edit-task-container {
+    width: 100vw;
+    transform: scale(0.9);
+   }
+}
+
+
 
 /***** end styles for addtask.html ****/
 

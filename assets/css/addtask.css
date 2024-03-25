@@ -21,6 +21,11 @@ body {
   background-color: #f6f7f8;
 }
 
+input, textarea{
+  font-family: 'Inter', sans-serif;
+  padding-left: 5px;
+}
+
 h1 {
   font-size: 47px;
   font-weight: 700;
@@ -298,6 +303,8 @@ select {
 
 .task-input-container .description-container textarea {
   height: 88px;
+  padding-left: 5px;
+  padding-top: 5px;
 }
 
 .task-input-container .prio-container {
