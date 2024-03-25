@@ -1,13 +1,34 @@
+/**
+ * Represents the currently dragged card element.
+ * @type {HTMLElement|null}
+ */
 let draggedCard = null;
+
+/**
+ * The X-coordinate offset of the touch event.
+ * @type {number}
+ */
 let touchOffsetX = 0;
+
+/**
+ * The Y-coordinate offset of the touch event.
+ * @type {number}
+ */
 let touchOffsetY = 0;
 
+/**
+ * Handles the drag start event for a card element.
+ * @param {Event} event - The drag start event.
+ */
 function dragStart(event) {
     draggedCard = event.target;
     event.dataTransfer.setData("text", event.target.id);
     event.target.style.transform = "rotate(5deg)";
 }
 
+/**
+ * Removes the placeholder card from the DOM.
+ */
 function removePlaceholderCard() {
     const placeholderCard = document.querySelector(".placeholder-card");
     if (placeholderCard) {
@@ -15,9 +36,22 @@ function removePlaceholderCard() {
     }
 }
 
+/**
+ * The timer for touch long press.
+ * @type {number}
+ */
 let dragTimer;
+
+/**
+ * Indicates whether the touch has moved.
+ * @type {boolean}
+ */
 let touchMoved = false;
 
+/**
+ * Handles the touch start event for the task cards.
+ * @param {TouchEvent} event - The touch event object.
+ */
 function handleTouchStart(event) {
     const touchedCard = event.target.closest(".task-card");
     if (!touchedCard) return;
@@ -29,6 +63,11 @@ function handleTouchStart(event) {
     touchMoved = false;
 }
 
+/**
+ * Handles the touch move event for dragging and dropping cards.
+ *
+ * @param {TouchEvent} event - The touch move event.
+ */
 function handleTouchMove(event) {
     touchMoved = true;
     if (!draggedCard) return;
@@ -48,6 +87,11 @@ function handleTouchMove(event) {
     }
 }
 
+/**
+ * Handles the touch cancel event.
+ *
+ * @param {TouchEvent} event - The touch cancel event object.
+ */
 function handleTouchCancel(event) {
     if (!draggedCard) return;
     removePlaceholderCard();
@@ -59,6 +103,10 @@ function handleTouchCancel(event) {
 document.addEventListener("touchcancel", handleTouchCancel);
 
 window.addEventListener("touchmove", function (event) {
+    /**
+     * Represents the touch event object.
+     * @type {Touch}
+     */
     const touch = event.touches[0];
     const threshold = 50;
     const scrollAmount = 10;
@@ -70,6 +118,11 @@ window.addEventListener("touchmove", function (event) {
     }
 });
 
+/**
+ * Handles the touch end event for drag and drop functionality.
+ * @param {TouchEvent} event - The touch end event.
+ * @returns {Promise<void>} - A promise that resolves when the event handling is complete.
+ */
 async function handleTouchEnd(event) {
     clearTimeout(dragTimer);
     if (!draggedCard || !touchMoved) return;
@@ -84,6 +137,11 @@ async function handleTouchEnd(event) {
     draggedCard = null;
 }
 
+/**
+ * Sets up a dragged card by cloning the touched card, assigning styles, and appending it to the document body.
+ * @param {HTMLElement} touchedCard - The card element that was touched.
+ * @param {TouchEvent} touch - The touch event object.
+ */
 function setupDraggedCard(touchedCard, touch) {
     draggedCard = touchedCard.cloneNode(true);
     Object.assign(draggedCard.style, {
@@ -108,11 +166,21 @@ function setupDraggedCard(touchedCard, touch) {
     draggedCard.dataset.originalContainer = touchedCard.parentNode.id;
 }
 
+/**
+ * Resets the original card by clearing the transform and opacity styles.
+ * @param {HTMLElement} originalCard - The original card element to be reset.
+ */
 function resetOriginalCard(originalCard) {
     originalCard.style.transform = "";
     originalCard.style.opacity = 1;
 }
 
+/**
+ * Handles the drop event for drag and drop functionality.
+ * @param {TouchEvent} touch - The touch event object.
+ * @param {HTMLElement} originalCard - The original card element being dragged.
+ * @returns {Promise<void>} - A promise that resolves when the drop event is handled.
+ */
 async function handleDrop(touch, originalCard) {
     let taskCardsContainer = document
         .elementFromPoint(touch.clientX, touch.clientY)
@@ -139,6 +207,12 @@ async function handleDrop(touch, originalCard) {
     }
 }
 
+/**
+ * Retrieves the container element that contains the given touch coordinates.
+ *
+ * @param {Touch} touch - The touch object containing the clientX and clientY coordinates.
+ * @returns {Element|null} - The container element that contains the touch coordinates, or null if no container is found.
+ */
 function getContainerFromTouch(touch) {
     const containers = document.querySelectorAll(".task-cards-container");
     for (const container of containers) {
@@ -155,6 +229,13 @@ function getContainerFromTouch(touch) {
     return null;
 }
 
+/**
+ * Updates the status of a task and saves it to the user's database.
+ *
+ * @param {string} originalCardId - The ID of the original task card.
+ * @param {string} containerId - The ID of the container where the task is moved to.
+ * @returns {Promise<void>} - A promise that resolves when the task status is updated and saved successfully.
+ */
 async function updateTaskStatus(originalCardId, containerId) {
     const task = userObject.tasks.find(
         (t) => t.id.toString() === originalCardId
@@ -175,11 +256,24 @@ async function updateTaskStatus(originalCardId, containerId) {
     }
 }
 
+/**
+ * Moves the dragged card to the specified position.
+ *
+ * @param {number} pageX - The X-coordinate of the mouse pointer relative to the whole document.
+ * @param {number} pageY - The Y-coordinate of the mouse pointer relative to the whole document.
+ * @param {number} clientX - The X-coordinate of the mouse pointer relative to the viewport.
+ * @param {number} clientY - The Y-coordinate of the mouse pointer relative to the viewport.
+ */
 function moveAt(pageX, pageY, clientX, clientY) {
     draggedCard.style.left = `${clientX - touchOffsetX}px`;
     draggedCard.style.top = `${clientY - touchOffsetY}px`;
 }
 
+/**
+ * Creates a placeholder card element.
+ *
+ * @returns {HTMLElement} The created placeholder card element.
+ */
 function createPlaceholderCard() {
     const placeholderCard = document.createElement("div");
     placeholderCard.className = "placeholder-card";
@@ -188,6 +282,9 @@ function createPlaceholderCard() {
     return placeholderCard;
 }
 
+/**
+ * Updates the placeholder card based on the position of the dragged card.
+ */
 function updatePlaceholderCard() {
     const containers = document.querySelectorAll(".task-cards-container");
     const targetRect = draggedCard.getBoundingClientRect();
@@ -209,6 +306,10 @@ function updatePlaceholderCard() {
     });
 }
 
+/**
+ * Handles the "drop" event and allows dropping elements into a container.
+ * @param {Event} ev - The drop event object.
+ */
 const allowDrop = (ev) => {
     ev.preventDefault();
     const taskCardsContainer = ev.target.closest(".task-cards-container");
@@ -233,6 +334,10 @@ const allowDrop = (ev) => {
     }
 };
 
+/**
+ * Removes the drag highlight by removing the placeholder card if it exists.
+ * @param {Event} ev - The drag event object.
+ */
 const removeDragHighlight = (ev) => {
     const taskCardsContainer = ev.target.closest(".task-cards-container");
 
@@ -245,6 +350,11 @@ const removeDragHighlight = (ev) => {
     }
 };
 
+/**
+ * Handles the drop event when an element is dropped onto a drop target.
+ * @param {DragEvent} ev - The drop event object.
+ * @returns {Promise<void>} - A promise that resolves when the drop event is handled.
+ */
 const drop = async (ev) => {
     ev.preventDefault();
     const data = ev.dataTransfer.getData("text");
@@ -286,6 +396,11 @@ document.querySelectorAll(".task-cards-container").forEach((card) => {
     });
 });
 
+/**
+ * Updates the display of the "no tasks" message based on the presence of task cards.
+ *
+ * @param {HTMLElement} taskCardsContainer - The container element that holds the task cards.
+ */
 const updateNoTasksMessage = (taskCardsContainer) => {
     const noTasksElement = taskCardsContainer.querySelector(".no-tasks");
     const hasTasks =

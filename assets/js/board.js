@@ -1,5 +1,10 @@
 "use strict";
 
+/**
+ * Initializes the board.
+ *
+ * @returns {Promise<void>} A promise that resolves when the initialization is complete.
+ */
 async function init() {
     await includeHTML();
     await checkUserloggedIn();
@@ -8,6 +13,10 @@ async function init() {
     addEventListenersToCards();
 }
 
+/**
+ * Initializes tasks by using the user object and creating task cards for each task.
+ * @returns {Promise<void>} A promise that resolves when the tasks are initialized.
+ */
 async function initTasks() {
     await useUserObject();
     userObject.tasks.forEach((task, index) => {
@@ -25,16 +34,33 @@ async function initTasks() {
     });
 }
 
+/**
+ * Uses the user object.
+ * If the user object is not available, it will retry after 3 seconds.
+ * @returns {Promise<void>}
+ */
 async function useUserObject() {
     if (!userObject) setTimeout(useUserObject, 3000);
 }
 
+/**
+ * Sets default values for a task object.
+ *
+ * @param {Object} task - The task object to set defaults for.
+ * @param {number} index - The index of the task.
+ * @returns {void}
+ */
 function setTaskDefaults(task, index) {
     task.status = task.status || "toDo";
     task.id = index;
     task.subtaskStatus = task.subtaskStatus || [];
 }
 
+/**
+ * Creates HTML for displaying assigned users' initials.
+ * @param {Object} task - The task object containing assigned users' information.
+ * @returns {string} - The HTML string representing the assigned users' initials.
+ */
 function createAssignedHTML(task) {
     let assignedHTML = "";
     const maxInitials = 5;
@@ -56,6 +82,11 @@ function createAssignedHTML(task) {
     return assignedHTML;
 }
 
+/**
+ * Creates HTML for displaying assigned users on an open card.
+ * @param {Object} task - The task object containing assigned users.
+ * @returns {string} - The HTML string representing the assigned users.
+ */
 function createAssignedHTMLforOpenCard(task) {
     return task.assignto
         .map((fullName, index) => {
@@ -66,6 +97,11 @@ function createAssignedHTMLforOpenCard(task) {
         .join("");
 }
 
+/**
+ * Creates HTML markup for displaying subtasks of an open card.
+ * @param {Object} task - The task object containing subtasks and their statuses.
+ * @returns {string} - The HTML markup for displaying subtasks.
+ */
 function createSubtasksHTMLforOpenCard(task) {
     return task.subtask
         .map((subtask, index) => {
@@ -76,6 +112,12 @@ function createSubtasksHTMLforOpenCard(task) {
         .join("");
 }
 
+/**
+ * Returns the initials of a full name.
+ *
+ * @param {string} fullName - The full name.
+ * @returns {string} The initials of the full name.
+ */
 function getInitialss(fullName) {
     return fullName
         ?.split(" ")
@@ -84,6 +126,9 @@ function getInitialss(fullName) {
         .join("");
 }
 
+/**
+ * Adds event listeners to the task cards.
+ */
 function addEventListenersToCards() {
     document.querySelectorAll(".task-card").forEach((card) => {
         card.addEventListener("dragstart", dragStart);
@@ -93,6 +138,15 @@ function addEventListenersToCards() {
     });
 }
 
+/**
+ * Creates a task card element.
+ *
+ * @param {Object} task - The task object.
+ * @param {string} assignedHTML - The HTML content for assigned users.
+ * @param {string} assignedHTMLforOpenCard - The HTML content for assigned users in the open card view.
+ * @param {string} subtasksHTMLforOpenCard - The HTML content for subtasks in the open card view.
+ * @returns {HTMLElement} The created task card element.
+ */
 function createTaskCard(
     task,
     assignedHTML,
@@ -121,6 +175,15 @@ function createTaskCard(
     return card;
 }
 
+/**
+ * Generates the HTML markup for a card based on the provided task object.
+ *
+ * @param {Object} task - The task object containing information about the card.
+ * @param {string} assignedHTML - The HTML markup for the assigned users.
+ * @param {number} trueCount - The number of completed subtasks.
+ * @param {number} completedPercentage - The percentage of completed subtasks.
+ * @returns {string} The HTML markup for the card.
+ */
 function getCardHTML(task, assignedHTML, trueCount, completedPercentage) {
     return `
         <div class="card-category-wrapper">
@@ -154,6 +217,12 @@ function getCardHTML(task, assignedHTML, trueCount, completedPercentage) {
     `;
 }
 
+/**
+ * Appends a card to the parent element based on the task status.
+ *
+ * @param {Object} task - The task object.
+ * @param {HTMLElement} card - The card element to be appended.
+ */
 function appendCardToParent(task, card) {
     const parentDiv = document.getElementById(task.status);
     parentDiv.appendChild(card);
@@ -162,6 +231,12 @@ function appendCardToParent(task, card) {
         .forEach(updateNoTasksMessage);
 }
 
+/**
+ * Opens a task and displays its details in an overlay.
+ * @param {string} id - The ID of the task to be opened.
+ * @param {string} assignedHTML - The HTML content for the assigned users.
+ * @param {string} subtasksHTMLforOpenCard - The HTML content for the subtasks.
+ */
 function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
     const overlayTask = document.querySelector(".overlay-task");
     const task = userObject.tasks[id];
@@ -219,16 +294,25 @@ function openTask(id, assignedHTML, subtasksHTMLforOpenCard) {
     overlayTask.style.display = "flex";
 }
 
+/**
+ * Opens the edit menu for a task.
+ */
 function openEditMenu() {
     document.querySelector(".overlay-task-edit").classList.remove("d-none");
     document.querySelector(".overlay-task").classList.add("d-none");
 }
 
+/**
+ * Closes the edit menu and shows the task overlay.
+ */
 function closeEditMenu() {
     document.querySelector(".overlay-task-edit").classList.add("d-none");
     document.querySelector(".overlay-task").classList.remove("d-none");
 }
 
+/**
+ * Clears the task containers by setting their innerHTML to a message indicating no tasks to do.
+ */
 function clearTaskContainer() {
     const containers = document.querySelectorAll(".task-cards-container");
     containers.forEach((container) => {
@@ -236,6 +320,10 @@ function clearTaskContainer() {
     });
 }
 
+/**
+ * Hides all task cards on the board.
+ * @returns {Promise} A promise that resolves after a timeout of 0 milliseconds.
+ */
 function hideTaskCards() {
     const taskCards = document.getElementsByClassName("task-card");
     Array.from(taskCards).forEach((card) => {
@@ -248,6 +336,9 @@ function hideTaskCards() {
     });
 }
 
+/**
+ * Shows all task cards by removing the "hidden" class from each card.
+ */
 function showTaskCards() {
     const taskCards = document.getElementsByClassName("task-card");
     Array.from(taskCards).forEach((card) => {
@@ -255,6 +346,12 @@ function showTaskCards() {
     });
 }
 
+/**
+ * Reloads the tasks on the board.
+ * Clears the task container, hides task cards, initializes tasks,
+ * searches for tasks, shows task cards, and adds touch event listeners to task cards.
+ * @returns {Promise<void>} A promise that resolves when the tasks are reloaded.
+ */
 async function reloadTasks() {
     clearTaskContainer();
     await hideTaskCards();
@@ -269,6 +366,9 @@ async function reloadTasks() {
     });
 }
 
+/**
+ * Closes the task and performs necessary cleanup actions.
+ */
 function closeTask() {
     const overlayTask = document.querySelector(".overlay-task");
     const taskCardOpen = document.querySelector(".task-card-open");
@@ -292,12 +392,21 @@ function closeTask() {
 
 const overlayTask = document.querySelector(".overlay-task");
 overlayTask.addEventListener("click", (event) => {
+    /**
+     * Represents the task card open element.
+     * @type {HTMLElement}
+     */
     const taskCardOpen = document.querySelector(".task-card-open");
     if (!taskCardOpen.contains(event.target)) {
         closeTask();
     }
 });
 
+/**
+ * Deletes a task from the user's task list.
+ * @param {number} id - The ID of the task to be deleted.
+ * @returns {Promise<void>} - A promise that resolves when the task is deleted.
+ */
 async function deleteTask(id) {
     try {
         const userDataBase = JSON.parse(await getItem("userDataBase"));
@@ -318,6 +427,13 @@ async function deleteTask(id) {
     location.reload();
 }
 
+/**
+ * Toggles the status of a subtask for a given task.
+ *
+ * @param {number} subtaskIndex - The index of the subtask to toggle.
+ * @param {number} taskId - The ID of the task containing the subtask.
+ * @returns {Promise<void>} - A promise that resolves when the subtask status is successfully updated.
+ */
 async function toggleSubtaskStatus(subtaskIndex, taskId) {
     let checkboxImg = document.getElementById(`checkbox-img${subtaskIndex}`);
     try {
@@ -341,6 +457,9 @@ async function toggleSubtaskStatus(subtaskIndex, taskId) {
         console.error("Error updating subtask status:", error);
     }
 }
+/**
+ * Searches for tasks based on the input value and filters the task cards and columns accordingly.
+ */
 function searchTask() {
     const input = document.getElementById("searchbar");
     const filter = input.value.toUpperCase();
@@ -376,6 +495,9 @@ function searchTask() {
     });
 }
 
+/**
+ * Redirects the user to the "addtask.html" page.
+ */
 function goToAddTask() {
     window.location.href = "addtask.html";
 }
