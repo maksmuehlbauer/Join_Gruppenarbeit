@@ -749,6 +749,12 @@ sup {
     transform: scale(0.9);
    }
 }
+@media (max-width: 350px){
+  #edit-task-container {
+    width: 120vw;
+    transform: scale(0.75);
+   }
+}
 
 
 
