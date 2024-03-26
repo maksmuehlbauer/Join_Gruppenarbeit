@@ -14,7 +14,6 @@ let taskEditNr = 0;
 let taskEditStatus = 'toDo';
 let subtaskStatus = [];
 
-
 /**
  * function to initialize the addtask-page
  */
@@ -43,7 +42,6 @@ async function loadContacts() {
 /**
  * this function is getting the task, that the user wants to edit from the board.html
  * 
- * 
  * @param {object} task - task to be edited 
  */
 async function sendTaskToEdit(task) {
@@ -53,8 +51,7 @@ async function sendTaskToEdit(task) {
 }
 
 /**
- * function assigns the values of the edited task into the inputfields of the addtask-site
- * 
+ * function assigns the values of the edited task into the inputfields of the addtask-site 
  * 
  * @param {object} task - task to be edited 
  */
@@ -76,11 +73,8 @@ function editTaskpage(task) {
     changeButtonText();
 }
 
-
-
 /**
  * function takes the name of a contact and generates the initials
- * 
  * 
  * @param {number} contactNr - number of the contact in the contact list
  * @returns - initials of the contact in capital letters
@@ -108,7 +102,6 @@ function splitAndUpperCaseInitials(fullname) {
 
 /**
  * function sets the color and the priority of the pressed button
- * 
  * 
  * @param {string} pressedButton - prio of the pressed button 
  */
@@ -184,7 +177,6 @@ function openAssignContainer() {
         document.getElementById('contacts-to-assign-container').classList.remove('d-none');
         document.getElementById('assigned-to-btn').classList.add('blue-border');
         assignedToMenuOpen = true;
-
     }
     else {
         document.getElementById('contacts-to-assign-container').classList.add('d-none');
@@ -233,7 +225,6 @@ function closeCategoryAndRemoveBorder() {
     categoryMenuOpen = false;
 }
 
-
 /**
  * eventlistener to close the container with the contacts when clicked outside
  */
@@ -265,8 +256,7 @@ function renderContactsList() {
 
 /**
  * renders the html code for the Contactlist
- * 
- * 
+ *  
  * @param {string} firstAndLastLetter - first and last letter of the contact 
  * @param {string} backgroundColor - backgroundcolor of the contact
  * @param {number} i - position of the contact in the object
@@ -285,7 +275,6 @@ function renderContactsListHTML(firstAndLastLetter, backgroundColor, i) {
             </div>`
 }
 
-
 /**
  * assignes the selected contact to the task
  * 
@@ -299,7 +288,6 @@ function assignContact(contactName, contactID, checkButtonID, color) {
     changeButtonText(contactID);
 
 }
-
 
 /**
  * pushes the assigned contacts into an array of all selected contacts of removes it 
@@ -321,7 +309,6 @@ function highlightSelectedContact(contactName, contactID, checkButtonID, color) 
     else {
         removeContactInArray(index, contactID);
         document.getElementById(checkButtonID).src = './assets/img/check_button.png';
-
     }
 }
 
@@ -368,256 +355,10 @@ function removeContactInList(event, name, id) {
     changeButtonText(id);
 }
 
-
 function removeContactInArray(index, id) {
     assignedContacts.splice(index, 1);
     assignedContactsID.splice(index, 1);
     assignedContactColor.splice(index, 1);
     document.getElementById(id).classList.remove('checked');
     document.querySelector(`#${id} img`).src = './assets/img/check_button.png';
-}
-
-
-/**
- * function to add subtasks into subtask-array
- * 
- * @returns nothing if no subtask is added
- */
-function addSubtasks() {
-    let subtask = document.getElementById('subtasks');
-    if (subtask.value == '') {
-        return;
-    }
-    subtasksArray.push(subtask.value);
-    subtask.value = '';
-    refreshSubtasks();
-}
-
-/**
- * refreshes the subtask list if something is added or removed
- */
-function refreshSubtasks() {
-    let subtaskList = document.getElementById('subtasks-list');
-    subtaskList.innerHTML = '';
-    for (let i = 0; i < subtasksArray.length; i++) {
-        subtaskList.innerHTML += generateSubtaskHTML(i)
-    }
-}
-
-/**
- * generates the HTML code of the subtask-list
- * 
- * @param {number} i - position of the subtask in the subtaskarray
- * @returns HTML code of the subtask-list
- */
-function generateSubtaskHTML(i) {
-    return `<div id="subtaskID${i}" class="input-button-container">
-                <span id="subtaskID${i}">${subtasksArray[i]}
-                </span>
-                    <div class="subtask-button-container">
-                        <button onclick="editSubtask(${i}, 'subtaskID${i}')"><img src="assets/img/edit-task.png"></button>
-                            <div id="separator" class="separator"></div>
-                        <button onclick="deleteSubtask(${i})"><img src="assets/img/delete.png"></button>
-                    </div>
-            </div>`
-}
-
-
-/**
- * function to remove subtasks from subtask-array
- * 
- * @param {number} position -  position of the subtask in the subtaskarray
- */
-function deleteSubtask(position) {
-    subtasksArray.splice(position, 1);
-    refreshSubtasks();
-}
-
-/**
- * function to generate the editable subtask list
- * 
- * @param {*} position - position of the subtask in the array
- * @param {*} ID - id of the subtask in the html file
- */
-function editSubtask(position, ID) {
-    refreshSubtasks();
-    document.getElementById(ID).innerHTML = `<div class="input-button-container">
-                                                <input id="subtaskChangeInput" type="text"></input>
-                                                <button onclick="changeSubtask(${position})">
-                                                <img src="assets/img/tick.png">
-                                                </button>
-                                            </div>`
-    document.getElementById('subtaskChangeInput').value = subtasksArray[position];
-    document.getElementById(ID).style.backgroundColor = "white";
-    document.getElementById('subtaskChangeInput').addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-            changeSubtask(position);
-        }
-    })
-}
-
-/**
- * changes the value of the subtask in the array
- * 
- * @param {number} position - position of the subtask in the array
- */
-function changeSubtask(position) {
-    let changedText = document.getElementById('subtaskChangeInput');
-    subtasksArray[position] = changedText.value;
-    refreshSubtasks();
-}
-
-/**
- * events to change the style of the subtasks when hovering
- */
-function subtaskEvents() {
-    document.getElementById('subtasks').addEventListener('focus', function (event) {
-        document.getElementById('subtasks-input-button-container').classList.add('blue-border');
-        document.getElementById('erase-subtask').classList.remove('d-none');
-        document.getElementById('separator').classList.remove('d-none');
-
-    })
-    document.getElementById('subtasks').addEventListener('blur', function (event) {
-        document.getElementById('subtasks-input-button-container').classList.remove('blue-border');
-        document.getElementById('erase-subtask').classList.add('d-none');
-        document.getElementById('separator').classList.add('d-none');
-    })
-    document.querySelector('.input-button-container #subtasks').addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-            addSubtasks();
-        }
-    })
-}
-
-
-/**
- * function to create the task and save into the database
- * 
- * @param {string} timeframe - value, whether task is new or edited
- */
-async function createTask(timeframe) {
-    let task = {};
-    let title = document.getElementById('title');
-    let dueDate = document.getElementById('dueDate');
-    checkRequiredFields(title);
-    checkRequiredFields(dueDate);
-    checkCategoryField();
-    if (title.value !== '' && dueDate.value !== '' && category !== '') {
-        createTheTaskObject(task, title, dueDate);
-        checkTaskStatus(task, timeframe);
-        await setItem("userDataBase", JSON.stringify(userDataBase));
-        if (timeframe === 'edit') {
-            location.reload();
-        }
-        resetEverything();
-    }
-}
-
-/**
- * creating the task-object 
- */
-function createTheTaskObject(task, title, dueDate){
-    task.description = document.getElementById('description').value;
-    task.category = category;
-    task.prio = priority;
-    task.status = taskEditStatus;
-    task.subtask = subtasksArray;
-    task.title = title.value;
-    task.dueDate = dueDate.value;
-    task.assignto = assignedContacts;
-    task.assigntoID = assignedContactsID;
-    task.assigntoColor = assignedContactColor;
-    task.initialCircles = initialCircles;
-    task.subtasksArray = subtasksArray;
-    task.subtaskStatus = subtaskStatus;
-}
-
-/**
- * creates a new task or changes an existing one
- * 
- * @param {object} task - task-object
- * @param {string} timeframe - value, whether task is new or edited
- */
-function checkTaskStatus(task, timeframe){
-    if (timeframe === 'new') {
-        userDataBase[userObject.id].tasks.push(task);
-        document.getElementById('task-created-container').classList.remove('d-none')
-        redirectToBoard();
-    }
-    else if (timeframe === 'edit') {
-        userDataBase[userObject.id].tasks[taskEditNr] = task;
-        document.querySelector('.overlay-task-edit').classList.add('d-none');
-    }
-}
-
-
-
-/**
- * function to reset all the inputs from the add-task-form
- */
-function resetEverything() {
-    document.getElementById('title').value = '';
-    document.getElementById('dueDate').value = '';
-    document.getElementById('description').value = '';
-    priority = 'medium';
-    taskEditStatus = 'toDo'
-    subtasksArray = [];
-    assignedContacts = [];
-    assignedContactsID = [];
-    assignedContactColor = [];
-    initialCircles = [];
-    subtasksArray = [];
-    refreshSubtasks();
-    changeButtonText();
-    resetButton();
-    resetCategoryAndButton();
-    renderContactsList();
-}
-
-/**
- * function to redirect to board.html if new task is created
- */
-function redirectToBoard() {
-    setTimeout(() => {
-        document.getElementById('task-created-container').classList.add('d-none')
-        window.location.href = "./board.html"
-    }, 1500);
-}
-
-/**
- * function to reset the form of the category-field
- */
-function resetCategoryAndButton() {
-    document.getElementById('category-selected').innerText = 'Select task category';
-    document.getElementById('category-selected').classList.remove('font-black');
-    document.getElementById('mediumPrioButton').classList.add('prioMedium');
-    document.getElementById('mediumPrioButtonFont').classList.add('colored-white', 'font-weight-clicked');
-}
-
-/**
- * function to check if all required fields have a value
- */
-function checkRequiredFields(inputField) {
-    if (inputField.value === '') {
-        document.getElementById(inputField.id).classList.add("red-border");
-        document.getElementById(inputField.id + "-required").classList.remove("d-none");
-    }
-    else {
-        document.getElementById(inputField.id).classList.remove("red-border");
-        document.getElementById(inputField.id + "-required").classList.add("d-none");
-    }
-}
-
-/**
- * function to check if category field has a value
- */
-function checkCategoryField() {
-    if (category === '') {
-        document.getElementById('category-btn').classList.add("red-border");
-        document.getElementById('category' + "-required").classList.remove("d-none");
-    }
-    else {
-        document.getElementById('category-btn').classList.remove("red-border");
-        document.getElementById('category' + "-required").classList.add("d-none");
-    }
 }
