@@ -42,6 +42,50 @@ async function loadContacts() {
 }
 
 /**
+ * Manages the creation of a new contact. Disables the create button to prevent
+ * double submissions, calls `addValueToContact` to add the contact, refreshes
+ * the contact list display, closes the add contact form, clears the form fields,
+ * and triggers a creation animation.
+ */
+async function createContact() {
+  createContactBtn.disabled = true;
+  addValueToContact();
+  renderContacts();
+  closeAddContactCard();
+  clearForm();
+  createContactAnimation();
+}
+
+/**
+ * Removes the currently selected contact from the contacts list and updates
+ * the database, then closes the contact and edit views.
+ */
+async function deleteContact() {
+  contacts.splice(contactIndex, 1);
+  await setItem("userDataBase", JSON.stringify(userDataBase));
+  renderContacts();
+  closeContact();
+  closeEditContactCard();
+}
+
+/**
+ * Saves the updated contact information to the contacts list and database,
+ * rerenders the contacts list, and displays the updated contact's details.
+ */
+async function updateContact() {
+  let newName = document.getElementById("edit-name").value;
+  let newEmail = document.getElementById("edit-email").value;
+  let newPhone = document.getElementById("edit-phone").value;
+  contacts[contactIndex] = { ...contacts[contactIndex], name: newName, email: newEmail, phone: newPhone };
+  await setItem("userDataBase", JSON.stringify(userDataBase));
+  renderContacts();
+  let newIndex = contacts.findIndex(contact => contact.name === newName && contact.email === newEmail);
+  contactIndex = newIndex;
+  showContact(newIndex);
+  closeEditContactCard();
+}
+
+/**
  * Adds user's contact to the list if not already present.
  * 
  * Checks for an existing contact with the same email and name. If not found, creates a new contact
@@ -58,17 +102,12 @@ async function addMyContactToContacts() {
   );
   if (index === -1) {
     const myDetails = {
-      id: userObject["id"],
-      name: userDataBase[userObject["id"]].name, 
-      email: userDataBase[userObject["id"]].email, 
-      phone: "",
-      bgrColor: "#2A3E59", 
-    };
+    id: userObject["id"], name: userDataBase[userObject["id"]].name, 
+    email: userDataBase[userObject["id"]].email, 
+    phone: "",bgrColor: "#2A3E59",};
     userDataBase[userObject["id"]].contacts.push(myDetails);
     await setItem("userDataBase", JSON.stringify(userDataBase));
-  }
-  }
-}
+  }}}
 
 /**
  * Adds a new contact to the list and updates the database. user input,
@@ -80,31 +119,10 @@ async function addMyContactToContacts() {
   let email = document.getElementById("email").value;
   let phone = document.getElementById("phone").value;
   const bgrColor = getRandomColor();
-  let contact = {
-    name: name,
-    email: email,
-    phone: phone,
-    bgrColor: bgrColor,
-  };
+  let contact = {name: name, email: email, phone: phone, bgrColor: bgrColor,};
   userDataBase[userObject["id"]].contacts.push(contact);
   await setItem("userDataBase", JSON.stringify(userDataBase));
 }
-
-/**
- * Manages the creation of a new contact. Disables the create button to prevent
- * double submissions, calls `addValueToContact` to add the contact, refreshes
- * the contact list display, closes the add contact form, clears the form fields,
- * and triggers a creation animation.
- */
-async function createContact() {
-  createContactBtn.disabled = true;
-  addValueToContact();
-  renderContacts();
-  closeAddContactCard();
-  clearForm();
-  createContactAnimation();
-}
-
 
 /**
  * Activates a visual animation to indicate the successful addition of a contact.
@@ -113,12 +131,8 @@ function createContactAnimation() {
   document.getElementById("centerAddContactAnimation").classList.add("active");
   document.getElementById("createContactAnimation").classList.add("active");
   setTimeout(function () {
-    document
-      .getElementById("centerAddContactAnimation")
-      .classList.remove("active");
-    document
-      .getElementById("createContactAnimation")
-      .classList.remove("active");
+    document.getElementById("centerAddContactAnimation").classList.remove("active");
+    document.getElementById("createContactAnimation").classList.remove("active");
   }, 2500);
 }
 
@@ -129,52 +143,6 @@ function clearForm() {
   document.getElementById("name").value = "";
   document.getElementById("email").value = "";
   document.getElementById("phone").value = "";
-}
-
-/**
- * Extracts the first letter of the first and last name from a given contact's name.
- * @param {Object} contact - The contact object, expected to contain a 'name' property.
- * @returns {Object} An object containing the first letters of the first and last name.
- */
-function extractInitials(contact) {
-  const firstLetter = contact.name[0].toUpperCase();
-  const parts = contact.name.split(" ");
-  let secondLetter = "";
-  if (parts.length > 1) {
-    const lastName = parts[parts.length - 1];
-    secondLetter = lastName[0].toUpperCase();
-  }
-  firstLetterGlobal = firstLetter;
-  secondLetterGlobal = secondLetter;
-  return { firstLetter, secondLetter };
-}
-
-
-
-/**
- * Sorts and displays the contacts list. Contacts are sorted alphabetically
- * by name, with each contact's details formatted and added to the display.
- */
-function renderContacts() {
-  const sortedContacts = contacts.sort((a, b) => {
-    if (!a.name || !b.name) {return 0;}
-    return a.name.localeCompare(b.name);
-  });
-  const contactsContainer = document.getElementById("contactsList");
-  let content = "";
-  let currentLetter = "";
-  for (let i = 0; i < sortedContacts.length; i++) {
-    const contact = sortedContacts[i];
-    if (contact.name) {
-      const { firstLetter, secondLetter } = extractInitials(contact);
-      if (currentLetter !== firstLetter) {
-        currentLetter = firstLetter;
-        content += generateHeadline(currentLetter);
-      }
-      content += generateContacts(contact.email, contact.name, secondLetter, firstLetter, i, contact.bgrColor);
-    } 
-  }
-  contactsContainer.innerHTML = content;
 }
 
 /**
@@ -190,7 +158,6 @@ function getRandomColor() {
   }
   return color;
 }
-
 
 /**
  * Closes the contact list view and prepares the UI for displaying a single contact's details.
@@ -212,66 +179,6 @@ window.addEventListener("resize", getScreenSize);
 function getScreenSize() {
   screenSize = window.innerWidth;
 }
-
-/**
- * Applies a unique background color to the UI representation of the selected contact
- * and adjusts UI elements for detailed view, based on screen size.
- * @param {number} i - Index of the selected contact.
- */
-function openContact(i) {
-  if (!contactStatus) {
-    closeContactList();
-    showContact(i);
-    addBgrColorContact(i);
-    sloganContainerDesktop.style.display = "none";
-  }
-  if(screenSize<=1440) {
-    contactStatus = true;
-  }
-}
-
-/**
- * Applies a unique background color to the UI representation of the selected contact
- * and adjusts UI elements for detailed view, based on screen size.
- * @param {number} i - Index of the selected contact.
- */
-function addBgrColorContact(i) {
-  if (screenSize > 1440) {
-    document.getElementById("sloganContainerDesktop").classList.add("d-none");
-    if (lastClickedContactId !== null) {
-      let lastContactElement = document.getElementById(lastClickedContactId);
-      if (lastContactElement) {
-        lastContactElement.classList.remove("contact-background-color-clicked");
-      }
-    }
-    let contactElement = document.getElementById(i.toString());
-    if (contactElement) {
-      contactElement.classList.add("contact-background-color-clicked");
-      lastClickedContactId = i.toString();
-    }
-  }
-}
-
-/**
- * Generates the UI with details of the selected contact, including name, phone, and email,
- * and adjusts the display to focus on this contact.
- * @param {number} i - Index of the contact to display.
- */
-function showContact(i) {
-  contactIndex = i;
-  contactOpenedStatus = true;
-  let content = document.getElementById("contact");
-  content.innerHTML = "";
-  let contact = contacts[i];
-  const { firstLetter, secondLetter } = extractInitials(contact);
-  const name = contact.name;
-  const phone = contact.phone;
-  const email = contact.email;
-  const bgrColor = contact.bgrColor;
-  content.innerHTML += generateContact(firstLetter,secondLetter,name,phone,email,i,bgrColor
-  );
-}
-
 
 /**
  * Resets the contact view UI to its default state, showing the contacts list.
@@ -309,7 +216,6 @@ function showEditOptions() {
   showEditOptionsStatus = false;
 }
 
-
 /**
  * Closes the edit contact form and resets the UI to its default editing state,
  * hiding the edit options and overlay.
@@ -344,23 +250,6 @@ function openEditContactCard(contactIndex) {
 }
 
 /**
- * Saves the updated contact information to the contacts list and database,
- * rerenders the contacts list, and displays the updated contact's details.
- */
-async function updateContact() {
-  let newName = document.getElementById("edit-name").value;
-  let newEmail = document.getElementById("edit-email").value;
-  let newPhone = document.getElementById("edit-phone").value;
-  contacts[contactIndex] = { ...contacts[contactIndex], name: newName, email: newEmail, phone: newPhone };
-  await setItem("userDataBase", JSON.stringify(userDataBase));
-  renderContacts();
-  let newIndex = contacts.findIndex(contact => contact.name === newName && contact.email === newEmail);
-  contactIndex = newIndex;
-  showContact(newIndex);
-  closeEditContactCard();
-}
-
-/**
  * Generates the HTML content for the edit contact card icon, reflecting the
  * contact's assigned background color.
  */
@@ -372,19 +261,6 @@ function generateIconForEditCard() {
     iconContainer.innerHTML += generateIconForEditCardTemplate(bgrColor);
   }
 }
-
-/**
- * Removes the currently selected contact from the contacts list and updates
- * the database, then closes the contact and edit views.
- */
-async function deleteContact() {
-  contacts.splice(contactIndex, 1);
-  await setItem("userDataBase", JSON.stringify(userDataBase));
-  renderContacts();
-  closeContact();
-  closeEditContactCard();
-}
-
 
 /**
  * Opens the UI for adding a new contact, preparing and displaying a blank
