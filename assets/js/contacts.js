@@ -91,7 +91,6 @@ async function updateContact() {
  * Checks for an existing contact with the same email and name. If not found, creates a new contact
  * with these details and a unique color, then adds to the contacts list and updates the database.
  * 
- * Should be used during contact page initialization to include the user's own contact.
  */
 async function addMyContactToContacts() {
   if(userDataBase[userObject["id"]].name !== "Guest"){
@@ -207,7 +206,7 @@ function closeContact() {
 }
 
 /**
- * Toggles the visibility of options for editing a selected contact
+ * Toggles the visibility of options for editing and deleting a selected contact
  */
 function showEditOptions() {
   let editOptions = document.getElementById("editContactOptions");

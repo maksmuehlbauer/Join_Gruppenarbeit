@@ -1,10 +1,48 @@
+::-webkit-scrollbar {
+  width: 12px;
+  height: 90%;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d1d1d1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: #eee;
+  border-radius: 10px;
+}
+
+.back-to-contacts-img img:hover,
+.closeAddContact img:hover,
+.edit-image-contact:hover,
+.center-img-text:hover,
+.cancel-add-contact:hover,
+#createContactBtn:hover,
+.close-card-desktop img:hover,
+.addContactImg:hover,
+.editContactImg:hover,
+.edit-contacts-options div:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.contact:hover,
+.addContactImg:hover,
+.closeAddContact img,
+.deleteBtn,
+.back-to-contacts-img img {
+  cursor: pointer;
+}
+
 @media (max-width: 429px) {
   .addContactCard {
     width: 310px !important;
     height: 630px;
   }
 
-  #createContactbtn, #editContactBtn button , .deleteBtn {
+  #createContactbtn,
+  #editContactBtn button,
+  .deleteBtn {
     font-size: 18px !important;
   }
 
